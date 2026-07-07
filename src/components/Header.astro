@@ -3,9 +3,8 @@ import { SITE } from "../config";
 
 const nav = [
   { href: "#issues", label: "課題" },
-  { href: "#philosophy", label: "考え方" },
-  { href: "#services", label: "サービス" },
-  { href: "#strengths", label: "強み" },
+  { href: "#domains", label: "支援領域" },
+  { href: "#principles", label: "Principles" },
   { href: "#process", label: "支援の流れ" },
   { href: "#message", label: "代表メッセージ" },
 ];
@@ -17,7 +16,7 @@ const nav = [
     <nav class="header__nav" aria-label="メインナビゲーション">
       {nav.map((item) => <a href={item.href}>{item.label}</a>)}
     </nav>
-    <a href="#contact" class="header__cta">無料で相談する</a>
+    <a href="#contact" class="header__cta">相談する</a>
   </div>
 </header>
 

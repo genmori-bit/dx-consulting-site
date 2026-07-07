@@ -1,0 +1,199 @@
+---
+const domains = [
+  {
+    num: "01",
+    en: "Strategy",
+    ja: "DX構想・業務診断",
+    body: [
+      "現状の業務、システム、データ、人の流れを整理し、どこから変えるべきかを明確にします。",
+      "いきなりツールを選ぶのではなく、投資すべき領域と優先順位を決めます。",
+    ],
+  },
+  {
+    num: "02",
+    en: "Sales Ops",
+    ja: "営業・顧客管理の仕組み化",
+    body: [
+      "CRM/SFAを中心に、顧客管理、案件管理、営業プロセス、レポート設計を行います。",
+      "営業活動が見える状態をつくり、勘や記憶に頼らない営業管理へ移行します。",
+    ],
+  },
+  {
+    num: "03",
+    en: "Corporate Ops",
+    ja: "バックオフィスの標準化",
+    body: [
+      "経理、人事、総務、契約、請求、申請・承認などの管理業務を整理します。",
+      "手作業、二重入力、属人化を減らし、少ない人数でも回る業務フローをつくります。",
+    ],
+  },
+];
+
+const methods = ["AI", "CRM", "SFA", "SaaS", "Automation", "Dashboard"];
+---
+
+<section class="section domains" id="domains">
+  <div class="container">
+    <p class="en-label reveal">02 / Domains</p>
+    <h2 class="heading-ja domains__heading reveal" style="--reveal-delay: 0.1s">
+      支援領域
+    </h2>
+    <p class="lead domains__lead reveal" style="--reveal-delay: 0.2s">
+      3つの領域で、業務とデータの流れを設計します。
+      ツールはそのための手段であり、下に並ぶ6つを必要な範囲でだけ使います。
+    </p>
+
+    <div class="domains__panels">
+      {
+        domains.map((domain) => (
+          <article class="domains__panel reveal">
+            <div class="domains__meta">
+              <span class="domains__num">{domain.num}</span>
+              <span class="domains__ja">{domain.ja}</span>
+            </div>
+            <h3 class="domains__en en-display">{domain.en}</h3>
+            <div class="domains__body">
+              {domain.body.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="domains__methods reveal">
+      <p class="domains__methods-label">実装手段 — Methods</p>
+      <ul class="domains__methods-list">
+        {methods.map((method) => <li class="en-display">{method}</li>)}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .domains {
+    background: var(--c-black);
+  }
+
+  .domains__heading {
+    margin-top: 36px;
+  }
+
+  .domains__lead {
+    margin-top: 32px;
+  }
+
+  /* --- 3つの大型パネル --- */
+  .domains__panels {
+    margin-top: 112px;
+  }
+
+  .domains__panel {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    column-gap: clamp(32px, 5vw, 96px);
+    row-gap: 24px;
+    padding-block: clamp(64px, 8vw, 112px);
+    border-top: 1px solid var(--line);
+  }
+
+  .domains__panel:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .domains__meta {
+    grid-column: 1;
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+  }
+
+  .domains__num {
+    font-family: var(--font-en);
+    font-weight: 200;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: var(--c-gold);
+  }
+
+  .domains__ja {
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    color: var(--c-muted);
+  }
+
+  .domains__en {
+    grid-column: 1;
+    font-size: clamp(40px, 5.5vw, 76px);
+    font-weight: 200;
+  }
+
+  .domains__body {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    align-self: center;
+    max-width: 480px;
+  }
+
+  .domains__body p {
+    font-size: 14.5px;
+    line-height: 2.3;
+    color: var(--c-muted);
+  }
+
+  .domains__body p + p {
+    margin-top: 1.4em;
+  }
+
+  /* --- 実装手段 --- */
+  .domains__methods {
+    margin-top: clamp(80px, 10vw, 128px);
+  }
+
+  .domains__methods-label {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--c-muted);
+  }
+
+  .domains__methods-list {
+    margin-top: 36px;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: clamp(20px, 2.5vw, 32px);
+  }
+
+  .domains__methods-list li {
+    border-left: 1px solid var(--line);
+    padding-left: clamp(14px, 1.6vw, 22px);
+    padding-block: 10px;
+    font-size: clamp(16px, 1.7vw, 22px);
+    font-weight: 300;
+    color: var(--c-ink);
+  }
+
+  @media (max-width: 960px) {
+    .domains__panel {
+      grid-template-columns: 1fr;
+    }
+
+    .domains__body {
+      grid-column: 1;
+      grid-row: auto;
+      margin-top: 8px;
+    }
+
+    .domains__methods-list {
+      grid-template-columns: repeat(3, 1fr);
+      row-gap: 32px;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .domains__methods-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

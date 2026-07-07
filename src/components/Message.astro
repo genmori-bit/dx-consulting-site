@@ -4,16 +4,33 @@ import { SITE } from "../config";
 
 <section class="section message" id="message">
   <div class="container">
-    <p class="en-label message__label reveal">Message</p>
+    <p class="en-label message__label reveal">05 / Message</p>
 
     <div class="message__inner">
       <blockquote class="message__quote reveal" style="--reveal-delay: 0.15s">
-        <p>DXやAIは、導入するだけでは意味がありません。</p>
         <p>
-          大切なのは、企業の現場で使われ、業務が変わり、成果につながることです。
+          DXという言葉は、少し大きく聞こえます。<br />
+          でも実際の変化は、もっと小さなところから始まります。
         </p>
+
+        <p class="message__stanza">
+          毎回探している資料。<br />
+          誰かに聞かないと分からない業務。<br />
+          入力されないCRM。<br />
+          数字が集まらない会議。
+        </p>
+
         <p>
-          私たちは、経営と現場のあいだに入り、企業に合ったデジタル活用を一緒に設計し、実装していきます。
+          そうした日々の詰まりを一つずつほどいていくことが、企業にとって本当に意味のあるデジタル活用だと考えています。
+        </p>
+
+        <p>
+          AIやSaaSは、導入するだけでは会社を変えません。
+          業務の流れに合うように設計し、人が使い続けられる形にして、はじめて力になります。
+        </p>
+
+        <p>
+          私たちは、経営と現場のあいだに立ち、事業が前に進む仕組みを一緒につくっていきます。
         </p>
       </blockquote>
 
@@ -27,7 +44,7 @@ import { SITE } from "../config";
 </section>
 
 <style>
-  /* 反転(オフホワイト)で静けさをつくる */
+  /* 反転(オフホワイト)の静かなセクション */
   .message {
     background: var(--c-paper);
     color: var(--c-ink-dark);
@@ -42,29 +59,37 @@ import { SITE } from "../config";
   }
 
   .message__inner {
-    max-width: 860px;
-    margin-top: 88px;
+    max-width: 800px;
+    margin-top: 96px;
   }
 
   .message__quote {
     border-left: 1px solid #a8863f;
-    padding-left: clamp(24px, 4vw, 48px);
+    padding-left: clamp(24px, 4vw, 56px);
   }
 
   .message__quote p {
-    font-size: clamp(17px, 2.4vw, 26px);
+    font-size: clamp(16px, 2vw, 21px);
     font-weight: 400;
-    line-height: 2.1;
+    line-height: 2.3;
     letter-spacing: 0.08em;
   }
 
   .message__quote p + p {
-    margin-top: 1.6em;
+    margin-top: 2em;
+  }
+
+  /* 日々の詰まりの列挙:少し引いて、静かに */
+  .message__stanza {
+    font-size: clamp(14px, 1.7vw, 17px) !important;
+    line-height: 2.6 !important;
+    color: var(--c-muted-dark);
+    padding-left: 1.5em;
   }
 
   .message__sign {
-    margin-top: 80px;
-    padding-left: clamp(24px, 4vw, 48px);
+    margin-top: 88px;
+    padding-left: clamp(24px, 4vw, 56px);
     display: flex;
     align-items: baseline;
     gap: 20px;

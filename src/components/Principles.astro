@@ -1,0 +1,114 @@
+---
+const principles = [
+  {
+    num: "01",
+    en: "Work first, tools second.",
+    lines: [
+      "ツールから考えない。",
+      "まず、仕事の流れを観察する。",
+      "その上で、必要なデジタルだけを入れる。",
+    ],
+  },
+  {
+    num: "02",
+    en: "Small build, fast proof.",
+    lines: [
+      "大きな構想で止めない。",
+      "小さく作り、早く試し、数字を見ながら改善する。",
+    ],
+  },
+  {
+    num: "03",
+    en: "Leave the system behind.",
+    lines: [
+      "外部の支援がなくても回る状態を目指す。",
+      "ルール、権限、入力、確認、改善のリズムまで設計する。",
+    ],
+  },
+];
+---
+
+<section class="section principles" id="principles">
+  <div class="container">
+    <p class="en-label principles__label reveal">03 / Principles</p>
+
+    <ol class="principles__list">
+      {
+        principles.map((principle) => (
+          <li class="principles__row reveal">
+            <span class="principles__num">{principle.num}</span>
+            <h3 class="principles__en en-display">{principle.en}</h3>
+            <p class="principles__ja">
+              {principle.lines.map((line, i) => (
+                <>
+                  {line}
+                  {i < principle.lines.length - 1 && <br />}
+                </>
+              ))}
+            </p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  /* オフホワイトの反転セクション */
+  .principles {
+    background: var(--c-paper);
+    color: var(--c-ink-dark);
+  }
+
+  .principles__label {
+    color: #a8863f;
+  }
+
+  .principles__label::before {
+    background: #a8863f;
+  }
+
+  .principles__list {
+    margin-top: 96px;
+    list-style: none;
+  }
+
+  .principles__row {
+    display: grid;
+    grid-template-columns: 90px 1.3fr 1fr;
+    gap: clamp(20px, 3vw, 56px);
+    align-items: baseline;
+    padding-block: clamp(52px, 7vw, 88px);
+    border-top: 1px solid var(--line-dark);
+  }
+
+  .principles__row:last-child {
+    border-bottom: 1px solid var(--line-dark);
+  }
+
+  .principles__num {
+    font-family: var(--font-en);
+    font-weight: 200;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: #a8863f;
+  }
+
+  .principles__en {
+    font-size: clamp(28px, 3.6vw, 48px);
+    font-weight: 300;
+  }
+
+  .principles__ja {
+    font-size: 14.5px;
+    line-height: 2.3;
+    color: var(--c-muted-dark);
+  }
+
+  @media (max-width: 840px) {
+    .principles__row {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+  }
+</style>

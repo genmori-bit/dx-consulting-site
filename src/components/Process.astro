@@ -2,39 +2,35 @@
 const steps = [
   {
     num: "01",
-    en: "Discovery",
-    title: "診断・可視化",
-    body: "現状の業務フロー・システム・データを棚卸しし、課題を構造化。「どこから変えるべきか」を明らかにします。",
+    en: "Audit",
+    body: "業務、データ、ツール、人の流れを棚卸しする。",
   },
   {
     num: "02",
-    en: "Design",
-    title: "構想・設計",
-    body: "あるべき業務プロセスとシステム構成を設計し、優先順位と改善ロードマップを策定します。",
+    en: "Blueprint",
+    body: "残す業務、なくす業務、自動化する業務を切り分ける。",
   },
   {
     num: "03",
-    en: "Implementation",
-    title: "実装・導入",
-    body: "ツール設定、データ移行、自動化の構築を、現場のキーパーソンを巻き込みながら進めます。",
+    en: "Build",
+    body: "CRM/SFA、SaaS、AI、自動化、ダッシュボードを必要な範囲で実装する。",
   },
   {
     num: "04",
-    en: "Adoption",
-    title: "定着・改善",
-    body: "運用ルールの整備とトレーニングを行い、活用データをもとに継続的に改善します。",
+    en: "Run",
+    body: "運用ルール、トレーニング、改善のリズムを整える。",
   },
 ];
 ---
 
 <section class="section process" id="process">
   <div class="container">
-    <p class="en-label reveal">Process</p>
+    <p class="en-label reveal">04 / Process</p>
     <h2 class="heading-ja process__heading reveal" style="--reveal-delay: 0.1s">
       支援の流れ
     </h2>
     <p class="lead process__lead reveal" style="--reveal-delay: 0.2s">
-      いきなりツールを入れることはしません。診断から定着まで、段階を踏んで確実に進めます。
+      いきなり作りはじめません。診断から運用まで、4つの段階で進めます。
     </p>
 
     <ol class="process__steps">
@@ -42,8 +38,7 @@ const steps = [
         steps.map((step, i) => (
           <li class="process__step reveal" style={`--reveal-delay: ${i * 0.12}s`}>
             <span class="process__num">{step.num}</span>
-            <span class="process__en">{step.en}</span>
-            <h3 class="process__title">{step.title}</h3>
+            <span class="process__en en-display">{step.en}</span>
             <p class="process__body">{step.body}</p>
           </li>
         ))
@@ -66,7 +61,7 @@ const steps = [
   }
 
   .process__steps {
-    margin-top: 104px;
+    margin-top: 112px;
     list-style: none;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -89,23 +84,15 @@ const steps = [
 
   .process__en {
     display: block;
-    margin-top: 10px;
-    font-family: var(--font-en);
+    margin-top: 14px;
+    font-size: clamp(22px, 2.2vw, 30px);
     font-weight: 300;
-    font-size: 20px;
-    letter-spacing: 0.02em;
-  }
-
-  .process__title {
-    margin-top: 8px;
-    font-size: 15px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
   }
 
   .process__body {
-    margin-top: 16px;
+    margin-top: 20px;
     font-size: 13.5px;
+    line-height: 2.3;
     color: var(--c-muted);
   }
 
@@ -116,7 +103,7 @@ const steps = [
     }
 
     .process__step {
-      padding-block: 40px 48px;
+      padding-block: 44px 52px;
     }
   }
 </style>
