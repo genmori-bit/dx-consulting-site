@@ -1,0 +1,103 @@
+---
+const issues = [
+  {
+    num: "01",
+    title: "属人化した業務",
+    body: "特定の担当者しか分からない業務が積み重なり、引き継ぎも標準化も進まない。人が替わるたびに、品質とスピードが揺らいでいる。",
+  },
+  {
+    num: "02",
+    title: "使われないシステム",
+    body: "導入したCRMやSFAが現場に定着せず、入力されないまま形骸化。コストだけが残り、データは意思決定に使えない。",
+  },
+  {
+    num: "03",
+    title: "見えない営業活動",
+    body: "案件の状況や商談の進捗が可視化されず、報告は口頭と感覚頼み。経営判断が、勘と経験に依存している。",
+  },
+  {
+    num: "04",
+    title: "目的化するツール導入",
+    body: "「AIを使うこと」「DXすること」自体が目的になり、業務の変化にも成果にもつながっていない。",
+  },
+];
+---
+
+<section class="section issues" id="issues">
+  <div class="container">
+    <p class="en-label reveal">Issues</p>
+    <h2 class="heading-ja reveal" style="--reveal-delay: 0.1s">
+      DXが進まないのは、<br />ツールのせいではありません。
+    </h2>
+    <p class="lead issues__lead reveal" style="--reveal-delay: 0.2s">
+      多くの企業で、デジタル投資は増えているのに、業務は変わっていません。
+      原因はテクノロジーではなく、経営課題と現場業務のあいだにある「設計の不在」です。
+    </p>
+
+    <div class="issues__grid">
+      {
+        issues.map((issue, i) => (
+          <article class="issues__card reveal" style={`--reveal-delay: ${i * 0.12}s`}>
+            <span class="issues__num">{issue.num}</span>
+            <h3 class="issues__title">{issue.title}</h3>
+            <p class="issues__body">{issue.body}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .issues {
+    background: var(--c-charcoal);
+    border-block: 1px solid var(--line);
+  }
+
+  .heading-ja {
+    margin-top: 36px;
+  }
+
+  .issues__lead {
+    margin-top: 32px;
+  }
+
+  .issues__grid {
+    margin-top: 96px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: clamp(40px, 6vw, 96px);
+  }
+
+  .issues__card {
+    border-top: 1px solid var(--line);
+    padding-block: clamp(36px, 5vw, 56px);
+  }
+
+  .issues__num {
+    font-family: var(--font-en);
+    font-weight: 200;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: var(--c-gold);
+  }
+
+  .issues__title {
+    margin-top: 24px;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+  }
+
+  .issues__body {
+    margin-top: 18px;
+    font-size: 14px;
+    color: var(--c-muted);
+  }
+
+  @media (max-width: 720px) {
+    .issues__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0b0b0c"/>
+  <!-- grid -->
+  <g stroke="#eeece6" stroke-opacity="0.07" stroke-width="1">
+    <path d="M120 0 V630 M300 0 V630 M480 0 V630 M660 0 V630 M840 0 V630 M1020 0 V630"/>
+    <path d="M0 126 H1200 M0 252 H1200 M0 378 H1200 M0 504 H1200"/>
+  </g>
+  <!-- data line -->
+  <path d="M-20 470 L260 470 L340 400 L640 400 L740 320 L1040 320 L1120 250 L1220 250" fill="none" stroke="#c8a96a" stroke-opacity="0.45" stroke-width="1.5"/>
+  <circle cx="340" cy="400" r="4" fill="#c8a96a" fill-opacity="0.8"/>
+  <circle cx="740" cy="320" r="4" fill="#c8a96a" fill-opacity="0.8"/>
+  <!-- copy -->
+  <text x="100" y="270" font-family="Helvetica Neue, Arial, sans-serif" font-size="88" font-weight="300" letter-spacing="-1" fill="#eeece6">Business,</text>
+  <text x="100" y="372" font-family="Helvetica Neue, Arial, sans-serif" font-size="88" font-weight="300" letter-spacing="-1" fill="none" stroke="#eeece6" stroke-width="1.2">Re-designed.</text>
+  <text x="102" y="445" font-family="Hiragino Kaku Gothic ProN, sans-serif" font-size="26" letter-spacing="4" fill="#a9a69e">会社の動き方を、デジタルで再設計する。</text>
+  <text x="102" y="150" font-family="Helvetica Neue, Arial, sans-serif" font-size="20" letter-spacing="8" fill="#c8a96a">RE:DESIGN PARTNERS</text>
+</svg>

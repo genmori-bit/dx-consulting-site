@@ -1,0 +1,131 @@
+---
+const services = [
+  {
+    num: "01",
+    en: "AI Transformation",
+    ja: "AI活用支援",
+    body: "生成AI・AIツールを業務に組み込み、資料作成、問い合わせ対応、ナレッジ活用、業務自動化を支援します。",
+  },
+  {
+    num: "02",
+    en: "CRM / SFA Design",
+    ja: "営業管理基盤の設計",
+    body: "営業活動・顧客情報・案件管理を可視化し、売上につながる営業管理基盤を設計します。",
+  },
+  {
+    num: "03",
+    en: "Back Office Optimization",
+    ja: "バックオフィス改善",
+    body: "経理、人事、総務、請求、契約、申請業務などを整理し、手作業・重複作業・属人化を減らします。",
+  },
+  {
+    num: "04",
+    en: "Business Process Consulting",
+    ja: "業務プロセス改善",
+    body: "業務プロセスを可視化し、ツール導入前の業務設計から改善ロードマップまで支援します。",
+  },
+];
+---
+
+<section class="section services" id="services">
+  <div class="container">
+    <p class="en-label reveal">Services</p>
+    <h2 class="services__heading en-display reveal" style="--reveal-delay: 0.1s">
+      What we do
+    </h2>
+    <p class="lead services__lead reveal" style="--reveal-delay: 0.2s">
+      経営課題と現場業務をつなぐ4つの領域を、単体でも、横断でも支援します。
+    </p>
+
+    <div class="services__list">
+      {
+        services.map((service) => (
+          <article class="services__row reveal">
+            <div class="services__head">
+              <span class="services__num">{service.num}</span>
+              <span class="services__ja">{service.ja}</span>
+            </div>
+            <h3 class="services__en en-display">{service.en}</h3>
+            <p class="services__body">{service.body}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .services {
+    background: var(--c-black);
+  }
+
+  .services__heading {
+    margin-top: 36px;
+    font-size: clamp(44px, 7.5vw, 104px);
+  }
+
+  .services__lead {
+    margin-top: 32px;
+  }
+
+  .services__list {
+    margin-top: 96px;
+  }
+
+  .services__row {
+    display: grid;
+    grid-template-columns: 200px 1.1fr 1fr;
+    gap: clamp(24px, 4vw, 64px);
+    align-items: baseline;
+    padding-block: clamp(44px, 6vw, 72px);
+    border-top: 1px solid var(--line);
+  }
+
+  .services__row:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .services__head {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .services__num {
+    font-family: var(--font-en);
+    font-weight: 200;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: var(--c-gold);
+  }
+
+  .services__ja {
+    font-size: 12.5px;
+    letter-spacing: 0.16em;
+    color: var(--c-muted);
+  }
+
+  .services__en {
+    font-size: clamp(26px, 3.2vw, 40px);
+    font-weight: 300;
+  }
+
+  .services__body {
+    font-size: 14px;
+    color: var(--c-muted);
+    max-width: 440px;
+  }
+
+  @media (max-width: 840px) {
+    .services__row {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .services__head {
+      flex-direction: row;
+      align-items: baseline;
+      gap: 16px;
+    }
+  }
+</style>

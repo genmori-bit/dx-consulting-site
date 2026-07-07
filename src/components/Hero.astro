@@ -1,0 +1,260 @@
+---
+---
+
+<section class="hero" id="top">
+  <!-- 抽象背景:グリッド+光+データライン -->
+  <div class="hero__bg" aria-hidden="true">
+    <div class="hero__glow"></div>
+    <svg
+      class="hero__lines"
+      viewBox="0 0 1440 900"
+      preserveAspectRatio="xMidYMid slice"
+      fill="none"
+    >
+      <path
+        class="dataline dataline--1"
+        d="M-40 620 L280 620 L360 540 L720 540 L820 440 L1180 440 L1260 360 L1480 360"
+        stroke="url(#gold-fade)"
+        stroke-width="1"
+      ></path>
+      <path
+        class="dataline dataline--2"
+        d="M-40 760 L200 760 L320 680 L860 680 L980 580 L1480 580"
+        stroke="url(#gold-fade)"
+        stroke-width="1"
+      ></path>
+      <circle class="node node--1" cx="360" cy="540" r="3"></circle>
+      <circle class="node node--2" cx="820" cy="440" r="3"></circle>
+      <circle class="node node--3" cx="980" cy="580" r="3"></circle>
+      <defs>
+        <linearGradient id="gold-fade" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#c8a96a" stop-opacity="0"></stop>
+          <stop offset="0.5" stop-color="#c8a96a" stop-opacity="0.28"></stop>
+          <stop offset="1" stop-color="#c8a96a" stop-opacity="0"></stop>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <div class="container hero__inner">
+    <p class="en-label reveal">DX Consulting for Business Growth</p>
+
+    <h1 class="hero__title en-display reveal" style="--reveal-delay: 0.15s">
+      Business,<br />
+      <span class="hero__title-accent">Re-designed.</span>
+    </h1>
+
+    <p class="hero__copy reveal" style="--reveal-delay: 0.3s">
+      会社の動き方を、デジタルで再設計する。
+    </p>
+
+    <p class="hero__sub reveal" style="--reveal-delay: 0.45s">
+      AI、CRM、SFA、バックオフィス改善を軸に、<br class="pc-only" />
+      属人化した業務、使われないシステム、見えない営業活動を整理し、<br
+        class="pc-only"
+      />
+      企業が前に進むための仕組みをつくります。
+    </p>
+
+    <div class="hero__actions reveal" style="--reveal-delay: 0.6s">
+      <a href="#contact" class="btn btn--primary">無料で相談する</a>
+      <a href="#services" class="btn btn--ghost">サービスを見る</a>
+    </div>
+  </div>
+
+  <div class="hero__scroll" aria-hidden="true">
+    <span>Scroll</span>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: var(--c-black);
+  }
+
+  /* --- 背景 --- */
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    /* 細いグリッド */
+    background-image: linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 120px 120px;
+    mask-image: radial-gradient(
+      120% 90% at 70% 40%,
+      rgba(0, 0, 0, 0.32),
+      transparent 70%
+    );
+    -webkit-mask-image: radial-gradient(
+      120% 90% at 70% 40%,
+      rgba(0, 0, 0, 0.32),
+      transparent 70%
+    );
+  }
+
+  .hero__glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      720px 540px at 78% 26%,
+      rgba(200, 169, 106, 0.05),
+      transparent 68%
+    );
+  }
+
+  .hero__lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .dataline {
+    stroke-dasharray: 1600;
+    stroke-dashoffset: 1600;
+    animation: draw 5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .dataline--2 {
+    animation-delay: 1s;
+  }
+
+  .node {
+    fill: var(--c-gold);
+    opacity: 0;
+    animation: node-in 1.4s ease forwards;
+  }
+
+  .node--1 { animation-delay: 2s; }
+  .node--2 { animation-delay: 2.6s; }
+  .node--3 { animation-delay: 3.4s; }
+
+  @keyframes draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes node-in {
+    to { opacity: 0.45; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dataline { animation: none; stroke-dashoffset: 0; }
+    .node { animation: none; opacity: 0.45; }
+  }
+
+  /* --- コンテンツ --- */
+  .hero__inner {
+    position: relative;
+    width: 100%;
+    padding-top: 120px;
+    padding-bottom: 80px;
+  }
+
+  .hero__title {
+    font-size: clamp(60px, 13.5vw, 192px);
+    font-weight: 200;
+    margin-top: 48px;
+    color: var(--c-ink);
+  }
+
+  .hero__title-accent {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(238, 236, 230, 0.85);
+  }
+
+  .hero__copy {
+    margin-top: 56px;
+    font-size: clamp(17px, 2.2vw, 22px);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+  }
+
+  .hero__sub {
+    margin-top: 28px;
+    font-size: 14px;
+    color: var(--c-muted);
+    max-width: 620px;
+  }
+
+  .hero__actions {
+    margin-top: 72px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-size: 14px;
+    letter-spacing: 0.14em;
+    white-space: nowrap;
+    padding: 16px 40px;
+    border: 1px solid;
+    transition: background-color 0.35s ease, color 0.35s ease,
+      border-color 0.35s ease;
+  }
+
+  .btn--primary {
+    background: transparent;
+    border-color: var(--c-gold-dim);
+    color: var(--c-gold);
+  }
+
+  .btn--primary:hover {
+    background: var(--c-gold);
+    border-color: var(--c-gold);
+    color: var(--c-black);
+  }
+
+  .btn--ghost {
+    border-color: var(--line);
+    color: var(--c-ink);
+  }
+
+  .btn--ghost:hover {
+    border-color: var(--c-ink);
+  }
+
+  /* --- スクロールインジケーター --- */
+  .hero__scroll {
+    position: absolute;
+    bottom: 0;
+    left: var(--pad-x);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero__scroll span {
+    font-family: var(--font-en);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+    writing-mode: vertical-rl;
+  }
+
+  .hero__scroll::after {
+    content: "";
+    width: 1px;
+    height: 64px;
+    background: linear-gradient(var(--c-gold-dim), transparent);
+    animation: scroll-pulse 2.6s ease-in-out infinite;
+  }
+
+  @keyframes scroll-pulse {
+    0%, 100% { transform: scaleY(1); opacity: 1; }
+    50% { transform: scaleY(0.55); opacity: 0.4; }
+  }
+
+  @media (max-width: 720px) {
+    .pc-only { display: none; }
+    .hero__scroll { display: none; }
+    .btn { flex: 1; text-align: center; padding-inline: 20px; }
+  }
+</style>

@@ -1,0 +1,122 @@
+---
+const steps = [
+  {
+    num: "01",
+    en: "Discovery",
+    title: "診断・可視化",
+    body: "現状の業務フロー・システム・データを棚卸しし、課題を構造化。「どこから変えるべきか」を明らかにします。",
+  },
+  {
+    num: "02",
+    en: "Design",
+    title: "構想・設計",
+    body: "あるべき業務プロセスとシステム構成を設計し、優先順位と改善ロードマップを策定します。",
+  },
+  {
+    num: "03",
+    en: "Implementation",
+    title: "実装・導入",
+    body: "ツール設定、データ移行、自動化の構築を、現場のキーパーソンを巻き込みながら進めます。",
+  },
+  {
+    num: "04",
+    en: "Adoption",
+    title: "定着・改善",
+    body: "運用ルールの整備とトレーニングを行い、活用データをもとに継続的に改善します。",
+  },
+];
+---
+
+<section class="section process" id="process">
+  <div class="container">
+    <p class="en-label reveal">Process</p>
+    <h2 class="heading-ja process__heading reveal" style="--reveal-delay: 0.1s">
+      支援の流れ
+    </h2>
+    <p class="lead process__lead reveal" style="--reveal-delay: 0.2s">
+      いきなりツールを入れることはしません。診断から定着まで、段階を踏んで確実に進めます。
+    </p>
+
+    <ol class="process__steps">
+      {
+        steps.map((step, i) => (
+          <li class="process__step reveal" style={`--reveal-delay: ${i * 0.12}s`}>
+            <span class="process__num">{step.num}</span>
+            <span class="process__en">{step.en}</span>
+            <h3 class="process__title">{step.title}</h3>
+            <p class="process__body">{step.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .process {
+    background: var(--c-black);
+  }
+
+  .process__heading {
+    margin-top: 36px;
+  }
+
+  .process__lead {
+    margin-top: 32px;
+  }
+
+  .process__steps {
+    margin-top: 104px;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(32px, 4vw, 56px);
+  }
+
+  .process__step {
+    border-top: 1px solid var(--line);
+    padding-top: 36px;
+  }
+
+  .process__num {
+    display: block;
+    font-family: var(--font-en);
+    font-weight: 200;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: var(--c-gold);
+  }
+
+  .process__en {
+    display: block;
+    margin-top: 10px;
+    font-family: var(--font-en);
+    font-weight: 300;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+  }
+
+  .process__title {
+    margin-top: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+  }
+
+  .process__body {
+    margin-top: 16px;
+    font-size: 13.5px;
+    color: var(--c-muted);
+  }
+
+  @media (max-width: 840px) {
+    .process__steps {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .process__step {
+      padding-block: 40px 48px;
+    }
+  }
+</style>

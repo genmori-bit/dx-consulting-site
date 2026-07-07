@@ -1,0 +1,189 @@
+---
+import { SITE } from "../config";
+---
+
+<section class="section contact" id="contact">
+  <div class="container">
+    <div class="contact__grid">
+      <div class="contact__intro">
+        <p class="en-label reveal">Contact</p>
+        <h2 class="contact__heading en-display reveal" style="--reveal-delay: 0.1s">
+          Let's talk.
+        </h2>
+        <p class="contact__lead reveal" style="--reveal-delay: 0.2s">
+          「何から手をつければいいか分からない」という段階からで構いません。
+          現状を伺いながら、貴社にとってのDXの進め方を一緒に整理します。
+          無理な提案・営業は行いません。
+        </p>
+        <p class="contact__note reveal" style="--reveal-delay: 0.3s">
+          初回相談無料 / オンライン対応 / 通常1営業日以内にご返信
+        </p>
+      </div>
+
+      <form
+        class="contact__form reveal"
+        style="--reveal-delay: 0.2s"
+        id="contact-form"
+        method="POST"
+        action={SITE.formEndpoint || "#"}
+        data-endpoint={SITE.formEndpoint}
+        data-mailto={SITE.contactEmail}
+      >
+        <div class="field">
+          <label for="f-company">会社名</label>
+          <input id="f-company" name="company" type="text" autocomplete="organization" required />
+        </div>
+        <div class="field">
+          <label for="f-name">お名前 <span class="req" aria-hidden="true">*</span></label>
+          <input id="f-name" name="name" type="text" autocomplete="name" required />
+        </div>
+        <div class="field">
+          <label for="f-email">メールアドレス <span class="req" aria-hidden="true">*</span></label>
+          <input id="f-email" name="email" type="email" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label for="f-message">ご相談内容 <span class="req" aria-hidden="true">*</span></label>
+          <textarea id="f-message" name="message" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="contact__submit">無料で相談する</button>
+        <p class="contact__form-note">
+          送信いただいた内容は、お問い合わせ対応の目的にのみ使用します。
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  // formEndpoint 未設定時は、入力内容を引き継いでメール作成画面を開くフォールバック
+  const form = document.getElementById("contact-form") as HTMLFormElement | null;
+
+  form?.addEventListener("submit", (e) => {
+    if (form.dataset.endpoint) return; // エンドポイント設定済みなら通常送信
+
+    e.preventDefault();
+    const data = new FormData(form);
+    const subject = encodeURIComponent("【無料相談】お問い合わせ");
+    const body = encodeURIComponent(
+      [
+        `会社名: ${data.get("company")}`,
+        `お名前: ${data.get("name")}`,
+        `メール: ${data.get("email")}`,
+        "",
+        "ご相談内容:",
+        String(data.get("message")),
+      ].join("\n")
+    );
+    window.location.href = `mailto:${form.dataset.mailto}?subject=${subject}&body=${body}`;
+  });
+</script>
+
+<style>
+  .contact {
+    background: var(--c-charcoal);
+    border-top: 1px solid var(--line);
+  }
+
+  .contact__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(48px, 6vw, 96px);
+    align-items: start;
+  }
+
+  .contact__heading {
+    margin-top: 36px;
+    font-size: clamp(48px, 7.5vw, 108px);
+  }
+
+  .contact__lead {
+    margin-top: 40px;
+    font-size: 14.5px;
+    color: var(--c-muted);
+    max-width: 440px;
+  }
+
+  .contact__note {
+    margin-top: 28px;
+    font-size: 12.5px;
+    letter-spacing: 0.12em;
+    color: var(--c-gold);
+  }
+
+  /* --- フォーム --- */
+  .contact__form {
+    border: 1px solid var(--line);
+    padding: clamp(36px, 5vw, 60px);
+  }
+
+  .field + .field {
+    margin-top: 36px;
+  }
+
+  .field label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12.5px;
+    letter-spacing: 0.14em;
+    color: var(--c-muted);
+  }
+
+  .req {
+    color: var(--c-gold);
+  }
+
+  .field input,
+  .field textarea {
+    width: 100%;
+    margin-top: 10px;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 10px 2px;
+    font-size: 15px;
+    line-height: 1.7;
+    transition: border-color 0.4s ease;
+  }
+
+  .field textarea {
+    resize: vertical;
+  }
+
+  .field input:focus,
+  .field textarea:focus {
+    outline: none;
+    border-bottom-color: var(--c-gold);
+  }
+
+  .contact__submit {
+    margin-top: 52px;
+    width: 100%;
+    padding: 18px;
+    background: transparent;
+    border: 1px solid var(--c-gold-dim);
+    color: var(--c-gold);
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    cursor: pointer;
+    transition: background-color 0.35s ease, color 0.35s ease;
+  }
+
+  .contact__submit:hover {
+    background: var(--c-gold);
+    color: var(--c-black);
+  }
+
+  .contact__form-note {
+    margin-top: 18px;
+    font-size: 11.5px;
+    color: var(--c-muted);
+    line-height: 1.9;
+  }
+
+  @media (max-width: 840px) {
+    .contact__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

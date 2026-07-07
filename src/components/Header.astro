@@ -1,0 +1,135 @@
+---
+import { SITE } from "../config";
+
+const nav = [
+  { href: "#issues", label: "課題" },
+  { href: "#philosophy", label: "考え方" },
+  { href: "#services", label: "サービス" },
+  { href: "#strengths", label: "強み" },
+  { href: "#process", label: "支援の流れ" },
+  { href: "#message", label: "代表メッセージ" },
+];
+---
+
+<header class="header" id="site-header">
+  <div class="header__inner">
+    <a href="#top" class="header__brand">{SITE.brandEn}</a>
+    <nav class="header__nav" aria-label="メインナビゲーション">
+      {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+    <a href="#contact" class="header__cta">無料で相談する</a>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById("site-header");
+  const onScroll = () => {
+    header?.classList.toggle("is-scrolled", window.scrollY > 32);
+  };
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+</script>
+
+<style>
+  .header {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 100;
+    transition: background-color 0.5s ease, border-color 0.5s ease;
+    border-bottom: 1px solid transparent;
+  }
+
+  .header.is-scrolled {
+    background: rgba(11, 11, 12, 0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom-color: var(--line);
+  }
+
+  .header__inner {
+    max-width: var(--container);
+    margin-inline: auto;
+    padding: 20px var(--pad-x);
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .header__brand {
+    font-family: var(--font-en);
+    font-weight: 400;
+    font-size: 17px;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  .header__nav {
+    display: flex;
+    gap: 28px;
+    margin-left: auto;
+  }
+
+  .header__nav a {
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    color: var(--c-muted);
+    transition: color 0.3s ease;
+  }
+
+  .header__nav a:hover {
+    color: var(--c-ink);
+  }
+
+  .header__cta {
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    border: 1px solid var(--c-gold-dim);
+    color: var(--c-gold);
+    padding: 10px 22px;
+    white-space: nowrap;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .header__cta:hover {
+    background: var(--c-gold);
+    color: var(--c-black);
+  }
+
+  @media (max-width: 900px) {
+    .header__nav {
+      display: none;
+    }
+    .header__cta {
+      margin-left: auto;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .header__inner {
+      padding-block: 16px;
+      gap: 16px;
+    }
+    .header__brand {
+      font-size: 15px;
+    }
+    .header__cta {
+      font-size: 12px;
+      padding: 8px 14px;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .header__inner {
+      padding-inline: 16px;
+      gap: 12px;
+    }
+    .header__brand {
+      font-size: 13px;
+    }
+    .header__cta {
+      font-size: 11px;
+      padding: 6px 10px;
+      letter-spacing: 0.06em;
+    }
+  }
+</style>

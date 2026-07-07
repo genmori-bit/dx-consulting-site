@@ -1,0 +1,99 @@
+---
+import { SITE } from "../config";
+---
+
+<section class="section message" id="message">
+  <div class="container">
+    <p class="en-label message__label reveal">Message</p>
+
+    <div class="message__inner">
+      <blockquote class="message__quote reveal" style="--reveal-delay: 0.15s">
+        <p>DXやAIは、導入するだけでは意味がありません。</p>
+        <p>
+          大切なのは、企業の現場で使われ、業務が変わり、成果につながることです。
+        </p>
+        <p>
+          私たちは、経営と現場のあいだに入り、企業に合ったデジタル活用を一緒に設計し、実装していきます。
+        </p>
+      </blockquote>
+
+      <div class="message__sign reveal" style="--reveal-delay: 0.3s">
+        <span class="message__role">代表</span>
+        <span class="message__name">{SITE.representative}</span>
+        <span class="message__name-en">Genki Mouri</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* 反転(オフホワイト)で静けさをつくる */
+  .message {
+    background: var(--c-paper);
+    color: var(--c-ink-dark);
+  }
+
+  .message__label {
+    color: #a8863f;
+  }
+
+  .message__label::before {
+    background: #a8863f;
+  }
+
+  .message__inner {
+    max-width: 860px;
+    margin-top: 88px;
+  }
+
+  .message__quote {
+    border-left: 1px solid #a8863f;
+    padding-left: clamp(24px, 4vw, 48px);
+  }
+
+  .message__quote p {
+    font-size: clamp(17px, 2.4vw, 26px);
+    font-weight: 400;
+    line-height: 2.1;
+    letter-spacing: 0.08em;
+  }
+
+  .message__quote p + p {
+    margin-top: 1.6em;
+  }
+
+  .message__sign {
+    margin-top: 80px;
+    padding-left: clamp(24px, 4vw, 48px);
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+  }
+
+  .message__role {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--c-muted-dark);
+  }
+
+  .message__name {
+    font-size: clamp(20px, 2.6vw, 26px);
+    font-weight: 500;
+    letter-spacing: 0.16em;
+  }
+
+  .message__name-en {
+    font-family: var(--font-en);
+    font-weight: 300;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: var(--c-muted-dark);
+  }
+
+  @media (max-width: 720px) {
+    .message__sign {
+      flex-direction: column;
+      gap: 6px;
+    }
+  }
+</style>
