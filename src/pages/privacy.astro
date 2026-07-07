@@ -1,0 +1,132 @@
+---
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import PageIntro from "../components/PageIntro.astro";
+import Footer from "../components/Footer.astro";
+import { SITE } from "../config";
+
+const sections = [
+  {
+    title: "1. 基本方針",
+    body: [
+      `${SITE.brandJa}(以下「当社」)は、お客様の個人情報の重要性を認識し、個人情報の保護に関する法律およびその他の関係法令を遵守するとともに、以下のとおり個人情報を適切に取り扱います。`,
+    ],
+  },
+  {
+    title: "2. 取得する情報",
+    body: [
+      "当社は、お問い合わせフォームを通じて、会社名、氏名、メールアドレス、ご相談内容を取得します。",
+    ],
+  },
+  {
+    title: "3. 利用目的",
+    body: [
+      "取得した個人情報は、以下の目的で利用します。",
+      "・お問い合わせへの回答およびご連絡のため",
+      "・ご相談内容に関する提案資料の作成のため",
+      "・当社サービスの品質向上のため",
+    ],
+  },
+  {
+    title: "4. 第三者提供",
+    body: [
+      "当社は、法令に基づく場合を除き、ご本人の同意なく個人情報を第三者に提供しません。",
+    ],
+  },
+  {
+    title: "5. 安全管理",
+    body: [
+      "当社は、個人情報の漏えい、滅失または毀損の防止のために、必要かつ適切な安全管理措置を講じます。",
+    ],
+  },
+  {
+    title: "6. 開示・訂正・削除",
+    body: [
+      "ご本人から個人情報の開示、訂正、削除等のお申し出があった場合は、ご本人であることを確認のうえ、速やかに対応します。",
+    ],
+  },
+  {
+    title: "7. 本ポリシーの変更",
+    body: [
+      "本ポリシーの内容は、法令の改正や運用の変更に応じて、予告なく改定されることがあります。改定後の内容は、本ページに掲載した時点から適用されます。",
+    ],
+  },
+  {
+    title: "8. お問い合わせ窓口",
+    body: [
+      "個人情報の取り扱いに関するお問い合わせは、当サイトのお問い合わせフォームよりご連絡ください。",
+    ],
+  },
+];
+---
+
+<Base
+  title="プライバシーポリシー | Re:Design Partners"
+  description="株式会社リデザインパートナーズの個人情報の取り扱いについてのご案内です。"
+>
+  <Header />
+  <main>
+    <PageIntro
+      label="Privacy Policy"
+      titleEn="Privacy Policy"
+      titleJa="プライバシーポリシー"
+    />
+
+    <section class="section policy">
+      <div class="container">
+        <div class="policy__inner">
+          {
+            sections.map((section) => (
+              <div class="policy__block reveal">
+                <h2 class="policy__title">{section.title}</h2>
+                {section.body.map((line) => (
+                  <p class="policy__body">{line}</p>
+                ))}
+              </div>
+            ))
+          }
+          <p class="policy__date reveal">制定日:2026年7月7日</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .policy {
+    background: var(--c-black);
+    border-top: 1px solid var(--line);
+    padding-block: clamp(80px, 10vw, 128px);
+  }
+
+  .policy__inner {
+    max-width: 720px;
+  }
+
+  .policy__block + .policy__block {
+    margin-top: 64px;
+  }
+
+  .policy__title {
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .policy__body {
+    margin-top: 16px;
+    font-size: 14px;
+    line-height: 2.3;
+    color: var(--c-muted);
+  }
+
+  .policy__date {
+    margin-top: 88px;
+    font-size: 12.5px;
+    letter-spacing: 0.1em;
+    color: var(--c-muted);
+  }
+</style>

@@ -1,46 +1,49 @@
 ---
+interface Props {
+  label?: string;
+}
+
+const { label = "02 / Domains" } = Astro.props;
+
 const domains = [
   {
     num: "01",
-    en: "Strategy",
-    ja: "DX構想・業務診断",
+    en: "Front Office",
+    ja: "顧客接点を整える",
     body: [
-      "現状の業務、システム、データ、人の流れを整理し、どこから変えるべきかを明確にします。",
-      "いきなりツールを選ぶのではなく、投資すべき領域と優先順位を決めます。",
+      "営業、顧客管理、案件管理、問い合わせ、見積、受注、営業会議を整理します。",
+      "CRM/SFAを必要に応じて活用し、営業活動が見える状態をつくります。",
     ],
   },
   {
     num: "02",
-    en: "Sales Ops",
-    ja: "営業・顧客管理の仕組み化",
+    en: "Back Office",
+    ja: "社内業務を整える",
     body: [
-      "CRM/SFAを中心に、顧客管理、案件管理、営業プロセス、レポート設計を行います。",
-      "営業活動が見える状態をつくり、勘や記憶に頼らない営業管理へ移行します。",
+      "経理、人事、総務、契約、請求、勤怠、経費、申請・承認などを整理します。",
+      "手作業、二重入力、属人化を減らし、少ない人数でも回る業務フローをつくります。",
     ],
   },
   {
     num: "03",
-    en: "Corporate Ops",
-    ja: "バックオフィスの標準化",
+    en: "Management",
+    ja: "経営判断を整える",
     body: [
-      "経理、人事、総務、契約、請求、申請・承認などの管理業務を整理します。",
-      "手作業、二重入力、属人化を減らし、少ない人数でも回る業務フローをつくります。",
+      "売上、粗利、案件状況、工数、請求、入金、KPIなどを整理します。",
+      "経営判断に必要な数字が自然に集まる状態をつくります。",
     ],
   },
 ];
-
-const methods = ["AI", "CRM", "SFA", "SaaS", "Automation", "Dashboard"];
 ---
 
 <section class="section domains" id="domains">
   <div class="container">
-    <p class="en-label reveal">02 / Domains</p>
+    <p class="en-label reveal">{label}</p>
     <h2 class="heading-ja domains__heading reveal" style="--reveal-delay: 0.1s">
       支援領域
     </h2>
     <p class="lead domains__lead reveal" style="--reveal-delay: 0.2s">
-      3つの領域で、業務とデータの流れを設計します。
-      ツールはそのための手段であり、下に並ぶ6つを必要な範囲でだけ使います。
+      顧客接点、社内業務、経営判断。3つの領域で、会社の仕事の流れを整えます。
     </p>
 
     <div class="domains__panels">
@@ -49,9 +52,9 @@ const methods = ["AI", "CRM", "SFA", "SaaS", "Automation", "Dashboard"];
           <article class="domains__panel reveal">
             <div class="domains__meta">
               <span class="domains__num">{domain.num}</span>
-              <span class="domains__ja">{domain.ja}</span>
+              <span class="domains__en">{domain.en}</span>
             </div>
-            <h3 class="domains__en en-display">{domain.en}</h3>
+            <h3 class="domains__ja">{domain.ja}</h3>
             <div class="domains__body">
               {domain.body.map((paragraph) => (
                 <p>{paragraph}</p>
@@ -60,13 +63,6 @@ const methods = ["AI", "CRM", "SFA", "SaaS", "Automation", "Dashboard"];
           </article>
         ))
       }
-    </div>
-
-    <div class="domains__methods reveal">
-      <p class="domains__methods-label">実装手段 — Methods</p>
-      <ul class="domains__methods-list">
-        {methods.map((method) => <li class="en-display">{method}</li>)}
-      </ul>
     </div>
   </div>
 </section>
@@ -93,7 +89,7 @@ const methods = ["AI", "CRM", "SFA", "SaaS", "Automation", "Dashboard"];
     display: grid;
     grid-template-columns: 0.9fr 1.1fr;
     column-gap: clamp(32px, 5vw, 96px);
-    row-gap: 24px;
+    row-gap: 28px;
     padding-block: clamp(64px, 8vw, 112px);
     border-top: 1px solid var(--line);
   }
@@ -117,16 +113,22 @@ const methods = ["AI", "CRM", "SFA", "SaaS", "Automation", "Dashboard"];
     color: var(--c-gold);
   }
 
-  .domains__ja {
-    font-size: 13px;
-    letter-spacing: 0.18em;
+  .domains__en {
+    font-family: var(--font-en);
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
     color: var(--c-muted);
   }
 
-  .domains__en {
+  /* 日本語を主役にした見出し */
+  .domains__ja {
     grid-column: 1;
-    font-size: clamp(40px, 5.5vw, 76px);
-    font-weight: 200;
+    font-size: clamp(26px, 3.6vw, 44px);
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    line-height: 1.6;
   }
 
   .domains__body {
@@ -146,34 +148,6 @@ const methods = ["AI", "CRM", "SFA", "SaaS", "Automation", "Dashboard"];
     margin-top: 1.4em;
   }
 
-  /* --- 実装手段 --- */
-  .domains__methods {
-    margin-top: clamp(80px, 10vw, 128px);
-  }
-
-  .domains__methods-label {
-    font-size: 12px;
-    letter-spacing: 0.2em;
-    color: var(--c-muted);
-  }
-
-  .domains__methods-list {
-    margin-top: 36px;
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: clamp(20px, 2.5vw, 32px);
-  }
-
-  .domains__methods-list li {
-    border-left: 1px solid var(--line);
-    padding-left: clamp(14px, 1.6vw, 22px);
-    padding-block: 10px;
-    font-size: clamp(16px, 1.7vw, 22px);
-    font-weight: 300;
-    color: var(--c-ink);
-  }
-
   @media (max-width: 960px) {
     .domains__panel {
       grid-template-columns: 1fr;
@@ -183,17 +157,6 @@ const methods = ["AI", "CRM", "SFA", "SaaS", "Automation", "Dashboard"];
       grid-column: 1;
       grid-row: auto;
       margin-top: 8px;
-    }
-
-    .domains__methods-list {
-      grid-template-columns: repeat(3, 1fr);
-      row-gap: 32px;
-    }
-  }
-
-  @media (max-width: 520px) {
-    .domains__methods-list {
-      grid-template-columns: repeat(2, 1fr);
     }
   }
 </style>

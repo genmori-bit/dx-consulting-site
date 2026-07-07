@@ -1,42 +1,53 @@
 ---
+interface Props {
+  label?: string;
+}
+
+const { label = "05 / Process" } = Astro.props;
+
 const steps = [
   {
     num: "01",
     en: "Audit",
-    body: "業務、データ、ツール、人の流れを棚卸しする。",
+    body: "現状の業務、データ、システム、人の流れを棚卸しする。",
   },
   {
     num: "02",
-    en: "Blueprint",
-    body: "残す業務、なくす業務、自動化する業務を切り分ける。",
+    en: "Strategy",
+    body: "どこから変えるか、何をやらないか、優先順位を決める。",
   },
   {
     num: "03",
-    en: "Build",
-    body: "CRM/SFA、SaaS、AI、自動化、ダッシュボードを必要な範囲で実装する。",
+    en: "Design",
+    body: "業務フロー、データ項目、システム構成、運用ルールを設計する。",
   },
   {
     num: "04",
-    en: "Run",
-    body: "運用ルール、トレーニング、改善のリズムを整える。",
+    en: "Build",
+    body: "必要な業務システム、自動化、AI活用、レポート環境を実装する。",
+  },
+  {
+    num: "05",
+    en: "Enable",
+    body: "現場が使い続けられるよう、教育、ルール、改善のリズムを整える。",
   },
 ];
 ---
 
 <section class="section process" id="process">
   <div class="container">
-    <p class="en-label reveal">04 / Process</p>
+    <p class="en-label reveal">{label}</p>
     <h2 class="heading-ja process__heading reveal" style="--reveal-delay: 0.1s">
       支援の流れ
     </h2>
     <p class="lead process__lead reveal" style="--reveal-delay: 0.2s">
-      いきなり作りはじめません。診断から運用まで、4つの段階で進めます。
+      いきなり作りはじめません。現状の棚卸しから運用の定着まで、5つの段階で進めます。
     </p>
 
     <ol class="process__steps">
       {
         steps.map((step, i) => (
-          <li class="process__step reveal" style={`--reveal-delay: ${i * 0.12}s`}>
+          <li class="process__step reveal" style={`--reveal-delay: ${i * 0.1}s`}>
             <span class="process__num">{step.num}</span>
             <span class="process__en en-display">{step.en}</span>
             <p class="process__body">{step.body}</p>
@@ -64,13 +75,13 @@ const steps = [
     margin-top: 112px;
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: clamp(32px, 4vw, 56px);
+    grid-template-columns: repeat(5, 1fr);
+    gap: clamp(24px, 3vw, 44px);
   }
 
   .process__step {
     border-top: 1px solid var(--line);
-    padding-top: 36px;
+    padding-top: 32px;
   }
 
   .process__num {
@@ -85,25 +96,25 @@ const steps = [
   .process__en {
     display: block;
     margin-top: 14px;
-    font-size: clamp(22px, 2.2vw, 30px);
+    font-size: clamp(20px, 1.9vw, 26px);
     font-weight: 300;
   }
 
   .process__body {
-    margin-top: 20px;
-    font-size: 13.5px;
+    margin-top: 18px;
+    font-size: 13px;
     line-height: 2.3;
     color: var(--c-muted);
   }
 
-  @media (max-width: 840px) {
+  @media (max-width: 1080px) {
     .process__steps {
       grid-template-columns: 1fr;
       gap: 0;
     }
 
     .process__step {
-      padding-block: 44px 52px;
+      padding-block: 40px 48px;
     }
   }
 </style>

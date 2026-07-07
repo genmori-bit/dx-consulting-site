@@ -1,0 +1,142 @@
+---
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+---
+
+<section class="section local" id="local-business">
+  <div class="container">
+    <p class="en-label local__label reveal">04 / For Local Business</p>
+
+    <h2 class="heading-ja local__heading reveal" style="--reveal-delay: 0.1s">
+      地域企業に、ちょうどいいDXを。
+    </h2>
+
+    <div class="local__cols">
+      <div class="local__body reveal" style="--reveal-delay: 0.2s">
+        <p>
+          デジタル化は、大きなシステムを入れることだけではありません。
+          人手が限られ、業務が属人化しやすい会社にこそ、
+          仕事の流れを整え、少ない人数でも回る仕組みが必要です。
+        </p>
+        <p>
+          私たちは、営業・管理部門・経営判断の流れを整理し、
+          今ある業務に合ったデジタル活用を設計します。
+        </p>
+        <p>
+          無理に大きく変えるのではなく、
+          現場で使われ、会社に残る仕組みを一つずつつくっていきます。
+        </p>
+      </div>
+
+      <div class="local__aside reveal" style="--reveal-delay: 0.3s">
+        <ul class="local__points">
+          <li>IT担当者がいなくても、進められます</li>
+          <li>1つの業務、1つの会議からでも始められます</li>
+          <li>今お使いのExcelやツールを活かして設計します</li>
+        </ul>
+        <div class="local__actions">
+          <a href={`${base}#contact`} class="local__cta">地域企業のDXを相談する</a>
+          <a href={`${base}local-business/`} class="local__more">詳しく見る</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* オフホワイトの反転セクション */
+  .local {
+    background: var(--c-paper);
+    color: var(--c-ink-dark);
+  }
+
+  .local__label {
+    color: #a8863f;
+  }
+
+  .local__label::before {
+    background: #a8863f;
+  }
+
+  .local__heading {
+    margin-top: 36px;
+  }
+
+  .local__cols {
+    margin-top: 72px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: clamp(48px, 6vw, 112px);
+    align-items: start;
+  }
+
+  .local__body p {
+    font-size: 15px;
+    line-height: 2.4;
+    color: var(--c-muted-dark);
+  }
+
+  .local__body p + p {
+    margin-top: 1.8em;
+  }
+
+  .local__points {
+    list-style: none;
+  }
+
+  .local__points li {
+    padding-block: 18px;
+    border-top: 1px solid var(--line-dark);
+    font-size: 14px;
+    letter-spacing: 0.08em;
+  }
+
+  .local__points li:last-child {
+    border-bottom: 1px solid var(--line-dark);
+  }
+
+  .local__actions {
+    margin-top: 44px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .local__cta {
+    display: block;
+    text-align: center;
+    padding: 17px 24px;
+    border: 1px solid #a8863f;
+    color: #7c6023;
+    font-size: 14px;
+    letter-spacing: 0.14em;
+    transition: background-color 0.35s ease, color 0.35s ease;
+  }
+
+  .local__cta:hover {
+    background: #a8863f;
+    color: var(--c-paper);
+  }
+
+  .local__more {
+    align-self: center;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    color: var(--c-muted-dark);
+    border-bottom: 1px solid var(--line-dark);
+    padding-bottom: 4px;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .local__more:hover {
+    color: var(--c-ink-dark);
+    border-color: var(--c-ink-dark);
+  }
+
+  @media (max-width: 840px) {
+    .local__cols {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

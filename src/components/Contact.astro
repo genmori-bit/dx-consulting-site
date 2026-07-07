@@ -6,18 +6,21 @@ import { SITE } from "../config";
   <div class="container">
     <div class="contact__grid">
       <div class="contact__intro">
-        <p class="en-label reveal">06 / Contact</p>
+        <p class="en-label reveal">07 / Contact</p>
         <h2 class="contact__heading en-display reveal" style="--reveal-delay: 0.1s">
           Let's talk.
         </h2>
         <p class="contact__lead reveal" style="--reveal-delay: 0.2s">
           「何から手をつければいいか分からない」という段階からで構いません。
           いまの業務の流れを伺いながら、変えるべき場所と順番を一緒に整理します。
-          無理な提案・営業は行いません。
         </p>
-        <p class="contact__note reveal" style="--reveal-delay: 0.3s">
-          初回相談無料 / オンライン対応 / 通常1営業日以内にご返信
-        </p>
+        <ul class="contact__points reveal" style="--reveal-delay: 0.3s">
+          <li>小さな業務改善から相談できます</li>
+          <li>IT担当者がいない企業もご相談ください</li>
+          <li>オンラインを基本に、必要に応じて対面でのご相談も可能です</li>
+          <li>ツールありきの提案は行いません</li>
+          <li>初回相談は無料です</li>
+        </ul>
       </div>
 
       <form
@@ -103,11 +106,22 @@ import { SITE } from "../config";
     max-width: 440px;
   }
 
-  .contact__note {
-    margin-top: 28px;
-    font-size: 12.5px;
-    letter-spacing: 0.12em;
-    color: var(--c-gold);
+  .contact__points {
+    margin-top: 40px;
+    list-style: none;
+    max-width: 440px;
+  }
+
+  .contact__points li {
+    padding-block: 14px;
+    border-top: 1px solid var(--line);
+    font-size: 13.5px;
+    letter-spacing: 0.08em;
+    color: var(--c-ink);
+  }
+
+  .contact__points li:last-child {
+    border-bottom: 1px solid var(--line);
   }
 
   /* --- フォーム --- */

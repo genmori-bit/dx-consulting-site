@@ -1,0 +1,269 @@
+---
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import PageIntro from "../components/PageIntro.astro";
+import Footer from "../components/Footer.astro";
+
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+
+const situations = [
+  "IT担当者がいない、または他の業務と兼任している",
+  "Excel・紙・口頭のやり取りが混在している",
+  "業務のやり方が、特定の人の頭の中にしかない",
+  "以前ツールを入れたが、いつのまにか使われなくなった",
+  "月末の集計や報告のために、毎回時間を取られている",
+];
+
+const approach = [
+  {
+    num: "01",
+    title: "1つの業務から始める",
+    body: "会社全体を一度に変える必要はありません。見積、請求、営業会議など、詰まりが目立つ1つの業務から着手します。",
+  },
+  {
+    num: "02",
+    title: "今あるものを活かす",
+    body: "使い慣れたExcelや既存のツールを前提に設計します。新しいシステムは、必要になったときに必要な分だけ入れます。",
+  },
+  {
+    num: "03",
+    title: "使われるまで見届ける",
+    body: "作って終わりにしません。運用ルールと教育まで含めて、現場が自分たちで回せる状態を確認してから手を離します。",
+  },
+];
+---
+
+<Base
+  title="地域企業のDX支援 | Re:Design Partners"
+  description="人手が限られた地域企業・中小企業向けに、小さく始めて現場に残る業務改善・デジタル活用を設計します。IT担当者がいない企業もご相談いただけます。"
+>
+  <Header />
+  <main>
+    <PageIntro
+      label="For Local Business"
+      titleEn="For Local Business"
+      titleJa="地域企業に、ちょうどいいDXを。"
+    />
+
+    <!-- 本文 -->
+    <section class="section intro">
+      <div class="container">
+        <div class="intro__body reveal">
+          <p>
+            デジタル化は、大きなシステムを入れることだけではありません。
+            人手が限られ、業務が属人化しやすい会社にこそ、
+            仕事の流れを整え、少ない人数でも回る仕組みが必要です。
+          </p>
+          <p>
+            私たちは、営業・管理部門・経営判断の流れを整理し、
+            今ある業務に合ったデジタル活用を設計します。
+          </p>
+          <p>
+            無理に大きく変えるのではなく、
+            現場で使われ、会社に残る仕組みを一つずつつくっていきます。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- よくある状況 -->
+    <section class="section situations">
+      <div class="container">
+        <p class="en-label reveal">Situations</p>
+        <h2 class="heading-ja situations__heading reveal" style="--reveal-delay: 0.1s">
+          こんな状況から、ご相談いただいています
+        </h2>
+
+        <ul class="situations__list">
+          {
+            situations.map((item, i) => (
+              <li class="situations__row reveal">
+                <span class="situations__num">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <p>{item}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <!-- 進め方 -->
+    <section class="section approach">
+      <div class="container">
+        <p class="en-label approach__label reveal">Approach</p>
+        <h2 class="heading-ja approach__heading reveal" style="--reveal-delay: 0.1s">
+          小さく始めて、確実に残す
+        </h2>
+
+        <div class="approach__grid">
+          {
+            approach.map((item) => (
+              <article class="approach__item reveal">
+                <span class="approach__num">{item.num}</span>
+                <h3 class="approach__title">{item.title}</h3>
+                <p class="approach__body">{item.body}</p>
+              </article>
+            ))
+          }
+        </div>
+
+        <div class="approach__cta reveal">
+          <a href={`${base}#contact`} class="approach__btn">
+            地域企業のDXを相談する
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  /* --- 本文 --- */
+  .intro {
+    background: var(--c-black);
+    border-top: 1px solid var(--line);
+    padding-block: clamp(80px, 10vw, 128px);
+  }
+
+  .intro__body {
+    max-width: 680px;
+  }
+
+  .intro__body p {
+    font-size: clamp(15px, 1.8vw, 17px);
+    line-height: 2.5;
+    letter-spacing: 0.08em;
+  }
+
+  .intro__body p + p {
+    margin-top: 2em;
+  }
+
+  /* --- よくある状況 --- */
+  .situations {
+    background: var(--c-charcoal);
+    border-block: 1px solid var(--line);
+  }
+
+  .situations__heading {
+    margin-top: 36px;
+  }
+
+  .situations__list {
+    margin-top: 88px;
+    list-style: none;
+    max-width: 840px;
+  }
+
+  .situations__row {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: clamp(20px, 3vw, 48px);
+    align-items: baseline;
+    padding-block: 28px;
+    border-top: 1px solid var(--line);
+  }
+
+  .situations__row:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .situations__num {
+    font-family: var(--font-en);
+    font-weight: 200;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: var(--c-gold);
+  }
+
+  .situations__row p {
+    font-size: 15px;
+    letter-spacing: 0.08em;
+  }
+
+  /* --- 進め方(オフホワイト反転) --- */
+  .approach {
+    background: var(--c-paper);
+    color: var(--c-ink-dark);
+  }
+
+  .approach__label {
+    color: #a8863f;
+  }
+
+  .approach__label::before {
+    background: #a8863f;
+  }
+
+  .approach__heading {
+    margin-top: 36px;
+  }
+
+  .approach__grid {
+    margin-top: 88px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(32px, 4vw, 64px);
+  }
+
+  .approach__item {
+    border-top: 1px solid var(--line-dark);
+    padding-top: 32px;
+  }
+
+  .approach__num {
+    font-family: var(--font-en);
+    font-weight: 200;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: #a8863f;
+  }
+
+  .approach__title {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+  }
+
+  .approach__body {
+    margin-top: 16px;
+    font-size: 14px;
+    line-height: 2.3;
+    color: var(--c-muted-dark);
+  }
+
+  .approach__cta {
+    margin-top: clamp(80px, 10vw, 120px);
+  }
+
+  .approach__btn {
+    display: inline-block;
+    padding: 17px 56px;
+    border: 1px solid #a8863f;
+    color: #7c6023;
+    font-size: 14px;
+    letter-spacing: 0.14em;
+    transition: background-color 0.35s ease, color 0.35s ease;
+  }
+
+  .approach__btn:hover {
+    background: #a8863f;
+    color: var(--c-paper);
+  }
+
+  @media (max-width: 840px) {
+    .approach__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .situations__row {
+      grid-template-columns: 48px 1fr;
+    }
+  }
+</style>

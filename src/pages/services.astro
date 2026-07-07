@@ -1,0 +1,72 @@
+---
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import PageIntro from "../components/PageIntro.astro";
+import Domains from "../components/Domains.astro";
+import Implementation from "../components/Implementation.astro";
+import Process from "../components/Process.astro";
+import Footer from "../components/Footer.astro";
+
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+---
+
+<Base
+  title="支援内容 | Re:Design Partners"
+  description="顧客接点、社内業務、経営判断の3つの領域で会社の仕事の流れを整えます。業務設計、データ設計、システム設計、自動化・AI活用、定着支援まで一貫して支援します。"
+>
+  <Header />
+  <main>
+    <PageIntro
+      label="Services"
+      titleEn="Services"
+      titleJa="支援内容"
+      lead="3つの支援領域と、5つの実装。何をどこまでやるかを、ここでご説明します。"
+    />
+
+    <Domains label="01 / Domains" />
+    <Implementation label="02 / Implementation" />
+    <Process label="03 / Process" />
+
+    <!-- CTA -->
+    <section class="section services-cta">
+      <div class="container">
+        <h2 class="heading-ja reveal">
+          どの領域から始めるか、<br />一緒に整理するところからで構いません。
+        </h2>
+        <div class="services-cta__actions reveal" style="--reveal-delay: 0.15s">
+          <a href={`${base}#contact`} class="services-cta__btn">相談する</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .services-cta {
+    background: var(--c-charcoal);
+    border-top: 1px solid var(--line);
+    text-align: center;
+  }
+
+  .services-cta__actions {
+    margin-top: 64px;
+  }
+
+  .services-cta__btn {
+    display: inline-block;
+    padding: 17px 64px;
+    border: 1px solid var(--c-gold-dim);
+    color: var(--c-gold);
+    font-size: 14px;
+    letter-spacing: 0.14em;
+    transition: background-color 0.35s ease, color 0.35s ease;
+  }
+
+  .services-cta__btn:hover {
+    background: var(--c-gold);
+    color: var(--c-black);
+  }
+</style>

@@ -1,0 +1,379 @@
+---
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import PageIntro from "../components/PageIntro.astro";
+import Footer from "../components/Footer.astro";
+import { SITE } from "../config";
+
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+
+const principles = [
+  {
+    num: "01",
+    title: "ツールから考えない。",
+    en: "Work first, tools second.",
+    body: "まず、仕事の流れを観察する。その上で、必要なデジタルだけを入れる。",
+  },
+  {
+    num: "02",
+    title: "小さく作り、早く試す。",
+    en: "Small build, fast proof.",
+    body: "大きな構想で止めない。小さく作り、数字を見ながら改善する。",
+  },
+  {
+    num: "03",
+    title: "仕組みを、会社に残す。",
+    en: "Leave the system behind.",
+    body: "外部の支援がなくても回る状態を目指す。ルール、権限、入力、確認、改善のリズムまで設計する。",
+  },
+];
+
+const overview = [
+  { key: "会社名", value: SITE.brandJa },
+  { key: "英文名", value: "Re:Design Partners" },
+  { key: "代表者", value: SITE.representative },
+  {
+    key: "事業内容",
+    value:
+      "DX構想・業務設計、営業・顧客管理改善、バックオフィス改善、AI活用支援、データ可視化、運用定着支援",
+  },
+  { key: "対応形式", value: "オンライン / 必要に応じて対面相談" },
+  { key: "対応企業", value: "地域企業、中小企業、成長企業" },
+  { key: "設立", value: "2026年" },
+  { key: "お問い合わせ", value: "フォームより受付" },
+];
+---
+
+<Base
+  title="会社概要 | Re:Design Partners"
+  description="株式会社リデザインパートナーズの会社概要。私たちの考え方、代表プロフィール、事業内容、対応形式をご紹介します。"
+>
+  <Header />
+  <main>
+    <PageIntro
+      label="Company"
+      titleEn="Company"
+      titleJa="会社概要"
+      lead="私たちは、業務とデータの流れを整え、事業が動く仕組みをつくる会社です。"
+    />
+
+    <!-- Mission -->
+    <section class="section mission">
+      <div class="container">
+        <p class="en-label reveal">Mission</p>
+        <p class="mission__statement reveal" style="--reveal-delay: 0.15s">
+          事業が動く仕組みを、設計する。
+        </p>
+        <p class="mission__body reveal" style="--reveal-delay: 0.25s">
+          私たちは、ツールを売る会社ではありません。
+          営業、管理部門、経営判断——会社の中で分断されがちな仕事とデータの流れを整え、
+          デジタルが現場で自然に使われる状態をつくることを仕事にしています。
+        </p>
+      </div>
+    </section>
+
+    <!-- 考え方 -->
+    <section class="section principles">
+      <div class="container">
+        <p class="en-label principles__label reveal">Principles</p>
+        <h2 class="heading-ja principles__heading reveal" style="--reveal-delay: 0.1s">
+          私たちの考え方
+        </h2>
+
+        <ol class="principles__list">
+          {
+            principles.map((principle) => (
+              <li class="principles__row reveal">
+                <span class="principles__num">{principle.num}</span>
+                <div>
+                  <h3 class="principles__title">{principle.title}</h3>
+                  <span class="principles__en">{principle.en}</span>
+                </div>
+                <p class="principles__body">{principle.body}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <!-- 代表プロフィール -->
+    <section class="section profile">
+      <div class="container">
+        <p class="en-label reveal">Profile</p>
+        <h2 class="heading-ja profile__heading reveal" style="--reveal-delay: 0.1s">
+          代表プロフィール
+        </h2>
+
+        <div class="profile__inner reveal" style="--reveal-delay: 0.2s">
+          <div class="profile__name-block">
+            <span class="profile__role">代表</span>
+            <span class="profile__name">{SITE.representative}</span>
+            <span class="profile__name-en">Genki Mouri</span>
+          </div>
+          <div class="profile__body">
+            <p>
+              外資系IT企業で法人営業として、CRM/SFAをはじめとする業務システムの導入・活用支援に携わる。
+              導入したものの現場で使われないシステム、数字が集まらないままの経営会議——
+              その原因の多くがツールではなく仕事の流れの設計にあることを、現場で繰り返し見てきました。
+            </p>
+            <p>
+              この経験をもとに、業務とデータの流れを整えることから始める実装型の支援を行うため、
+              Re:Design Partnersを設立。地域で事業を続ける会社が、無理のない形でデジタルを使い、
+              事業を前に進めていけるよう支援しています。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 会社概要テーブル -->
+    <section class="section overview">
+      <div class="container">
+        <p class="en-label overview__label reveal">Overview</p>
+        <h2 class="heading-ja overview__heading reveal" style="--reveal-delay: 0.1s">
+          会社概要
+        </h2>
+
+        <dl class="overview__table reveal" style="--reveal-delay: 0.2s">
+          {
+            overview.map((row) => (
+              <div class="overview__row">
+                <dt>{row.key}</dt>
+                <dd>{row.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+
+        <div class="overview__cta reveal">
+          <a href={`${base}#contact`} class="overview__btn">相談する</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  /* --- Mission --- */
+  .mission {
+    background: var(--c-black);
+    border-top: 1px solid var(--line);
+  }
+
+  .mission__statement {
+    margin-top: 48px;
+    font-size: clamp(26px, 4vw, 44px);
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    line-height: 1.8;
+  }
+
+  .mission__body {
+    margin-top: 40px;
+    max-width: 640px;
+    font-size: 14.5px;
+    line-height: 2.4;
+    color: var(--c-muted);
+  }
+
+  /* --- 考え方(オフホワイト反転) --- */
+  .principles {
+    background: var(--c-paper);
+    color: var(--c-ink-dark);
+  }
+
+  .principles__label {
+    color: #a8863f;
+  }
+
+  .principles__label::before {
+    background: #a8863f;
+  }
+
+  .principles__heading {
+    margin-top: 36px;
+  }
+
+  .principles__list {
+    margin-top: 88px;
+    list-style: none;
+  }
+
+  .principles__row {
+    display: grid;
+    grid-template-columns: 90px 1.1fr 1fr;
+    gap: clamp(20px, 3vw, 56px);
+    align-items: baseline;
+    padding-block: clamp(44px, 6vw, 72px);
+    border-top: 1px solid var(--line-dark);
+  }
+
+  .principles__row:last-child {
+    border-bottom: 1px solid var(--line-dark);
+  }
+
+  .principles__num {
+    font-family: var(--font-en);
+    font-weight: 200;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: #a8863f;
+  }
+
+  .principles__title {
+    font-size: clamp(20px, 2.6vw, 28px);
+    font-weight: 400;
+    letter-spacing: 0.1em;
+  }
+
+  .principles__en {
+    display: block;
+    margin-top: 12px;
+    font-family: var(--font-en);
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--c-muted-dark);
+  }
+
+  .principles__body {
+    font-size: 14.5px;
+    line-height: 2.3;
+    color: var(--c-muted-dark);
+  }
+
+  /* --- 代表プロフィール --- */
+  .profile {
+    background: var(--c-charcoal);
+    border-block: 1px solid var(--line);
+  }
+
+  .profile__heading {
+    margin-top: 36px;
+  }
+
+  .profile__inner {
+    margin-top: 88px;
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: clamp(40px, 6vw, 112px);
+    align-items: start;
+  }
+
+  .profile__name-block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-top: 1px solid var(--c-gold-dim);
+    padding-top: 28px;
+  }
+
+  .profile__role {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--c-muted);
+  }
+
+  .profile__name {
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 500;
+    letter-spacing: 0.16em;
+  }
+
+  .profile__name-en {
+    font-family: var(--font-en);
+    font-weight: 300;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: var(--c-muted);
+  }
+
+  .profile__body p {
+    font-size: 14.5px;
+    line-height: 2.4;
+    color: var(--c-muted);
+  }
+
+  .profile__body p + p {
+    margin-top: 1.8em;
+  }
+
+  /* --- 会社概要テーブル --- */
+  .overview {
+    background: var(--c-black);
+  }
+
+  .overview__heading {
+    margin-top: 36px;
+  }
+
+  .overview__table {
+    margin-top: 88px;
+    max-width: 840px;
+  }
+
+  .overview__row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: clamp(20px, 3vw, 48px);
+    padding-block: 26px;
+    border-top: 1px solid var(--line);
+  }
+
+  .overview__row:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .overview__row dt {
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    color: var(--c-muted);
+  }
+
+  .overview__row dd {
+    font-size: 14.5px;
+    line-height: 2.1;
+    letter-spacing: 0.06em;
+  }
+
+  .overview__cta {
+    margin-top: 88px;
+  }
+
+  .overview__btn {
+    display: inline-block;
+    padding: 16px 56px;
+    border: 1px solid var(--c-gold-dim);
+    color: var(--c-gold);
+    font-size: 14px;
+    letter-spacing: 0.14em;
+    transition: background-color 0.35s ease, color 0.35s ease;
+  }
+
+  .overview__btn:hover {
+    background: var(--c-gold);
+    color: var(--c-black);
+  }
+
+  @media (max-width: 840px) {
+    .principles__row,
+    .profile__inner,
+    .overview__row {
+      grid-template-columns: 1fr;
+    }
+
+    .principles__row {
+      gap: 16px;
+    }
+
+    .overview__row {
+      gap: 8px;
+      padding-block: 20px;
+    }
+  }
+</style>

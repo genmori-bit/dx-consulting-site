@@ -34,7 +34,12 @@ npm run preview  # ビルド結果の確認
 src/
   config.ts            # 社名・連絡先などの設定値(ここだけ変えれば全体に反映)
   layouts/Base.astro   # <head>(SEO / OGP / 構造化データ / フォント)+ フェードインscript
-  pages/index.astro    # セクションの並び
+  pages/
+    index.astro          # トップページ
+    services.astro       # 支援内容
+    local-business.astro # 地域企業向けDX支援
+    company.astro        # 会社概要・代表プロフィール
+    privacy.astro        # プライバシーポリシー
   components/          # セクション単位のコンポーネント(コピーは各ファイル冒頭のfrontmatterに集約)
   styles/global.css    # デザイントークン(色・フォント・余白)と共通ユーティリティ
 public/

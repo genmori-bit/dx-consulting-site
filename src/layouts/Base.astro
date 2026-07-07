@@ -2,6 +2,13 @@
 import { SITE } from "../config";
 import "../styles/global.css";
 
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = SITE.title, description = SITE.description } = Astro.props;
+
 // base(サブパス)配信でもアセットURLが正しくなるよう BASE_URL を基準にする
 const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
@@ -16,16 +23,16 @@ const favicon = `${base}favicon.svg`;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{SITE.title}</title>
-    <meta name="description" content={SITE.description} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href={favicon} />
 
     <!-- OGP -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE.brandEn} />
-    <meta property="og:title" content={SITE.title} />
-    <meta property="og:description" content={SITE.description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:locale" content="ja_JP" />

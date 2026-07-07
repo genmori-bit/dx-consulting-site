@@ -1,0 +1,55 @@
+---
+/**
+ * 下層ページ共通の導入部。英字ラベル+大型英字タイトル+日本語見出し。
+ */
+interface Props {
+  label: string;
+  titleEn: string;
+  titleJa: string;
+  lead?: string;
+}
+
+const { label, titleEn, titleJa, lead } = Astro.props;
+---
+
+<section class="pageintro">
+  <div class="container">
+    <p class="en-label reveal">{label}</p>
+    <h1 class="pageintro__en en-display reveal" style="--reveal-delay: 0.15s">
+      {titleEn}
+    </h1>
+    <p class="pageintro__ja reveal" style="--reveal-delay: 0.3s">{titleJa}</p>
+    {
+      lead && (
+        <p class="lead pageintro__lead reveal" style="--reveal-delay: 0.4s">
+          {lead}
+        </p>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .pageintro {
+    background: var(--c-black);
+    padding-top: clamp(160px, 22vw, 240px);
+    padding-bottom: clamp(80px, 10vw, 128px);
+  }
+
+  .pageintro__en {
+    margin-top: 40px;
+    font-size: clamp(48px, 9vw, 128px);
+    font-weight: 200;
+  }
+
+  .pageintro__ja {
+    margin-top: 32px;
+    font-size: clamp(16px, 2vw, 20px);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+  }
+
+  .pageintro__lead {
+    margin-top: 24px;
+  }
+</style>
