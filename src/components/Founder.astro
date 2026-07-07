@@ -1,6 +1,10 @@
 ---
 import { SITE } from "../config";
 
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+
 const career = [
   {
     tag: "HR Tech",
@@ -33,14 +37,15 @@ const career = [
     </h2>
 
     <div class="founder__intro">
-      <!--
-        代表写真の差し替え:下の .founder__photo-inner を
-        <img src="..." alt="代表 毛利元樹" /> に置き換えてください。
-      -->
       <figure class="founder__photo reveal" style="--reveal-delay: 0.2s">
-        <div class="founder__photo-inner">
-          <span>Photo</span>
-        </div>
+        <img
+          class="founder__photo-img"
+          src={`${base}founder.jpg`}
+          alt={`代表 ${SITE.representative}`}
+          width="800"
+          height="1200"
+          loading="lazy"
+        />
       </figure>
 
       <div class="founder__text">
@@ -122,21 +127,14 @@ const career = [
     }
   }
 
-  .founder__photo-inner {
+  .founder__photo-img {
+    width: 100%;
     aspect-ratio: 3 / 3.6;
-    background: #eeebe1;
+    object-fit: cover;
+    /* 顔が中心に来るよう上寄せでトリミング */
+    object-position: 50% 18%;
     border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .founder__photo-inner span {
-    font-family: var(--font-en);
-    font-size: 11px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--c-sub);
+    display: block;
   }
 
   .founder__name {
