@@ -112,22 +112,24 @@ const issues = [
     transform: none;
   }
 
+  /* 詰まりポイント(オレンジ) */
   .issues__node {
     position: absolute;
     top: 0;
     left: 0;
-    width: 7px;
-    height: 7px;
-    border: 1px solid var(--c-gold);
-    background: var(--c-charcoal);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--c-orange);
+    background: rgba(240, 138, 75, 0.25);
   }
 
   .issues__num {
     font-family: var(--font-en);
-    font-weight: 200;
+    font-weight: 300;
     font-size: 13px;
     letter-spacing: 0.2em;
-    color: var(--c-gold);
+    color: var(--c-orange);
   }
 
   .issues__en {

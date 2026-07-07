@@ -48,8 +48,13 @@ public/
 
 ## デザイン方針
 
-- 黒(#0b0b0c)/ チャコール / オフホワイト基調、シャンパンゴールド(#c8a96a)を控えめなアクセントに
+- White Editorial × Playful Operations × Practical Trust
+- 温かいオフホワイト(#F7F5EF)基調、墨色(#1E1E1A)の文字、薄いベージュの罫線(#DDD8CC)
+- アクセント:ブルー(#4C7DFF)を主に、オレンジ(詰まり)・グリーン(チェック)・イエロー(付箋)を限定的に
 - 大きな英字タイポグラフィ(Inter Tight)+ 読みやすい日本語(Noto Sans JP)
-- 細い罫線・広い余白・角丸なしのカードUI
-- 画像素材なし(抽象的なグリッド・データラインはCSS/SVGで描画)— 表示速度優先
-- スクロール時のフェードインは IntersectionObserver + CSS transition(prefers-reduced-motion 対応)
+- 紙面・付箋・チェックリスト・方眼紙のモチーフ、やわらかい角丸
+- 画像素材なし(モチーフはCSS/SVGで描画)— 表示速度優先
+- 動きは CSS + IntersectionObserver 中心(prefers-reduced-motion 対応)
+
+※ `global.css` の旧テーマ変数(--c-black 等)は新トークンへのエイリアスとして残しています。
+色の変更は `:root` の新トークン(--c-base / --c-text / --c-blue 等)を編集してください。

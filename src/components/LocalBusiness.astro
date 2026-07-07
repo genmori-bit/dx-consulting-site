@@ -2,11 +2,17 @@
 const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
+
+const points = [
+  "IT担当者がいなくても、進められます",
+  "1つの業務、1つの会議からでも始められます",
+  "今お使いのExcelやツールを活かして設計します",
+];
 ---
 
 <section class="section local" id="local-business">
   <div class="container">
-    <p class="en-label local__label reveal">04 / For Local Business</p>
+    <p class="en-label reveal">03 / For Local Business</p>
 
     <h2 class="heading-ja local__heading reveal" style="--reveal-delay: 0.1s">
       地域企業に、ちょうどいいDXを。
@@ -20,6 +26,10 @@ const base = import.meta.env.BASE_URL.endsWith("/")
           仕事の流れを整え、少ない人数でも回る仕組みが必要です。
         </p>
         <p>
+          大きなシステムを入れる前に、
+          まずは、今の仕事の流れを一緒に見直すところから。
+        </p>
+        <p>
           私たちは、営業・管理部門・経営判断の流れを整理し、
           今ある業務に合ったデジタル活用を設計します。
         </p>
@@ -29,13 +39,22 @@ const base = import.meta.env.BASE_URL.endsWith("/")
         </p>
       </div>
 
-      <div class="local__aside reveal" style="--reveal-delay: 0.3s">
+      <div class="local__aside">
+        <!-- 付箋の安心材料 -->
         <ul class="local__points">
-          <li class="reveal" style="--reveal-delay: 0.35s">IT担当者がいなくても、進められます</li>
-          <li class="reveal" style="--reveal-delay: 0.43s">1つの業務、1つの会議からでも始められます</li>
-          <li class="reveal" style="--reveal-delay: 0.51s">今お使いのExcelやツールを活かして設計します</li>
+          {
+            points.map((point, i) => (
+              <li
+                class="local__note reveal"
+                style={`--reveal-delay: ${0.3 + i * 0.12}s; --r: ${i % 2 === 0 ? -1.2 : 1.1}deg`}
+              >
+                {point}
+              </li>
+            ))
+          }
         </ul>
-        <div class="local__actions">
+
+        <div class="local__actions reveal" style="--reveal-delay: 0.6s">
           <a href={`${base}#contact`} class="local__cta cta-flow"
             >地域企業のDXを相談する<span class="cta-arrow" aria-hidden="true">→</span></a
           >
@@ -47,18 +66,8 @@ const base = import.meta.env.BASE_URL.endsWith("/")
 </section>
 
 <style>
-  /* オフホワイトの反転セクション */
   .local {
-    background: var(--c-paper);
-    color: var(--c-ink-dark);
-  }
-
-  .local__label {
-    color: #a8863f;
-  }
-
-  .local__label::before {
-    background: #a8863f;
+    background: var(--c-white);
   }
 
   .local__heading {
@@ -76,26 +85,39 @@ const base = import.meta.env.BASE_URL.endsWith("/")
   .local__body p {
     font-size: 15px;
     line-height: 2.4;
-    color: var(--c-muted-dark);
+    color: var(--c-sub);
   }
 
   .local__body p + p {
     margin-top: 1.8em;
   }
 
+  /* --- 付箋 --- */
   .local__points {
     list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
   }
 
-  .local__points li {
-    padding-block: 18px;
-    border-top: 1px solid var(--line-dark);
-    font-size: 14px;
+  .local__note {
+    background: rgba(244, 208, 111, 0.3);
+    border: 1px solid rgba(212, 172, 74, 0.35);
+    border-radius: 6px;
+    box-shadow: 0 8px 20px rgba(30, 30, 26, 0.06);
+    rotate: var(--r, 0deg);
+    padding: 18px 22px;
+    font-size: 13.5px;
     letter-spacing: 0.08em;
+    color: #6b5820;
+    transition-property: opacity, transform, translate, rotate;
   }
 
-  .local__points li:last-child {
-    border-bottom: 1px solid var(--line-dark);
+  @media (hover: hover) {
+    .local__note:hover {
+      translate: 0 -3px;
+      rotate: 0deg;
+    }
   }
 
   .local__actions {
@@ -109,31 +131,35 @@ const base = import.meta.env.BASE_URL.endsWith("/")
     display: block;
     text-align: center;
     padding: 17px 24px;
-    border: 1px solid #a8863f;
-    color: #7c6023;
+    border: 1px solid var(--c-text);
+    border-radius: 10px;
+    color: var(--c-text);
+    background: transparent;
     font-size: 14px;
     letter-spacing: 0.14em;
-    transition: background-color 0.35s ease, color 0.35s ease;
+    transition: background-color 0.35s ease, color 0.35s ease,
+      translate 0.35s ease;
   }
 
   .local__cta:hover {
-    background: #a8863f;
-    color: var(--c-paper);
+    background: var(--c-text);
+    color: var(--c-base);
+    translate: 0 -2px;
   }
 
   .local__more {
     align-self: center;
     font-size: 13px;
     letter-spacing: 0.14em;
-    color: var(--c-muted-dark);
-    border-bottom: 1px solid var(--line-dark);
+    color: var(--c-sub);
+    border-bottom: 1px solid var(--c-hairline);
     padding-bottom: 4px;
     transition: color 0.3s ease, border-color 0.3s ease;
   }
 
   .local__more:hover {
-    color: var(--c-ink-dark);
-    border-color: var(--c-ink-dark);
+    color: var(--c-text);
+    border-color: var(--c-text);
   }
 
   @media (max-width: 840px) {

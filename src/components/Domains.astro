@@ -10,6 +10,7 @@ const domains = [
     num: "01",
     en: "Front Office",
     ja: "顧客接点を整える",
+    tone: "blue",
     body: [
       "営業、顧客管理、案件管理、問い合わせ、見積、受注、営業会議を整理します。",
       "CRM/SFAを必要に応じて活用し、営業活動が見える状態をつくります。",
@@ -19,6 +20,7 @@ const domains = [
     num: "02",
     en: "Back Office",
     ja: "社内業務を整える",
+    tone: "green",
     body: [
       "経理、人事、総務、契約、請求、勤怠、経費、申請・承認などを整理します。",
       "手作業、二重入力、属人化を減らし、少ない人数でも回る業務フローをつくります。",
@@ -28,6 +30,7 @@ const domains = [
     num: "03",
     en: "Management",
     ja: "経営判断を整える",
+    tone: "orange",
     body: [
       "売上、粗利、案件状況、工数、請求、入金、KPIなどを整理します。",
       "経営判断に必要な数字が自然に集まる状態をつくります。",
@@ -40,78 +43,42 @@ const domains = [
   <div class="container">
     <p class="en-label reveal">{label}</p>
     <h2 class="heading-ja domains__heading reveal" style="--reveal-delay: 0.1s">
-      支援領域
+      整えるのは、会社の3つの流れ。
     </h2>
     <p class="lead domains__lead reveal" style="--reveal-delay: 0.2s">
       顧客接点、社内業務、経営判断。3つの領域で、会社の仕事の流れを整えます。
     </p>
 
-    <div class="domains__stage" data-domains-stage>
-      <!-- 左:固定される大型英字(現在の領域が明るくなる) -->
-      <div class="domains__stick" aria-hidden="true">
-        <ol class="domains__stick-list">
-          {
-            domains.map((domain, i) => (
-              <li class:list={["domains__stick-item", { "is-active": i === 0 }]} data-stick-item>
-                <span class="domains__stick-num">{domain.num}</span>
-                <span class="domains__stick-en en-display">{domain.en}</span>
-              </li>
-            ))
-          }
-        </ol>
-      </div>
-
-      <!-- 右:スクロールで流れる本文 -->
-      <div class="domains__flow">
-        {
-          domains.map((domain, i) => (
-            <article class="domains__block reveal" data-domain-block data-index={i}>
-              <p class="domains__mobile-en">
-                {domain.num} — {domain.en}
-              </p>
-              <h3 class="domains__ja">{domain.ja}</h3>
-              <div class="domains__body">
-                {domain.body.map((paragraph) => (
-                  <p>{paragraph}</p>
-                ))}
-              </div>
-            </article>
-          ))
-        }
-      </div>
+    <!-- 3枚の紙面が少し重なる -->
+    <div class="domains__stack">
+      {
+        domains.map((domain, i) => (
+          <article
+            class:list={["domains__paper", `domains__paper--${domain.tone}`, "reveal"]}
+            style={`--reveal-delay: ${i * 0.12}s`}
+          >
+            <span class="domains__tab" aria-hidden="true" />
+            <div class="domains__meta">
+              <span class="domains__num">{domain.num}</span>
+              <span class="domains__en">{domain.en}</span>
+            </div>
+            <h3 class="domains__ja">{domain.ja}</h3>
+            <div class="domains__body">
+              {domain.body.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+            </div>
+            <span class="domains__rule" aria-hidden="true" />
+          </article>
+        ))
+      }
     </div>
   </div>
 </section>
 
-<script>
-  // 右側のブロックが画面中央帯に入ったら、左の英字を切り替える(スクロールジャックなし)
-  const stages = document.querySelectorAll<HTMLElement>("[data-domains-stage]");
-
-  stages.forEach((stage) => {
-    const stickItems = stage.querySelectorAll<HTMLElement>("[data-stick-item]");
-    const blocks = stage.querySelectorAll<HTMLElement>("[data-domain-block]");
-    if (!stickItems.length || !blocks.length) return;
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          const index = Number((entry.target as HTMLElement).dataset.index);
-          stickItems.forEach((item, i) =>
-            item.classList.toggle("is-active", i === index)
-          );
-        }
-      },
-      { rootMargin: "-40% 0px -50% 0px" }
-    );
-
-    blocks.forEach((block) => io.observe(block));
-  });
-</script>
-
 <style>
   .domains {
-    background: var(--c-black);
+    background: var(--c-base);
   }
 
   .domains__heading {
@@ -122,113 +89,167 @@ const domains = [
     margin-top: 32px;
   }
 
-  .domains__stage {
-    margin-top: 112px;
-    display: grid;
-    grid-template-columns: 1fr 1.05fr;
-    gap: clamp(48px, 6vw, 112px);
-    align-items: start;
+  /* --- 重なる紙面 --- */
+  .domains__stack {
+    margin-top: 104px;
+    display: flex;
+    flex-direction: column;
   }
 
-  /* --- 左:スティッキーな大型英字 --- */
-  .domains__stick {
-    position: sticky;
-    top: 24vh;
+  .domains__paper {
+    position: relative;
+    width: min(100%, 860px);
+    background: var(--c-white);
+    border: 1px solid var(--c-hairline);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-paper);
+    padding: clamp(32px, 5vw, 64px);
+    transition-property: opacity, transform, translate, rotate, box-shadow;
   }
 
-  .domains__stick-list {
-    list-style: none;
+  .domains__paper:nth-child(1) {
+    align-self: flex-start;
+    rotate: -0.6deg;
+    z-index: 1;
   }
 
-  .domains__stick-item {
-    padding-block: 26px;
-    border-top: 1px solid var(--line);
-    opacity: 0.16;
-    transition: opacity 0.7s ease;
+  .domains__paper:nth-child(2) {
+    align-self: center;
+    margin-top: -44px;
+    rotate: 0.5deg;
+    z-index: 2;
   }
 
-  .domains__stick-item:last-child {
-    border-bottom: 1px solid var(--line);
+  .domains__paper:nth-child(3) {
+    align-self: flex-end;
+    margin-top: -44px;
+    rotate: -0.4deg;
+    z-index: 3;
   }
 
-  .domains__stick-item.is-active {
-    opacity: 1;
+  /* ホバー:紙片が少し浮き、下の線が伸びる */
+  @media (hover: hover) {
+    .domains__paper {
+      transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 1.1s cubic-bezier(0.16, 1, 0.3, 1), translate 0.5s ease,
+        rotate 0.5s ease, box-shadow 0.5s ease;
+      transition-delay: var(--reveal-delay, 0s), var(--reveal-delay, 0s), 0s,
+        0s, 0s;
+    }
+
+    .domains__paper:hover {
+      translate: 0 -6px;
+      rotate: 0deg;
+      box-shadow: 0 22px 56px rgba(30, 30, 26, 0.1);
+      z-index: 4;
+    }
+
+    .domains__paper:hover .domains__rule {
+      transform: scaleX(1);
+    }
   }
 
-  .domains__stick-num {
+  /* 付箋タブ */
+  .domains__tab {
+    position: absolute;
+    top: -9px;
+    left: 36px;
+    width: 58px;
+    height: 18px;
+    border-radius: 5px;
+    rotate: -2deg;
+    opacity: 0.85;
+  }
+
+  .domains__paper--blue .domains__tab {
+    background: rgba(76, 125, 255, 0.28);
+  }
+
+  .domains__paper--green .domains__tab {
+    background: rgba(79, 166, 106, 0.3);
+  }
+
+  .domains__paper--orange .domains__tab {
+    background: rgba(240, 138, 75, 0.32);
+  }
+
+  .domains__meta {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+  }
+
+  .domains__num {
     font-family: var(--font-en);
-    font-weight: 200;
+    font-weight: 300;
     font-size: 13px;
     letter-spacing: 0.2em;
-    color: var(--c-gold);
   }
 
-  .domains__stick-en {
-    display: block;
-    margin-top: 8px;
-    font-size: clamp(34px, 4.2vw, 60px);
-    font-weight: 200;
-  }
+  .domains__paper--blue .domains__num { color: var(--c-blue); }
+  .domains__paper--green .domains__num { color: var(--c-green); }
+  .domains__paper--orange .domains__num { color: var(--c-orange); }
 
-  /* --- 右:本文 --- */
-  .domains__block {
-    padding-block: clamp(64px, 9vw, 120px);
-    border-top: 1px solid var(--line);
-  }
-
-  .domains__block:last-child {
-    border-bottom: 1px solid var(--line);
-  }
-
-  .domains__mobile-en {
-    display: none;
+  .domains__en {
+    font-family: var(--font-en);
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--c-sub);
   }
 
   .domains__ja {
-    font-size: clamp(24px, 3vw, 36px);
+    margin-top: 20px;
+    font-size: clamp(22px, 2.8vw, 32px);
     font-weight: 400;
     letter-spacing: 0.1em;
     line-height: 1.7;
   }
 
   .domains__body {
-    margin-top: 32px;
-    max-width: 460px;
+    margin-top: 24px;
+    max-width: 560px;
   }
 
   .domains__body p {
-    font-size: 14.5px;
-    line-height: 2.3;
-    color: var(--c-muted);
+    font-size: 14px;
+    line-height: 2.2;
+    color: var(--c-sub);
   }
 
   .domains__body p + p {
-    margin-top: 1.4em;
+    margin-top: 1.2em;
   }
 
-  /* --- スマホ:縦に流れる通常レイアウト --- */
-  @media (max-width: 960px) {
-    .domains__stage {
-      grid-template-columns: 1fr;
+  /* ホバーで伸びる細い線 */
+  .domains__rule {
+    position: absolute;
+    left: clamp(32px, 5vw, 64px);
+    right: clamp(32px, 5vw, 64px);
+    bottom: 24px;
+    height: 1px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .domains__paper--blue .domains__rule { background: var(--c-blue); }
+  .domains__paper--green .domains__rule { background: var(--c-green); }
+  .domains__paper--orange .domains__rule { background: var(--c-orange); }
+
+  @media (max-width: 840px) {
+    .domains__stack {
+      gap: 20px;
     }
 
-    .domains__stick {
-      display: none;
+    .domains__paper:nth-child(2),
+    .domains__paper:nth-child(3) {
+      margin-top: 0;
     }
 
-    .domains__mobile-en {
-      display: block;
-      font-family: var(--font-en);
-      font-weight: 400;
-      font-size: 12px;
-      letter-spacing: 0.26em;
-      text-transform: uppercase;
-      color: var(--c-muted);
-      margin-bottom: 20px;
-    }
-
-    .domains__block {
-      padding-block: clamp(48px, 8vw, 72px);
+    .domains__paper {
+      width: 100%;
     }
   }
 </style>

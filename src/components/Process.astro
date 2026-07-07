@@ -38,7 +38,7 @@ const steps = [
   <div class="container">
     <p class="en-label reveal">{label}</p>
     <h2 class="heading-ja process__heading reveal" style="--reveal-delay: 0.1s">
-      支援の流れ
+      小さく始めて、使われるまで。
     </h2>
     <p class="lead process__lead reveal" style="--reveal-delay: 0.2s">
       いきなり作りはじめません。現状の棚卸しから運用の定着まで、5つの段階で進めます。
@@ -106,7 +106,8 @@ const steps = [
 
 <style>
   .process {
-    background: var(--c-black);
+    background: var(--c-white);
+    border-block: 1px solid var(--line);
   }
 
   .process__heading {
@@ -161,8 +162,9 @@ const steps = [
     top: 5px;
     width: 7px;
     height: 7px;
-    border: 1px solid var(--c-gold);
-    background: var(--c-black);
+    border-radius: 50%;
+    border: 1px solid var(--c-blue);
+    background: var(--c-white);
   }
 
   .process__num {

@@ -42,7 +42,7 @@ const nav = [
   }
 
   .header.is-scrolled {
-    background: rgba(11, 11, 12, 0.82);
+    background: rgba(247, 245, 239, 0.85);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border-bottom-color: var(--line);
@@ -74,27 +74,29 @@ const nav = [
   .header__nav a {
     font-size: 13px;
     letter-spacing: 0.1em;
-    color: var(--c-muted);
+    color: var(--c-sub);
     transition: color 0.3s ease;
   }
 
   .header__nav a:hover {
-    color: var(--c-ink);
+    color: var(--c-text);
   }
 
   .header__cta {
     font-size: 13px;
     letter-spacing: 0.12em;
-    border: 1px solid var(--c-gold-dim);
-    color: var(--c-gold);
-    padding: 10px 22px;
+    border: 1px solid var(--c-text);
+    color: var(--c-text);
+    background: transparent;
+    border-radius: 999px;
+    padding: 10px 24px;
     white-space: nowrap;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   .header__cta:hover {
-    background: var(--c-gold);
-    color: var(--c-black);
+    background: var(--c-text);
+    color: var(--c-base);
   }
 
   @media (max-width: 900px) {

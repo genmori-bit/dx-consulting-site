@@ -79,8 +79,6 @@
     flex-direction: column;
     align-items: center;
     gap: 18px;
-    /* オフホワイトのセクション上でも読めるように反転合成 */
-    mix-blend-mode: difference;
     pointer-events: none;
   }
 
@@ -88,13 +86,13 @@
     position: relative;
     width: 1px;
     height: 170px;
-    background: rgba(238, 236, 230, 0.18);
+    background: var(--c-hairline);
   }
 
   .rail__fill {
     position: absolute;
     inset: 0;
-    background: rgba(238, 236, 230, 0.55);
+    background: var(--c-blue);
     transform: scaleY(0);
     transform-origin: top;
     will-change: transform;
@@ -107,7 +105,7 @@
     font-weight: 400;
     letter-spacing: 0.28em;
     text-transform: uppercase;
-    color: rgba(238, 236, 230, 0.6);
+    color: var(--c-sub);
     opacity: 0;
     transition: opacity 0.6s ease;
     min-height: 110px;

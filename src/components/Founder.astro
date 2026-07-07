@@ -1,0 +1,263 @@
+---
+import { SITE } from "../config";
+
+const career = [
+  {
+    tag: "HR Tech",
+    body: "大手人材会社の経営企画本部にて、HR Techサービスのインサイドセールス、フィールドセールス、プロダクト開発に従事。営業現場とプロダクトの両面から事業成長に携わる。",
+  },
+  {
+    tag: "SaaS ERP",
+    body: "クラウドサービス企業にて、SaaS型ERPサービスの営業企画、プロダクト企画、カスタマーエクスペリエンスを担当。SalesforceやMarketoを活用したマーケティング・営業プロセスの設計、機能改善、新規ビジネス開発、サポート体制の構築を推進。",
+  },
+  {
+    tag: "Service Leadership",
+    body: "ジョブカン経費精算/ワークフローのサービス責任者として、プロダクト、営業、顧客体験を横断して事業成長をリード。プロダクトの競争力強化と市場拡大に取り組む。",
+  },
+  {
+    tag: "CRM / DX Support",
+    body: "現在は外資系CRM企業にて、法人企業のCRM活用、営業改革、業務改善、DX推進を支援。",
+  },
+  {
+    tag: "Re:Design Partners",
+    body: "営業、マーケティング、プロダクト、CX、事業責任の経験を活かし、ツール導入で終わらない、現場に根づくデジタル活用を支援する。",
+  },
+];
+---
+
+<section class="section founder" id="founder">
+  <div class="container">
+    <p class="en-label reveal">06 / Founder</p>
+    <h2 class="heading-ja founder__heading reveal" style="--reveal-delay: 0.1s">
+      代表について
+    </h2>
+
+    <div class="founder__intro">
+      <!--
+        代表写真の差し替え:下の .founder__photo-inner を
+        <img src="..." alt="代表 毛利元樹" /> に置き換えてください。
+      -->
+      <figure class="founder__photo reveal" style="--reveal-delay: 0.2s">
+        <div class="founder__photo-inner">
+          <span>Photo</span>
+        </div>
+      </figure>
+
+      <div class="founder__text">
+        <p class="founder__name reveal" style="--reveal-delay: 0.25s">
+          <span class="founder__role">代表</span>
+          {SITE.representative}
+          <span class="founder__name-en">Genki Mouri</span>
+        </p>
+        <div class="founder__message reveal" style="--reveal-delay: 0.35s">
+          <p>
+            DXという言葉は、少し大きく聞こえます。
+            でも、実際に会社を変えるのは、もっと身近な仕事の流れだと考えています。
+          </p>
+          <p>
+            営業も、プロダクトも、顧客対応も。仕事の流れが変わる瞬間を、ずっと現場で見てきました。
+            だから、ツールを入れて終わりにはしません。
+            現場の負担が減り、事業が続いていく仕組みになるまでを、一緒につくります。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Career:縦のタイムライン -->
+    <div class="founder__career">
+      <h3 class="founder__career-title en-display reveal">Career</h3>
+      <p class="founder__career-sub reveal" style="--reveal-delay: 0.1s">
+        営業、プロダクト、顧客体験、事業成長の接点で。
+      </p>
+
+      <ol class="founder__timeline">
+        {
+          career.map((item, i) => (
+            <li class="founder__entry reveal" style={`--reveal-delay: ${i * 0.08}s`}>
+              <span class="founder__marker" aria-hidden="true" />
+              <span class="founder__tag">{item.tag}</span>
+              <p class="founder__entry-body">{item.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .founder {
+    background: var(--c-base);
+    border-top: 1px solid var(--line);
+  }
+
+  .founder__heading {
+    margin-top: 36px;
+  }
+
+  /* --- 紹介(写真+メッセージ) --- */
+  .founder__intro {
+    margin-top: 88px;
+    display: grid;
+    grid-template-columns: minmax(220px, 300px) 1fr;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
+  }
+
+  /* 写真の余白(ポラロイド風の白フチ) */
+  .founder__photo {
+    background: var(--c-white);
+    border: 1px solid var(--c-hairline);
+    border-radius: 10px;
+    box-shadow: var(--shadow-paper);
+    padding: 12px 12px 40px;
+    rotate: -1.2deg;
+    transition-property: opacity, transform, rotate, translate;
+  }
+
+  @media (hover: hover) {
+    .founder__photo:hover {
+      rotate: 0deg;
+      translate: 0 -3px;
+    }
+  }
+
+  .founder__photo-inner {
+    aspect-ratio: 3 / 3.6;
+    background: #eeebe1;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .founder__photo-inner span {
+    font-family: var(--font-en);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--c-sub);
+  }
+
+  .founder__name {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: clamp(22px, 2.8vw, 28px);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+  }
+
+  .founder__role {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--c-sub);
+  }
+
+  .founder__name-en {
+    font-family: var(--font-en);
+    font-weight: 300;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: var(--c-sub);
+  }
+
+  .founder__message {
+    margin-top: 32px;
+    max-width: 560px;
+  }
+
+  .founder__message p {
+    font-size: 14.5px;
+    line-height: 2.4;
+    color: var(--c-sub);
+  }
+
+  .founder__message p + p {
+    margin-top: 1.6em;
+  }
+
+  /* --- Career タイムライン --- */
+  .founder__career {
+    margin-top: clamp(96px, 12vw, 144px);
+  }
+
+  .founder__career-title {
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 200;
+  }
+
+  .founder__career-sub {
+    margin-top: 20px;
+    font-size: 13.5px;
+    letter-spacing: 0.12em;
+    color: var(--c-sub);
+  }
+
+  .founder__timeline {
+    margin-top: 64px;
+    list-style: none;
+    position: relative;
+    max-width: 760px;
+  }
+
+  .founder__timeline::before {
+    content: "";
+    position: absolute;
+    left: 3px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: var(--c-hairline);
+  }
+
+  .founder__entry {
+    position: relative;
+    padding: 0 0 clamp(44px, 6vw, 64px) clamp(40px, 5vw, 64px);
+  }
+
+  .founder__entry:last-child {
+    padding-bottom: 0;
+  }
+
+  .founder__marker {
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    border: 1px solid var(--c-blue);
+    background: var(--c-base);
+  }
+
+  .founder__entry:last-child .founder__marker {
+    background: var(--c-blue);
+  }
+
+  .founder__tag {
+    font-family: var(--font-en);
+    font-weight: 400;
+    font-size: 15px;
+    letter-spacing: 0.14em;
+  }
+
+  .founder__entry-body {
+    margin-top: 14px;
+    font-size: 13.5px;
+    line-height: 2.3;
+    color: var(--c-sub);
+    max-width: 620px;
+  }
+
+  @media (max-width: 720px) {
+    .founder__intro {
+      grid-template-columns: 1fr;
+    }
+
+    .founder__photo {
+      max-width: 260px;
+    }
+  }
+</style>

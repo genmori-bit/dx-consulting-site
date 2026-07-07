@@ -1,16 +1,60 @@
 ---
-import OperationsMap from "./OperationsMap.astro";
+/**
+ * Hero — 散らばった業務ワード(付箋)が白い余白の中で漂い、
+ * 読み込み後に細い線でつながって「仕事の流れが整理されていく」様子を見せる。
+ * 座標は 0-100 の共通空間(チップの left/top % と SVG viewBox が対応)。
+ */
+const words = [
+  { t: "案件管理", x: 60, y: 16, tone: "blue", d: 0.9, f: 9 },
+  { t: "請求", x: 77, y: 10, tone: "plain", d: 1.1, f: 11 },
+  { t: "承認", x: 90, y: 22, tone: "plain", d: 1.3, f: 10 },
+  { t: "会議", x: 64, y: 38, tone: "yellow", d: 1.0, f: 12 },
+  { t: "顧客情報", x: 84, y: 46, tone: "plain", d: 1.2, f: 9.5 },
+  { t: "KPI", x: 62, y: 60, tone: "plain", d: 1.4, f: 10.5 },
+  { t: "経費", x: 88, y: 66, tone: "plain", d: 1.5, f: 11.5 },
+  { t: "AI", x: 68, y: 80, tone: "orange", d: 1.6, f: 9 },
+  { t: "CRM", x: 84, y: 88, tone: "blue", d: 1.7, f: 10 },
+];
+
+const netPoints = words.map((w) => `${w.x},${w.y}`).join(" ");
 ---
 
 <section class="hero" id="top">
   <div class="hero__bg" aria-hidden="true"></div>
+
+  <!-- 漂う業務ワードと、それをつなぐ細い線 -->
+  <div class="hero__desk" aria-hidden="true">
+    <svg
+      class="hero__net"
+      viewBox="0 0 100 100"
+      preserveAspectRatio="none"
+      fill="none"
+    >
+      <polyline
+        class="hero__net-line"
+        points={netPoints}
+        vector-effect="non-scaling-stroke"></polyline>
+    </svg>
+    <ul class="hero__words">
+      {
+        words.map((word) => (
+          <li
+            class:list={["hero__word", `hero__word--${word.tone}`]}
+            style={`--x: ${word.x}%; --y: ${word.y}%; --d: ${word.d}s; --f: ${word.f}s`}
+          >
+            <span class="hero__chip">{word.t}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 
   <div class="container hero__inner">
     <p class="en-label reveal">Operations / Data / Systems</p>
 
     <h1 class="hero__title en-display">
       <span class="hero__line">
-        <span class="hero__line-inner">Business,</span>
+        <span class="hero__line-inner">Workflows,</span>
       </span>
       <span class="hero__line">
         <span class="hero__line-inner hero__line-inner--2 hero__title-accent"
@@ -19,32 +63,25 @@ import OperationsMap from "./OperationsMap.astro";
       </span>
     </h1>
 
-    <div class="hero__row">
-      <div class="hero__copywrap">
-        <p class="hero__copy reveal" style="--reveal-delay: 0.75s">
-          事業が動く仕組みを、設計する。
-        </p>
+    <div class="hero__copywrap">
+      <p class="hero__copy reveal" style="--reveal-delay: 0.75s">
+        仕事の流れを、整える。
+      </p>
 
-        <p class="hero__sub reveal" style="--reveal-delay: 0.9s">
-          営業、管理部門、経営判断。<br />
-          会社の中で分断された仕事の流れを整え、<br class="pc-only" />
-          デジタルが現場で自然に使われる状態をつくります。
-        </p>
+      <p class="hero__sub reveal" style="--reveal-delay: 0.9s">
+        営業、管理部門、経営判断。<br />
+        会社の中に散らばった業務と情報をつなぎ、<br class="pc-only" />
+        少ない人数でも前に進める仕組みをつくります。
+      </p>
 
-        <div class="hero__actions reveal" style="--reveal-delay: 1.05s">
-          <a href="#contact" class="btn btn--primary cta-flow"
-            >相談する<span class="cta-arrow" aria-hidden="true">→</span></a
-          >
-          <a href="#domains" class="btn btn--ghost cta-flow"
-            >支援内容を見る<span class="cta-arrow" aria-hidden="true">→</span></a
-          >
-        </div>
+      <div class="hero__actions reveal" style="--reveal-delay: 1.05s">
+        <a href="#contact" class="btn btn--primary cta-flow"
+          >相談する<span class="cta-arrow" aria-hidden="true">→</span></a
+        >
+        <a href="#domains" class="btn btn--ghost cta-flow"
+          >支援内容を見る<span class="cta-arrow" aria-hidden="true">→</span></a
+        >
       </div>
-
-      <figure class="hero__map reveal" style="--reveal-delay: 0.5s">
-        <OperationsMap />
-        <figcaption>Operations Map — 業務とデータの流れ</figcaption>
-      </figure>
     </div>
   </div>
 
@@ -60,48 +97,146 @@ import OperationsMap from "./OperationsMap.astro";
     display: flex;
     align-items: center;
     overflow: hidden;
-    background: var(--c-black);
+    background: var(--c-base);
   }
 
-  /* --- 背景:ごく薄いグリッドのみ(グローなし)。ごくゆっくり漂う --- */
+  /* --- 背景:薄い方眼紙 --- */
   .hero__bg {
     position: absolute;
-    inset: -140px;
-    background-image: linear-gradient(var(--line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size: 120px 120px;
-    animation: grid-drift 90s linear infinite alternate;
+    inset: 0;
+    background-image: linear-gradient(
+        rgba(221, 216, 204, 0.45) 1px,
+        transparent 1px
+      ),
+      linear-gradient(90deg, rgba(221, 216, 204, 0.45) 1px, transparent 1px),
+      linear-gradient(rgba(221, 216, 204, 0.22) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(221, 216, 204, 0.22) 1px, transparent 1px);
+    background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
     mask-image: radial-gradient(
-      120% 90% at 70% 40%,
-      rgba(0, 0, 0, 0.28),
-      transparent 70%
+      130% 100% at 60% 40%,
+      rgba(0, 0, 0, 0.7),
+      transparent 75%
     );
     -webkit-mask-image: radial-gradient(
-      120% 90% at 70% 40%,
-      rgba(0, 0, 0, 0.28),
-      transparent 70%
+      130% 100% at 60% 40%,
+      rgba(0, 0, 0, 0.7),
+      transparent 75%
     );
+  }
+
+  /* --- 業務ワードのデスク(右側の空間) --- */
+  .hero__desk {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero__net {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero__net-line {
+    stroke: var(--c-blue);
+    stroke-opacity: 0.35;
+    stroke-width: 1;
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+    animation: net-draw 2.6s cubic-bezier(0.16, 1, 0.3, 1) 1.9s forwards;
+  }
+
+  .hero__words {
+    position: absolute;
+    inset: 0;
+    list-style: none;
+  }
+
+  .hero__word {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    translate: -50% -50%;
+  }
+
+  .hero__chip {
+    display: inline-block;
+    padding: 7px 16px;
+    background: var(--c-white);
+    border: 1px solid var(--c-hairline);
+    border-radius: 7px;
+    box-shadow: 0 6px 18px rgba(30, 30, 26, 0.06);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    color: var(--c-sub);
+    opacity: 0;
+    animation: chip-in 0.9s ease var(--d) forwards,
+      chip-float var(--f) ease-in-out calc(var(--d) + 0.9s) infinite alternate;
+  }
+
+  .hero__word--yellow .hero__chip {
+    background: rgba(244, 208, 111, 0.32);
+    border-color: rgba(212, 172, 74, 0.45);
+    color: #7a6425;
+  }
+
+  .hero__word--blue .hero__chip {
+    background: rgba(76, 125, 255, 0.07);
+    border-color: rgba(76, 125, 255, 0.35);
+    color: #3d63cc;
+  }
+
+  .hero__word--orange .hero__chip {
+    background: rgba(240, 138, 75, 0.09);
+    border-color: rgba(240, 138, 75, 0.45);
+    color: #c06428;
+  }
+
+  @keyframes chip-in {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes chip-float {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-9px);
+    }
+  }
+
+  @keyframes net-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
   }
 
   /* --- コンテンツ --- */
   .hero__inner {
     position: relative;
+    z-index: 1;
     width: 100%;
     padding-top: 140px;
     padding-bottom: 96px;
   }
 
   .hero__title {
-    font-size: clamp(60px, 13.5vw, 192px);
+    font-size: clamp(56px, 12vw, 168px);
     font-weight: 200;
-    color: var(--c-ink);
+    color: var(--c-text);
   }
 
-  /* 行ごとに下から静かに組み上がる */
   .hero__line {
     display: block;
     overflow: hidden;
-    /* ディセンダー(g等)が切れないよう余白を確保 */
     padding-bottom: 0.12em;
     margin-bottom: -0.12em;
   }
@@ -118,7 +253,7 @@ import OperationsMap from "./OperationsMap.astro";
 
   .hero__title-accent {
     color: transparent;
-    -webkit-text-stroke: 1px rgba(238, 236, 230, 0.85);
+    -webkit-text-stroke: 1px rgba(30, 30, 26, 0.75);
   }
 
   @keyframes hero-rise {
@@ -127,31 +262,12 @@ import OperationsMap from "./OperationsMap.astro";
     }
   }
 
-  @keyframes grid-drift {
-    to {
-      transform: translate3d(120px, 120px, 0);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hero__bg {
-      animation: none;
-    }
-    .hero__line-inner {
-      animation: none;
-      transform: none;
-    }
-  }
-
-  .hero__row {
-    margin-top: clamp(56px, 7vw, 96px);
-    display: grid;
-    grid-template-columns: 1.05fr 0.95fr;
-    gap: clamp(48px, 6vw, 112px);
-    align-items: end;
+  .hero__copywrap {
+    max-width: 560px;
   }
 
   .hero__copy {
+    margin-top: clamp(48px, 6vw, 72px);
     font-size: clamp(17px, 2.2vw, 22px);
     font-weight: 500;
     letter-spacing: 0.14em;
@@ -161,14 +277,13 @@ import OperationsMap from "./OperationsMap.astro";
     margin-top: 28px;
     font-size: 14px;
     line-height: 2.3;
-    color: var(--c-muted);
-    max-width: 560px;
+    color: var(--c-sub);
   }
 
   .hero__actions {
-    margin-top: 64px;
+    margin-top: 56px;
     display: flex;
-    gap: 20px;
+    gap: 18px;
     flex-wrap: wrap;
   }
 
@@ -176,47 +291,35 @@ import OperationsMap from "./OperationsMap.astro";
     font-size: 14px;
     letter-spacing: 0.14em;
     white-space: nowrap;
-    padding: 16px 40px;
+    padding: 16px 38px;
+    border-radius: 10px;
     border: 1px solid;
     transition: background-color 0.35s ease, color 0.35s ease,
-      border-color 0.35s ease;
+      border-color 0.35s ease, translate 0.35s ease;
   }
 
   .btn--primary {
-    background: transparent;
-    border-color: var(--c-gold-dim);
-    color: var(--c-gold);
+    background: var(--c-text);
+    border-color: var(--c-text);
+    color: var(--c-base);
   }
 
   .btn--primary:hover {
-    background: var(--c-gold);
-    border-color: var(--c-gold);
-    color: var(--c-black);
+    background: var(--c-blue);
+    border-color: var(--c-blue);
+    color: #fff;
+    translate: 0 -2px;
   }
 
   .btn--ghost {
-    border-color: var(--line);
-    color: var(--c-ink);
+    background: var(--c-white);
+    border-color: var(--c-hairline);
+    color: var(--c-text);
   }
 
   .btn--ghost:hover {
-    border-color: var(--c-ink);
-  }
-
-  /* --- Operations Map --- */
-  .hero__map {
-    max-width: 560px;
-    justify-self: end;
-    width: 100%;
-  }
-
-  .hero__map figcaption {
-    margin-top: 20px;
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    color: var(--c-muted);
-    border-top: 1px solid var(--line);
-    padding-top: 14px;
+    border-color: var(--c-text);
+    translate: 0 -2px;
   }
 
   /* --- スクロールインジケーター --- */
@@ -235,7 +338,7 @@ import OperationsMap from "./OperationsMap.astro";
     font-size: 10px;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: var(--c-muted);
+    color: var(--c-sub);
     writing-mode: vertical-rl;
   }
 
@@ -243,41 +346,59 @@ import OperationsMap from "./OperationsMap.astro";
     content: "";
     width: 1px;
     height: 64px;
-    background: linear-gradient(var(--c-gold-dim), transparent);
+    background: linear-gradient(var(--c-hairline), transparent);
   }
 
   @media (max-width: 960px) {
-    .hero__row {
-      grid-template-columns: 1fr;
-      align-items: start;
-    }
-
-    .hero__map {
-      justify-self: start;
-      max-width: 480px;
-      margin-top: 16px;
-    }
-
-    /* 1カラム時はマップのキャプションと重なるため非表示 */
     .hero__scroll {
       display: none;
     }
   }
 
+  /* --- スマホ:動きと要素を簡略化 --- */
   @media (max-width: 720px) {
     .pc-only {
       display: none;
     }
-    .hero__scroll {
-      display: none;
-    }
+
     .hero__inner {
       padding-top: 120px;
     }
+
     .btn {
       flex: 1;
       text-align: center;
       padding-inline: 20px;
+    }
+
+    /* チップは少数だけ、線は非表示 */
+    .hero__net {
+      display: none;
+    }
+
+    .hero__word:nth-child(n + 6) {
+      display: none;
+    }
+
+    .hero__chip {
+      font-size: 11px;
+      padding: 5px 12px;
+      animation: chip-in 0.9s ease var(--d) forwards;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__line-inner {
+      animation: none;
+      transform: none;
+    }
+    .hero__chip {
+      animation: none;
+      opacity: 1;
+    }
+    .hero__net-line {
+      animation: none;
+      stroke-dashoffset: 0;
     }
   }
 </style>
