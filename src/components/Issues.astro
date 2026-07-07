@@ -34,17 +34,22 @@ const issues = [
       私たちは、会社の中で起きていることを4つの層に分けて見ています。
     </p>
 
-    <ol class="issues__list">
-      {
-        issues.map((item) => (
-          <li class="issues__row reveal">
-            <span class="issues__num">{item.num}</span>
-            <span class="issues__en en-display">{item.en}</span>
-            <p class="issues__ja">{item.ja}</p>
-          </li>
-        ))
-      }
-    </ol>
+    <!-- 一本の業務ラインの上に、詰まりが順に現れる -->
+    <div class="issues__flow reveal">
+      <span class="issues__line" aria-hidden="true"></span>
+      <ol class="issues__items">
+        {
+          issues.map((item, i) => (
+            <li class="issues__item" style={`--i: ${i}`}>
+              <span class="issues__node" aria-hidden="true" />
+              <span class="issues__num">{item.num}</span>
+              <span class="issues__en">{item.en}</span>
+              <p class="issues__ja">{item.ja}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
   </div>
 </section>
 
@@ -62,22 +67,59 @@ const issues = [
     margin-top: 32px;
   }
 
-  .issues__list {
-    margin-top: 112px;
+  /* --- 業務ライン --- */
+  .issues__flow {
+    position: relative;
+    margin-top: 128px;
+  }
+
+  .issues__line {
+    position: absolute;
+    top: 3px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--line);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+  }
+
+  .issues__flow.is-visible .issues__line {
+    transform: scaleX(1);
+  }
+
+  .issues__items {
     list-style: none;
-  }
-
-  .issues__row {
     display: grid;
-    grid-template-columns: 90px 1fr 1.3fr;
-    gap: clamp(20px, 3vw, 48px);
-    align-items: baseline;
-    padding-block: clamp(44px, 5.5vw, 68px);
-    border-top: 1px solid var(--line);
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(24px, 3vw, 48px);
   }
 
-  .issues__row:last-child {
-    border-bottom: 1px solid var(--line);
+  /* ライン描画に合わせて、左から順番に現れる */
+  .issues__item {
+    position: relative;
+    padding-top: 40px;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: calc(var(--i) * 0.18s + 0.45s);
+  }
+
+  .issues__flow.is-visible .issues__item {
+    opacity: 1;
+    transform: none;
+  }
+
+  .issues__node {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 7px;
+    height: 7px;
+    border: 1px solid var(--c-gold);
+    background: var(--c-charcoal);
   }
 
   .issues__num {
@@ -89,20 +131,61 @@ const issues = [
   }
 
   .issues__en {
-    font-size: clamp(26px, 3.2vw, 40px);
+    display: block;
+    margin-top: 12px;
+    font-family: var(--font-en);
     font-weight: 300;
+    font-size: clamp(22px, 2.4vw, 32px);
   }
 
   .issues__ja {
-    font-size: clamp(15px, 1.8vw, 18px);
-    letter-spacing: 0.1em;
+    margin-top: 16px;
+    font-size: 14px;
+    line-height: 2.2;
+    letter-spacing: 0.08em;
     color: var(--c-ink);
   }
 
+  /* スマホ:縦に流れるライン */
   @media (max-width: 840px) {
-    .issues__row {
+    .issues__line {
+      left: 3px;
+      right: auto;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      height: auto;
+      transform: scaleY(0);
+      transform-origin: top;
+    }
+
+    .issues__flow.is-visible .issues__line {
+      transform: scaleY(1);
+    }
+
+    .issues__items {
       grid-template-columns: 1fr;
-      gap: 14px;
+      gap: 0;
+    }
+
+    .issues__item {
+      padding: 0 0 48px 36px;
+    }
+
+    .issues__node {
+      top: 6px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .issues__line {
+      transform: none;
+      transition: none;
+    }
+    .issues__item {
+      opacity: 1;
+      transform: none;
+      transition: none;
     }
   }
 </style>

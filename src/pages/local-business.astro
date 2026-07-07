@@ -112,9 +112,9 @@ const approach = [
         </div>
 
         <div class="approach__cta reveal">
-          <a href={`${base}#contact`} class="approach__btn">
-            地域企業のDXを相談する
-          </a>
+          <a href={`${base}#contact`} class="approach__btn cta-flow"
+            >地域企業のDXを相談する<span class="cta-arrow" aria-hidden="true">→</span></a
+          >
         </div>
       </div>
     </section>
@@ -214,6 +214,14 @@ const approach = [
   .approach__item {
     border-top: 1px solid var(--line-dark);
     padding-top: 32px;
+  }
+
+  /* ホバー:わずかに浮き、罫線が少し濃くなる */
+  @media (hover: hover) {
+    .approach__item:hover {
+      translate: 0 -3px;
+      border-top-color: rgba(23, 23, 26, 0.4);
+    }
   }
 
   .approach__num {

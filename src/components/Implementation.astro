@@ -47,8 +47,8 @@ const items = [
 
     <ol class="implementation__list">
       {
-        items.map((item) => (
-          <li class="implementation__row reveal">
+        items.map((item, i) => (
+          <li class="implementation__row reveal" style={`--reveal-delay: ${i * 0.08}s`}>
             <span class="implementation__num">{item.num}</span>
             <h3 class="implementation__title">{item.title}</h3>
             <p class="implementation__body">{item.body}</p>
@@ -89,6 +89,14 @@ const items = [
 
   .implementation__row:last-child {
     border-bottom: 1px solid var(--line);
+  }
+
+  /* ホバー:わずかに浮き、罫線が少し明るくなる */
+  @media (hover: hover) {
+    .implementation__row:hover {
+      translate: 0 -3px;
+      border-top-color: rgba(238, 236, 230, 0.32);
+    }
   }
 
   .implementation__num {

@@ -31,12 +31,14 @@ const base = import.meta.env.BASE_URL.endsWith("/")
 
       <div class="local__aside reveal" style="--reveal-delay: 0.3s">
         <ul class="local__points">
-          <li>IT担当者がいなくても、進められます</li>
-          <li>1つの業務、1つの会議からでも始められます</li>
-          <li>今お使いのExcelやツールを活かして設計します</li>
+          <li class="reveal" style="--reveal-delay: 0.35s">IT担当者がいなくても、進められます</li>
+          <li class="reveal" style="--reveal-delay: 0.43s">1つの業務、1つの会議からでも始められます</li>
+          <li class="reveal" style="--reveal-delay: 0.51s">今お使いのExcelやツールを活かして設計します</li>
         </ul>
         <div class="local__actions">
-          <a href={`${base}#contact`} class="local__cta">地域企業のDXを相談する</a>
+          <a href={`${base}#contact`} class="local__cta cta-flow"
+            >地域企業のDXを相談する<span class="cta-arrow" aria-hidden="true">→</span></a
+          >
           <a href={`${base}local-business/`} class="local__more">詳しく見る</a>
         </div>
       </div>

@@ -36,7 +36,9 @@ const base = import.meta.env.BASE_URL.endsWith("/")
           どの領域から始めるか、<br />一緒に整理するところからで構いません。
         </h2>
         <div class="services-cta__actions reveal" style="--reveal-delay: 0.15s">
-          <a href={`${base}#contact`} class="services-cta__btn">相談する</a>
+          <a href={`${base}#contact`} class="services-cta__btn cta-flow"
+            >相談する<span class="cta-arrow" aria-hidden="true">→</span></a
+          >
         </div>
       </div>
     </section>

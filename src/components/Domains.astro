@@ -46,26 +46,68 @@ const domains = [
       顧客接点、社内業務、経営判断。3つの領域で、会社の仕事の流れを整えます。
     </p>
 
-    <div class="domains__panels">
-      {
-        domains.map((domain) => (
-          <article class="domains__panel reveal">
-            <div class="domains__meta">
-              <span class="domains__num">{domain.num}</span>
-              <span class="domains__en">{domain.en}</span>
-            </div>
-            <h3 class="domains__ja">{domain.ja}</h3>
-            <div class="domains__body">
-              {domain.body.map((paragraph) => (
-                <p>{paragraph}</p>
-              ))}
-            </div>
-          </article>
-        ))
-      }
+    <div class="domains__stage" data-domains-stage>
+      <!-- 左:固定される大型英字(現在の領域が明るくなる) -->
+      <div class="domains__stick" aria-hidden="true">
+        <ol class="domains__stick-list">
+          {
+            domains.map((domain, i) => (
+              <li class:list={["domains__stick-item", { "is-active": i === 0 }]} data-stick-item>
+                <span class="domains__stick-num">{domain.num}</span>
+                <span class="domains__stick-en en-display">{domain.en}</span>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+
+      <!-- 右:スクロールで流れる本文 -->
+      <div class="domains__flow">
+        {
+          domains.map((domain, i) => (
+            <article class="domains__block reveal" data-domain-block data-index={i}>
+              <p class="domains__mobile-en">
+                {domain.num} — {domain.en}
+              </p>
+              <h3 class="domains__ja">{domain.ja}</h3>
+              <div class="domains__body">
+                {domain.body.map((paragraph) => (
+                  <p>{paragraph}</p>
+                ))}
+              </div>
+            </article>
+          ))
+        }
+      </div>
     </div>
   </div>
 </section>
+
+<script>
+  // 右側のブロックが画面中央帯に入ったら、左の英字を切り替える(スクロールジャックなし)
+  const stages = document.querySelectorAll<HTMLElement>("[data-domains-stage]");
+
+  stages.forEach((stage) => {
+    const stickItems = stage.querySelectorAll<HTMLElement>("[data-stick-item]");
+    const blocks = stage.querySelectorAll<HTMLElement>("[data-domain-block]");
+    if (!stickItems.length || !blocks.length) return;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const index = Number((entry.target as HTMLElement).dataset.index);
+          stickItems.forEach((item, i) =>
+            item.classList.toggle("is-active", i === index)
+          );
+        }
+      },
+      { rootMargin: "-40% 0px -50% 0px" }
+    );
+
+    blocks.forEach((block) => io.observe(block));
+  });
+</script>
 
 <style>
   .domains {
@@ -80,32 +122,40 @@ const domains = [
     margin-top: 32px;
   }
 
-  /* --- 3つの大型パネル --- */
-  .domains__panels {
+  .domains__stage {
     margin-top: 112px;
-  }
-
-  .domains__panel {
     display: grid;
-    grid-template-columns: 0.9fr 1.1fr;
-    column-gap: clamp(32px, 5vw, 96px);
-    row-gap: 28px;
-    padding-block: clamp(64px, 8vw, 112px);
-    border-top: 1px solid var(--line);
+    grid-template-columns: 1fr 1.05fr;
+    gap: clamp(48px, 6vw, 112px);
+    align-items: start;
   }
 
-  .domains__panel:last-child {
+  /* --- 左:スティッキーな大型英字 --- */
+  .domains__stick {
+    position: sticky;
+    top: 24vh;
+  }
+
+  .domains__stick-list {
+    list-style: none;
+  }
+
+  .domains__stick-item {
+    padding-block: 26px;
+    border-top: 1px solid var(--line);
+    opacity: 0.16;
+    transition: opacity 0.7s ease;
+  }
+
+  .domains__stick-item:last-child {
     border-bottom: 1px solid var(--line);
   }
 
-  .domains__meta {
-    grid-column: 1;
-    display: flex;
-    align-items: baseline;
-    gap: 20px;
+  .domains__stick-item.is-active {
+    opacity: 1;
   }
 
-  .domains__num {
+  .domains__stick-num {
     font-family: var(--font-en);
     font-weight: 200;
     font-size: 13px;
@@ -113,29 +163,37 @@ const domains = [
     color: var(--c-gold);
   }
 
-  .domains__en {
-    font-family: var(--font-en);
-    font-weight: 400;
-    font-size: 12px;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--c-muted);
+  .domains__stick-en {
+    display: block;
+    margin-top: 8px;
+    font-size: clamp(34px, 4.2vw, 60px);
+    font-weight: 200;
   }
 
-  /* 日本語を主役にした見出し */
+  /* --- 右:本文 --- */
+  .domains__block {
+    padding-block: clamp(64px, 9vw, 120px);
+    border-top: 1px solid var(--line);
+  }
+
+  .domains__block:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .domains__mobile-en {
+    display: none;
+  }
+
   .domains__ja {
-    grid-column: 1;
-    font-size: clamp(26px, 3.6vw, 44px);
+    font-size: clamp(24px, 3vw, 36px);
     font-weight: 400;
     letter-spacing: 0.1em;
-    line-height: 1.6;
+    line-height: 1.7;
   }
 
   .domains__body {
-    grid-column: 2;
-    grid-row: 1 / 3;
-    align-self: center;
-    max-width: 480px;
+    margin-top: 32px;
+    max-width: 460px;
   }
 
   .domains__body p {
@@ -148,15 +206,29 @@ const domains = [
     margin-top: 1.4em;
   }
 
+  /* --- スマホ:縦に流れる通常レイアウト --- */
   @media (max-width: 960px) {
-    .domains__panel {
+    .domains__stage {
       grid-template-columns: 1fr;
     }
 
-    .domains__body {
-      grid-column: 1;
-      grid-row: auto;
-      margin-top: 8px;
+    .domains__stick {
+      display: none;
+    }
+
+    .domains__mobile-en {
+      display: block;
+      font-family: var(--font-en);
+      font-weight: 400;
+      font-size: 12px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--c-muted);
+      margin-bottom: 20px;
+    }
+
+    .domains__block {
+      padding-block: clamp(48px, 8vw, 72px);
     }
   }
 </style>

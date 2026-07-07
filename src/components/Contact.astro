@@ -14,12 +14,12 @@ import { SITE } from "../config";
           「何から手をつければいいか分からない」という段階からで構いません。
           いまの業務の流れを伺いながら、変えるべき場所と順番を一緒に整理します。
         </p>
-        <ul class="contact__points reveal" style="--reveal-delay: 0.3s">
-          <li>小さな業務改善から相談できます</li>
-          <li>IT担当者がいない企業もご相談ください</li>
-          <li>オンラインを基本に、必要に応じて対面でのご相談も可能です</li>
-          <li>ツールありきの提案は行いません</li>
-          <li>初回相談は無料です</li>
+        <ul class="contact__points">
+          <li class="reveal" style="--reveal-delay: 0.3s">小さな業務改善から相談できます</li>
+          <li class="reveal" style="--reveal-delay: 0.38s">IT担当者がいない企業もご相談ください</li>
+          <li class="reveal" style="--reveal-delay: 0.46s">オンラインを基本に、必要に応じて対面でのご相談も可能です</li>
+          <li class="reveal" style="--reveal-delay: 0.54s">ツールありきの提案は行いません</li>
+          <li class="reveal" style="--reveal-delay: 0.62s">初回相談は無料です</li>
         </ul>
       </div>
 
@@ -48,7 +48,9 @@ import { SITE } from "../config";
           <label for="f-message">ご相談内容 <span class="req" aria-hidden="true">*</span></label>
           <textarea id="f-message" name="message" rows="5" required></textarea>
         </div>
-        <button type="submit" class="contact__submit">相談する</button>
+        <button type="submit" class="contact__submit cta-flow"
+          >相談する<span class="cta-arrow" aria-hidden="true">→</span></button
+        >
         <p class="contact__form-note">
           送信いただいた内容は、お問い合わせ対応の目的にのみ使用します。
         </p>

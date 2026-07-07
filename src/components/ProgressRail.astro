@@ -1,0 +1,125 @@
+---
+/**
+ * 画面左の細いスクロール進捗レール(PCのみ)。
+ * 現在のセクションの英字ラベル(例: 02 / Domains)を縦書きで表示する。
+ */
+---
+
+<aside class="rail" id="progress-rail" aria-hidden="true">
+  <div class="rail__track">
+    <div class="rail__fill" data-rail-fill></div>
+  </div>
+  <p class="rail__label" data-rail-label></p>
+</aside>
+
+<script>
+  const rail = document.getElementById("progress-rail");
+
+  if (rail) {
+    const fill = rail.querySelector<HTMLElement>("[data-rail-fill]");
+    const labelEl = rail.querySelector<HTMLElement>("[data-rail-label]");
+
+    // 番号付き英字ラベルを持つセクションだけを対象にする
+    const sections = [...document.querySelectorAll<HTMLElement>("main section[id]")]
+      .map((el) => ({
+        el,
+        label: el.querySelector(".en-label")?.textContent?.trim() ?? "",
+      }))
+      .filter((s) => /^\d/.test(s.label));
+
+    if (sections.length && fill && labelEl) {
+      // 現在のセクション表示
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            const found = sections.find((s) => s.el === entry.target);
+            if (found) {
+              labelEl.textContent = found.label;
+              rail.classList.add("has-label");
+            }
+          }
+        },
+        { rootMargin: "-45% 0px -45% 0px" }
+      );
+      sections.forEach((s) => io.observe(s.el));
+
+      // 全体のスクロール進捗
+      let ticking = false;
+      const update = () => {
+        const max =
+          document.documentElement.scrollHeight - window.innerHeight;
+        const p = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+        fill.style.transform = `scaleY(${p})`;
+        ticking = false;
+      };
+      window.addEventListener(
+        "scroll",
+        () => {
+          if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(update);
+          }
+        },
+        { passive: true }
+      );
+      update();
+    }
+  }
+</script>
+
+<style>
+  .rail {
+    position: fixed;
+    left: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    /* オフホワイトのセクション上でも読めるように反転合成 */
+    mix-blend-mode: difference;
+    pointer-events: none;
+  }
+
+  .rail__track {
+    position: relative;
+    width: 1px;
+    height: 170px;
+    background: rgba(238, 236, 230, 0.18);
+  }
+
+  .rail__fill {
+    position: absolute;
+    inset: 0;
+    background: rgba(238, 236, 230, 0.55);
+    transform: scaleY(0);
+    transform-origin: top;
+    will-change: transform;
+  }
+
+  .rail__label {
+    writing-mode: vertical-rl;
+    font-family: var(--font-en);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(238, 236, 230, 0.6);
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    min-height: 110px;
+  }
+
+  .rail.has-label .rail__label {
+    opacity: 1;
+  }
+
+  @media (max-width: 1180px) {
+    .rail {
+      display: none;
+    }
+  }
+</style>

@@ -8,26 +8,36 @@ import OperationsMap from "./OperationsMap.astro";
   <div class="container hero__inner">
     <p class="en-label reveal">Operations / Data / Systems</p>
 
-    <h1 class="hero__title en-display reveal" style="--reveal-delay: 0.15s">
-      Business,<br />
-      <span class="hero__title-accent">Re-designed.</span>
+    <h1 class="hero__title en-display">
+      <span class="hero__line">
+        <span class="hero__line-inner">Business,</span>
+      </span>
+      <span class="hero__line">
+        <span class="hero__line-inner hero__line-inner--2 hero__title-accent"
+          >Re-designed.</span
+        >
+      </span>
     </h1>
 
     <div class="hero__row">
       <div class="hero__copywrap">
-        <p class="hero__copy reveal" style="--reveal-delay: 0.3s">
+        <p class="hero__copy reveal" style="--reveal-delay: 0.75s">
           事業が動く仕組みを、設計する。
         </p>
 
-        <p class="hero__sub reveal" style="--reveal-delay: 0.45s">
+        <p class="hero__sub reveal" style="--reveal-delay: 0.9s">
           営業、管理部門、経営判断。<br />
           会社の中で分断された仕事の流れを整え、<br class="pc-only" />
           デジタルが現場で自然に使われる状態をつくります。
         </p>
 
-        <div class="hero__actions reveal" style="--reveal-delay: 0.6s">
-          <a href="#contact" class="btn btn--primary">相談する</a>
-          <a href="#domains" class="btn btn--ghost">支援内容を見る</a>
+        <div class="hero__actions reveal" style="--reveal-delay: 1.05s">
+          <a href="#contact" class="btn btn--primary cta-flow"
+            >相談する<span class="cta-arrow" aria-hidden="true">→</span></a
+          >
+          <a href="#domains" class="btn btn--ghost cta-flow"
+            >支援内容を見る<span class="cta-arrow" aria-hidden="true">→</span></a
+          >
         </div>
       </div>
 
@@ -53,13 +63,14 @@ import OperationsMap from "./OperationsMap.astro";
     background: var(--c-black);
   }
 
-  /* --- 背景:ごく薄いグリッドのみ(グローなし) --- */
+  /* --- 背景:ごく薄いグリッドのみ(グローなし)。ごくゆっくり漂う --- */
   .hero__bg {
     position: absolute;
-    inset: 0;
+    inset: -140px;
     background-image: linear-gradient(var(--line) 1px, transparent 1px),
       linear-gradient(90deg, var(--line) 1px, transparent 1px);
     background-size: 120px 120px;
+    animation: grid-drift 90s linear infinite alternate;
     mask-image: radial-gradient(
       120% 90% at 70% 40%,
       rgba(0, 0, 0, 0.28),
@@ -86,9 +97,50 @@ import OperationsMap from "./OperationsMap.astro";
     color: var(--c-ink);
   }
 
+  /* 行ごとに下から静かに組み上がる */
+  .hero__line {
+    display: block;
+    overflow: hidden;
+    /* ディセンダー(g等)が切れないよう余白を確保 */
+    padding-bottom: 0.12em;
+    margin-bottom: -0.12em;
+  }
+
+  .hero__line-inner {
+    display: block;
+    transform: translateY(112%);
+    animation: hero-rise 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+  }
+
+  .hero__line-inner--2 {
+    animation-delay: 0.4s;
+  }
+
   .hero__title-accent {
     color: transparent;
     -webkit-text-stroke: 1px rgba(238, 236, 230, 0.85);
+  }
+
+  @keyframes hero-rise {
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes grid-drift {
+    to {
+      transform: translate3d(120px, 120px, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__bg {
+      animation: none;
+    }
+    .hero__line-inner {
+      animation: none;
+      transform: none;
+    }
   }
 
   .hero__row {
