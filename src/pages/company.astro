@@ -44,31 +44,81 @@ const overview = [
   { key: "お問い合わせ", value: "フォームより受付" },
 ];
 
-const career = [
+// 1層目:経験領域をMECEに整理
+const experienceDomains = [
+  {
+    num: "01",
+    en: "Sales / Revenue Design",
+    ja: "営業・顧客接点の設計",
+    body: [
+      "インサイドセールス、フィールドセールス、アカウントエグゼクティブとして、法人顧客への提案活動に従事。",
+      "顧客課題の整理、営業プロセスの設計、CRM/SFA活用、マーケティング施策との連携を通じて、売上につながる顧客接点づくりを経験。",
+    ],
+  },
+  {
+    num: "02",
+    en: "Product / Service Design",
+    ja: "プロダクト・サービスの設計",
+    body: [
+      "HR TechサービスやSaaS型ERPサービスにおいて、プロダクト開発、プロダクト企画、機能改善提案に従事。",
+      "営業現場や顧客の声をもとに、サービスの使いやすさ、提供価値、競争力を高めるための改善に取り組む。",
+    ],
+  },
+  {
+    num: "03",
+    en: "Customer Experience / Operations",
+    ja: "顧客体験・運用体制の設計",
+    body: [
+      "カスタマーエクスペリエンス領域において、顧客対応、サポート体制、利用定着に関わる仕組みづくりを担当。",
+      "導入して終わりではなく、顧客が使い続けられる状態をつくるための運用設計に取り組む。",
+    ],
+  },
+  {
+    num: "04",
+    en: "Business Growth / Leadership",
+    ja: "事業成長・サービス責任",
+    body: [
+      "ジョブカン経費精算/ワークフローのサービス責任者として、プロダクト、営業、顧客体験を横断しながら事業成長を推進。",
+      "市場ニーズを捉えた改善、販売戦略の強化、プロダクトの競争力向上を通じて、サービスの成長に携わる。",
+    ],
+  },
+];
+
+// 2層目:実際のキャリアの時系列
+const careerTimeline = [
   {
     tag: "HR Tech",
-    roles: ["インサイドセールス", "フィールドセールス", "プロダクト開発"],
-    body: "大手人材会社の経営企画本部にて、HR Techサービスのインサイドセールス、フィールドセールス、プロダクト開発に従事。営業現場とプロダクトの両面から事業成長に携わる。",
+    body: [
+      "大手人材会社の経営企画本部に所属。HR Techサービスにおいて、インサイドセールス、フィールドセールス、プロダクト開発に従事。",
+      "営業現場とプロダクトの両面から、顧客課題とサービス改善に向き合う。",
+    ],
   },
   {
     tag: "SaaS ERP",
-    roles: ["営業企画", "プロダクト企画", "CX", "Salesforce", "Marketo"],
-    body: "クラウドサービス企業にて、SaaS型ERPサービスの営業企画、プロダクト企画、カスタマーエクスペリエンスを担当。SalesforceやMarketoを活用したマーケティング・営業プロセスの設計、機能改善、新規ビジネス開発、サポート体制の構築を推進。",
+    body: [
+      "クラウドサービス事業を展開する企業にて、SaaS型ERPサービスのインサイドセールス、営業企画、プロダクト企画、カスタマーエクスペリエンスを担当。",
+      "SalesforceやMarketoを活用したマーケティング戦略の立案・実行、営業プロセス設計、機能改善提案、新規ビジネス開発、サポート体制の構築に取り組む。",
+    ],
   },
   {
     tag: "Service Leadership",
-    roles: ["サービス責任者", "プロダクト", "営業", "顧客体験"],
-    body: "ジョブカン経費精算/ワークフローのサービス責任者として、プロダクト、営業、顧客体験を横断して事業成長をリード。プロダクトの競争力強化と市場拡大に取り組む。",
+    body: [
+      "ジョブカン経費精算/ワークフローのサービス責任者として、プロダクト、営業、顧客体験を横断して事業成長を推進。",
+      "市場ニーズを捉えた改善と販売戦略の強化を通じて、プロダクトの競争力向上と市場拡大に貢献。",
+    ],
   },
   {
     tag: "CRM / DX Support",
-    roles: ["CRM活用", "営業改革", "業務改善", "DX推進"],
-    body: "現在は外資系CRM企業にて、法人企業のCRM活用、営業改革、業務改善、DX推進を支援。",
+    body: [
+      "現在はSalesforceにてアカウントエグゼクティブとして勤務。",
+      "法人営業の最前線で、企業のCRM活用、営業改革、業務改善、DX推進を支援している。",
+    ],
   },
   {
     tag: "ミチカク",
-    roles: ["営業", "マーケティング", "プロダクト", "CX", "事業責任"],
-    body: "営業、マーケティング、プロダクト、CX、事業責任の経験を活かし、ツール導入で終わらない、現場に根づくデジタル活用を支援する。",
+    body: [
+      "これまでの営業、プロダクト、顧客体験、事業運営の経験をもとに、企業の仕事の流れを整理し、現場に根づくデジタル活用を支援する。",
+    ],
   },
 ];
 ---
@@ -164,27 +214,71 @@ const career = [
           Career
         </h2>
         <p class="career__sub reveal" style="--reveal-delay: 0.2s">
-          営業、プロダクト、顧客体験、事業成長の接点で。
+          営業、プロダクト、顧客体験、事業運営を横断してきました。
         </p>
 
-        <ol class="career__timeline">
-          {
-            career.map((item, i) => (
-              <li class="career__entry reveal" style={`--reveal-delay: ${i * 0.08}s`}>
-                <span class="career__marker" aria-hidden="true" />
-                <div class="career__head">
+        <div class="career__lead reveal" style="--reveal-delay: 0.3s">
+          <p>
+            毛利元樹は、HR Tech、SaaS ERP、CRM領域において、営業現場、営業企画、プロダクト企画、カスタマーエクスペリエンス、事業責任を経験してきました。
+          </p>
+          <p class="career__lead-questions">
+            顧客接点をどう設計するか。<br />
+            プロダクトをどう改善するか。<br />
+            顧客体験をどう整えるか。<br />
+            事業をどう伸ばすか。
+          </p>
+          <p>
+            それぞれの立場から、仕事が前に進むための仕組みづくりに向き合ってきました。
+          </p>
+        </div>
+
+        <!-- 1層目:経験領域 -->
+        <div class="career__layer">
+          <p class="career__layer-label reveal">Experience Domains — 経験領域</p>
+          <ol class="career__domains">
+            {
+              experienceDomains.map((domain, i) => (
+                <li class="career__domain reveal" style={`--reveal-delay: ${i * 0.08}s`}>
+                  <span class="career__domain-num">{domain.num}</span>
+                  <div class="career__domain-text">
+                    <h3 class="career__domain-en en-display">{domain.en}</h3>
+                    <p class="career__domain-ja">{domain.ja}</p>
+                    <div class="career__domain-body">
+                      {domain.body.map((line) => (
+                        <p>{line}</p>
+                      ))}
+                    </div>
+                  </div>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+
+        <!-- 2層目:時系列 -->
+        <div class="career__layer">
+          <p class="career__layer-label reveal">Career Timeline — 経歴</p>
+          <ol class="career__timeline">
+            {
+              careerTimeline.map((item, i) => (
+                <li class="career__entry reveal" style={`--reveal-delay: ${i * 0.08}s`}>
+                  <span class="career__marker" aria-hidden="true" />
                   <span class="career__tag">{item.tag}</span>
-                  <ul class="career__roles" aria-label="担当領域">
-                    {item.roles.map((role) => (
-                      <li>{role}</li>
+                  <div class="career__body">
+                    {item.body.map((line) => (
+                      <p>{line}</p>
                     ))}
-                  </ul>
-                </div>
-                <p class="career__body">{item.body}</p>
-              </li>
-            ))
-          }
-        </ol>
+                  </div>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+
+        <p class="career__closing reveal">
+          これまで一貫して向き合ってきたのは、ツールそのものではなく、現場で仕事が前に進むための仕組みづくりです。
+          ミチカクでは、営業、管理部門、経営判断の流れを整理し、企業ごとに合ったデジタル活用を設計します。
+        </p>
       </div>
     </section>
 
@@ -378,13 +472,98 @@ const career = [
 
   .career__sub {
     margin-top: 20px;
-    font-size: 13.5px;
+    font-size: 14px;
     letter-spacing: 0.12em;
     color: var(--c-sub);
   }
 
+  /* リード文 */
+  .career__lead {
+    margin-top: 44px;
+    max-width: 680px;
+  }
+
+  .career__lead p {
+    font-size: 14.5px;
+    line-height: 2.4;
+    color: var(--c-text);
+  }
+
+  .career__lead p + p {
+    margin-top: 1.6em;
+  }
+
+  .career__lead-questions {
+    color: var(--c-sub) !important;
+    letter-spacing: 0.06em;
+  }
+
+  /* 2つの層の見出し */
+  .career__layer {
+    margin-top: clamp(72px, 9vw, 112px);
+  }
+
+  .career__layer-label {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--c-blue);
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--c-hairline);
+  }
+
+  /* --- 1層目:経験領域 --- */
+  .career__domains {
+    margin-top: 8px;
+    list-style: none;
+  }
+
+  .career__domain {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: clamp(16px, 3vw, 40px);
+    padding-block: clamp(36px, 4.5vw, 52px);
+    border-bottom: 1px solid var(--c-hairline);
+  }
+
+  .career__domain-num {
+    font-family: var(--font-en);
+    font-weight: 300;
+    font-size: 14px;
+    letter-spacing: 0.14em;
+    color: var(--c-blue);
+    padding-top: 6px;
+  }
+
+  .career__domain-en {
+    font-size: clamp(22px, 2.6vw, 32px);
+    font-weight: 300;
+  }
+
+  .career__domain-ja {
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+  }
+
+  .career__domain-body {
+    margin-top: 20px;
+    max-width: 620px;
+  }
+
+  .career__domain-body p {
+    font-size: 13.5px;
+    line-height: 2.3;
+    color: var(--c-sub);
+  }
+
+  .career__domain-body p + p {
+    margin-top: 1em;
+  }
+
+  /* --- 2層目:時系列 --- */
   .career__timeline {
-    margin-top: 72px;
+    margin-top: 56px;
     list-style: none;
     position: relative;
     max-width: 800px;
@@ -424,44 +603,46 @@ const career = [
     background: var(--c-blue);
   }
 
-  .career__head {
-    display: flex;
-    align-items: baseline;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-
   .career__tag {
+    display: block;
     font-family: var(--font-en);
     font-weight: 400;
     font-size: 17px;
     letter-spacing: 0.14em;
   }
 
-  /* 担当領域のチップ */
-  .career__roles {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .career__roles li {
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    color: var(--c-sub);
-    background: var(--c-white);
-    border: 1px solid var(--c-hairline);
-    border-radius: 999px;
-    padding: 3px 12px;
-  }
-
   .career__body {
-    margin-top: 16px;
+    margin-top: 14px;
+    max-width: 660px;
+  }
+
+  .career__body p {
     font-size: 13.5px;
     line-height: 2.3;
     color: var(--c-sub);
-    max-width: 660px;
+  }
+
+  .career__body p + p {
+    margin-top: 0.6em;
+  }
+
+  /* 締めの一文 */
+  .career__closing {
+    margin-top: clamp(64px, 8vw, 96px);
+    max-width: 720px;
+    font-size: 14.5px;
+    line-height: 2.4;
+    letter-spacing: 0.04em;
+    color: var(--c-text);
+    padding-top: clamp(40px, 5vw, 56px);
+    border-top: 1px solid var(--c-hairline);
+  }
+
+  @media (max-width: 720px) {
+    .career__domain {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
   }
 
   /* --- 事業概要テーブル --- */
