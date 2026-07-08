@@ -15,7 +15,23 @@ const nav = [
 
 <header class="header" id="site-header">
   <div class="header__inner">
-    <a href={base} class="header__brand">{SITE.brandEn}</a>
+    <!-- D案メインロゴ:ワードマーク+道筋の線 -->
+    <a href={base} class="header__brand" aria-label={`${SITE.brandJa} — ${SITE.tagline}`}>
+      <span class="header__brand-name">ミチカク</span>
+      <svg
+        class="header__brand-line"
+        viewBox="0 0 132 12"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M2 7 C 24 3, 44 10, 66 7 C 88 4, 106 8, 118 6"
+          stroke="#2E6E5A"
+          stroke-width="2.4"
+          stroke-linecap="round"></path>
+        <circle cx="126" cy="5.5" r="4" fill="#E06A3F"></circle>
+      </svg>
+    </a>
     <nav class="header__nav" aria-label="メインナビゲーション">
       {nav.map((item) => <a href={item.href}>{item.label}</a>)}
     </nav>
@@ -58,11 +74,23 @@ const nav = [
   }
 
   .header__brand {
-    font-family: var(--font-en);
-    font-weight: 400;
-    font-size: 17px;
-    letter-spacing: 0.08em;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
     white-space: nowrap;
+  }
+
+  .header__brand-name {
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.18em;
+    line-height: 1;
+  }
+
+  .header__brand-line {
+    width: 96px;
+    height: 9px;
+    display: block;
   }
 
   .header__nav {

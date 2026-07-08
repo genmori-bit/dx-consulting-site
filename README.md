@@ -1,4 +1,4 @@
-# Re:Design Partners — コーポレートサイト
+# ミチカク — コーポレートサイト
 
 DXコンサルティング会社のコーポレートサイト(Astro製・完全静的)。
 
@@ -23,7 +23,7 @@ npm run preview  # ビルド結果の確認
 
 | 項目 | 場所 |
 | --- | --- |
-| 会社名(現在は仮称) | `src/config.ts` の `brandEn` / `brandJa` |
+| 名称 | `src/config.ts` の `brandEn` / `brandJa` |
 | 問い合わせメールアドレス | `src/config.ts` の `contactEmail` |
 | フォーム送信先 | `src/config.ts` の `formEndpoint`(Formspree等のURL。空の場合はメール作成画面を開くフォールバック) |
 | 本番ドメイン | `astro.config.mjs` の `site`(canonical / OGP の絶対URLに使用)。独自ドメインに移行する際は `base` も削除 |

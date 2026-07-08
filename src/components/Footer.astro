@@ -11,8 +11,24 @@ const year = new Date().getFullYear();
 <footer class="footer">
   <div class="container footer__inner">
     <div class="footer__brand">
-      <p class="footer__logo">{SITE.brandEn}</p>
-      <p class="footer__tagline">Business, Re-designed.</p>
+      <p class="footer__logo">
+        <span class="footer__logo-name">ミチカク</span>
+        <svg
+          class="footer__logo-line"
+          viewBox="0 0 132 12"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M2 7 C 24 3, 44 10, 66 7 C 88 4, 106 8, 118 6"
+            stroke="#2E6E5A"
+            stroke-width="2.4"
+            stroke-linecap="round"></path>
+          <circle cx="126" cy="5.5" r="4" fill="#E06A3F"></circle>
+        </svg>
+      </p>
+      <p class="footer__tagline">{SITE.tagline}</p>
+      <p class="footer__tagline-en">Workflows, Re-designed.</p>
     </div>
     <nav class="footer__nav" aria-label="フッターナビゲーション">
       <a href={`${base}services/`}>支援内容</a>
@@ -45,19 +61,39 @@ const year = new Date().getFullYear();
   }
 
   .footer__logo {
-    font-family: var(--font-en);
+    display: inline-flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .footer__logo-name {
+    font-weight: 700;
     font-size: 22px;
-    font-weight: 300;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.18em;
+    line-height: 1;
+  }
+
+  .footer__logo-line {
+    width: 116px;
+    height: 11px;
+    display: block;
   }
 
   .footer__tagline {
-    margin-top: 10px;
-    font-family: var(--font-en);
-    font-size: 12px;
-    font-weight: 300;
+    margin-top: 14px;
+    font-size: 12.5px;
     letter-spacing: 0.2em;
-    color: var(--c-gold);
+    color: var(--c-sub);
+  }
+
+  .footer__tagline-en {
+    margin-top: 6px;
+    font-family: var(--font-en);
+    font-size: 10.5px;
+    font-weight: 400;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--c-hairline);
   }
 
   .footer__nav {

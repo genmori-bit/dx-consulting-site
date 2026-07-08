@@ -5,13 +5,12 @@
     <path d="M120 0 V630 M300 0 V630 M480 0 V630 M660 0 V630 M840 0 V630 M1020 0 V630"/>
     <path d="M0 126 H1200 M0 252 H1200 M0 378 H1200 M0 504 H1200"/>
   </g>
-  <!-- 仕事の流れの線 -->
-  <path d="M-20 480 L260 480 L340 410 L640 410 L740 330 L1040 330 L1120 260 L1220 260" fill="none" stroke="#4c7dff" stroke-opacity="0.5" stroke-width="1.5"/>
-  <circle cx="340" cy="410" r="5" fill="#f08a4b" fill-opacity="0.9"/>
-  <circle cx="740" cy="330" r="5" fill="#f08a4b" fill-opacity="0.9"/>
-  <!-- コピー -->
-  <text x="100" y="150" font-family="Helvetica Neue, Arial, sans-serif" font-size="20" letter-spacing="8" fill="#4c7dff">RE:DESIGN PARTNERS</text>
-  <text x="100" y="272" font-family="Helvetica Neue, Arial, sans-serif" font-size="84" font-weight="300" letter-spacing="-1" fill="#1e1e1a">Workflows,</text>
-  <text x="100" y="374" font-family="Helvetica Neue, Arial, sans-serif" font-size="84" font-weight="300" letter-spacing="-1" fill="none" stroke="#1e1e1a" stroke-width="1.2">Re-designed.</text>
-  <text x="102" y="448" font-family="Hiragino Kaku Gothic ProN, sans-serif" font-size="26" letter-spacing="4" fill="#6f6b63">仕事の流れを、整える。</text>
+  <!-- ワードマーク -->
+  <text x="100" y="280" font-family="Hiragino Kaku Gothic ProN, sans-serif" font-size="120" font-weight="700" letter-spacing="18" fill="#1e1e1a">ミチカク</text>
+  <!-- 道筋の線 -->
+  <path d="M104 340 C 240 320, 380 356, 520 340 C 660 326, 780 348, 872 336" fill="none" stroke="#2e6e5a" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="906" cy="333" r="13" fill="#e06a3f"/>
+  <!-- タグライン -->
+  <text x="104" y="430" font-family="Hiragino Kaku Gothic ProN, sans-serif" font-size="30" letter-spacing="6" fill="#6f6b63">仕事に、道筋を。</text>
+  <text x="106" y="486" font-family="Helvetica Neue, Arial, sans-serif" font-size="18" letter-spacing="7" fill="#a9a49a">WORKFLOWS, RE-DESIGNED.</text>
 </svg>
