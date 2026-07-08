@@ -31,31 +31,58 @@ const principles = [
 ];
 
 const overview = [
-  { key: "名称", value: SITE.brandJa },
-  { key: "英文表記", value: "MICHIKAKU" },
-  { key: "代表者", value: SITE.representative },
+  { key: "屋号", value: SITE.brandJa },
+  { key: "代表", value: SITE.representative },
   {
     key: "事業内容",
     value:
-      "DX構想・業務設計、営業・顧客管理改善、バックオフィス改善、AI活用支援、データ可視化、運用定着支援",
+      "業務設計、営業・顧客管理改善、バックオフィス改善、AI活用支援、データ可視化、運用定着支援",
   },
   { key: "対応形式", value: "オンライン / 必要に応じて対面相談" },
   { key: "対応企業", value: "地域企業、中小企業、成長企業" },
-  { key: "設立", value: "2026年" },
+  { key: "活動開始", value: "2026年" },
   { key: "お問い合わせ", value: "フォームより受付" },
+];
+
+const career = [
+  {
+    tag: "HR Tech",
+    roles: ["インサイドセールス", "フィールドセールス", "プロダクト開発"],
+    body: "大手人材会社の経営企画本部にて、HR Techサービスのインサイドセールス、フィールドセールス、プロダクト開発に従事。営業現場とプロダクトの両面から事業成長に携わる。",
+  },
+  {
+    tag: "SaaS ERP",
+    roles: ["営業企画", "プロダクト企画", "CX", "Salesforce", "Marketo"],
+    body: "クラウドサービス企業にて、SaaS型ERPサービスの営業企画、プロダクト企画、カスタマーエクスペリエンスを担当。SalesforceやMarketoを活用したマーケティング・営業プロセスの設計、機能改善、新規ビジネス開発、サポート体制の構築を推進。",
+  },
+  {
+    tag: "Service Leadership",
+    roles: ["サービス責任者", "プロダクト", "営業", "顧客体験"],
+    body: "ジョブカン経費精算/ワークフローのサービス責任者として、プロダクト、営業、顧客体験を横断して事業成長をリード。プロダクトの競争力強化と市場拡大に取り組む。",
+  },
+  {
+    tag: "CRM / DX Support",
+    roles: ["CRM活用", "営業改革", "業務改善", "DX推進"],
+    body: "現在は外資系CRM企業にて、法人企業のCRM活用、営業改革、業務改善、DX推進を支援。",
+  },
+  {
+    tag: "ミチカク",
+    roles: ["営業", "マーケティング", "プロダクト", "CX", "事業責任"],
+    body: "営業、マーケティング、プロダクト、CX、事業責任の経験を活かし、ツール導入で終わらない、現場に根づくデジタル活用を支援する。",
+  },
 ];
 ---
 
 <Base
-  title="会社概要 | ミチカク"
-  description="ミチカクの概要。私たちの考え方、代表プロフィール、事業内容、対応形式をご紹介します。"
+  title="ミチカクについて | ミチカク"
+  description="ミチカクの事業概要。私たちの考え方、代表プロフィール、経歴、事業内容、対応形式をご紹介します。"
 >
   <Header />
   <main>
     <PageIntro
-      label="Company"
-      titleEn="Company"
-      titleJa="会社概要"
+      label="About"
+      titleEn="About"
+      titleJa="ミチカクについて"
       lead="私たちは、業務とデータの流れを整え、事業が動く仕組みをつくります。"
     />
 
@@ -129,12 +156,44 @@ const overview = [
       </div>
     </section>
 
-    <!-- 会社概要テーブル -->
+    <!-- Career -->
+    <section class="section career">
+      <div class="container">
+        <p class="en-label reveal">Career</p>
+        <h2 class="career__title en-display reveal" style="--reveal-delay: 0.1s">
+          Career
+        </h2>
+        <p class="career__sub reveal" style="--reveal-delay: 0.2s">
+          営業、プロダクト、顧客体験、事業成長の接点で。
+        </p>
+
+        <ol class="career__timeline">
+          {
+            career.map((item, i) => (
+              <li class="career__entry reveal" style={`--reveal-delay: ${i * 0.08}s`}>
+                <span class="career__marker" aria-hidden="true" />
+                <div class="career__head">
+                  <span class="career__tag">{item.tag}</span>
+                  <ul class="career__roles" aria-label="担当領域">
+                    {item.roles.map((role) => (
+                      <li>{role}</li>
+                    ))}
+                  </ul>
+                </div>
+                <p class="career__body">{item.body}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <!-- 事業概要テーブル -->
     <section class="section overview">
       <div class="container">
         <p class="en-label overview__label reveal">Overview</p>
         <h2 class="heading-ja overview__heading reveal" style="--reveal-delay: 0.1s">
-          会社概要
+          事業概要
         </h2>
 
         <dl class="overview__table reveal" style="--reveal-delay: 0.2s">
@@ -305,9 +364,109 @@ const overview = [
     margin-top: 1.8em;
   }
 
-  /* --- 会社概要テーブル --- */
+  /* --- Career --- */
+  .career {
+    background: var(--c-base);
+    border-block: 1px solid var(--line);
+  }
+
+  .career__title {
+    margin-top: 36px;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 200;
+  }
+
+  .career__sub {
+    margin-top: 20px;
+    font-size: 13.5px;
+    letter-spacing: 0.12em;
+    color: var(--c-sub);
+  }
+
+  .career__timeline {
+    margin-top: 72px;
+    list-style: none;
+    position: relative;
+    max-width: 800px;
+  }
+
+  .career__timeline::before {
+    content: "";
+    position: absolute;
+    left: 3px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: var(--c-hairline);
+  }
+
+  .career__entry {
+    position: relative;
+    padding: 0 0 clamp(48px, 6vw, 72px) clamp(40px, 5vw, 64px);
+  }
+
+  .career__entry:last-child {
+    padding-bottom: 0;
+  }
+
+  .career__marker {
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    border: 1px solid var(--c-blue);
+    background: var(--c-base);
+  }
+
+  .career__entry:last-child .career__marker {
+    background: var(--c-blue);
+  }
+
+  .career__head {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .career__tag {
+    font-family: var(--font-en);
+    font-weight: 400;
+    font-size: 17px;
+    letter-spacing: 0.14em;
+  }
+
+  /* 担当領域のチップ */
+  .career__roles {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .career__roles li {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--c-sub);
+    background: var(--c-white);
+    border: 1px solid var(--c-hairline);
+    border-radius: 999px;
+    padding: 3px 12px;
+  }
+
+  .career__body {
+    margin-top: 16px;
+    font-size: 13.5px;
+    line-height: 2.3;
+    color: var(--c-sub);
+    max-width: 660px;
+  }
+
+  /* --- 事業概要テーブル --- */
   .overview {
-    background: var(--c-black);
+    background: var(--c-white);
   }
 
   .overview__heading {

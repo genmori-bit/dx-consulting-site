@@ -1,9 +1,11 @@
 ---
 interface Props {
   label?: string;
+  /** 「よくある相談例」を表示する(/services/ で使用) */
+  showExamples?: boolean;
 }
 
-const { label = "02 / Domains" } = Astro.props;
+const { label = "02 / Domains", showExamples = false } = Astro.props;
 
 const domains = [
   {
@@ -15,6 +17,8 @@ const domains = [
       "営業、顧客管理、案件管理、問い合わせ、見積、受注、営業会議を整理します。",
       "CRM/SFAを必要に応じて活用し、営業活動が見える状態をつくります。",
     ],
+    example:
+      "営業案件をExcelで管理していて、案件状況や次アクションが見えない。",
   },
   {
     num: "02",
@@ -25,6 +29,8 @@ const domains = [
       "経理、人事、総務、契約、請求、勤怠、経費、申請・承認などを整理します。",
       "手作業、二重入力、属人化を減らし、少ない人数でも回る業務フローをつくります。",
     ],
+    example:
+      "請求、申請、承認、経費精算が人によって違い、確認作業に時間がかかっている。",
   },
   {
     num: "03",
@@ -35,6 +41,8 @@ const domains = [
       "売上、粗利、案件状況、工数、請求、入金、KPIなどを整理します。",
       "経営判断に必要な数字が自然に集まる状態をつくります。",
     ],
+    example:
+      "売上、粗利、案件見込み、入金状況が別々の場所にあり、会議のたびに集計している。",
   },
 ];
 ---
@@ -68,6 +76,12 @@ const domains = [
                 <p>{paragraph}</p>
               ))}
             </div>
+            {showExamples && (
+              <div class="domains__example">
+                <span class="domains__example-label">よくある相談例</span>
+                <p class="domains__example-body">「{domain.example}」</p>
+              </div>
+            )}
             <span class="domains__rule" aria-hidden="true" />
           </article>
         ))
@@ -220,6 +234,34 @@ const domains = [
 
   .domains__body p + p {
     margin-top: 1.2em;
+  }
+
+  /* よくある相談例(付箋風のメモ) */
+  .domains__example {
+    margin-top: 28px;
+    max-width: 560px;
+    background: var(--c-base);
+    border: 1px solid var(--c-hairline);
+    border-radius: 8px;
+    padding: 18px 22px;
+  }
+
+  .domains__paper--blue .domains__example { border-left: 3px solid var(--c-blue); }
+  .domains__paper--green .domains__example { border-left: 3px solid var(--c-green); }
+  .domains__paper--orange .domains__example { border-left: 3px solid var(--c-orange); }
+
+  .domains__example-label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--c-sub);
+  }
+
+  .domains__example-body {
+    margin-top: 8px;
+    font-size: 13.5px;
+    line-height: 2;
+    letter-spacing: 0.06em;
   }
 
   /* ホバーで伸びる細い線 */
