@@ -1,56 +1,62 @@
 ---
 /**
- * Hero — 散らばった業務ワード(付箋)が白い余白の中で漂い、
- * 読み込み後に細い線でつながって「仕事の流れが整理されていく」様子を見せる。
- * 座標は 0-100 の共通空間(チップの left/top % と SVG viewBox が対応)。
+ * Hero — Scattered Work → Clear Path
+ * 散らばった業務ワード(紙片)が、3つのレーン(顧客接点/社内業務/経営判断)へ
+ * 滑らかに整理され、Data Layer を通って経営判断へつながる業務マップ。
+ *
+ * 実装:チップはレーン内の最終位置に通常フローで配置し、
+ * 初期状態だけ transform(--dx/--dy/--r)で散乱させておき、CSSアニメーションで整列させる。
+ * 絡まった線(SVG)は描画→ほどけて消え、構造の線が伸びる。
  */
-const words = [
-  { t: "案件管理", x: 60, y: 16, tone: "blue", d: 0.9, f: 9 },
-  { t: "請求", x: 77, y: 10, tone: "plain", d: 1.1, f: 11 },
-  { t: "承認", x: 90, y: 22, tone: "plain", d: 1.3, f: 10 },
-  { t: "会議", x: 64, y: 38, tone: "yellow", d: 1.0, f: 12 },
-  { t: "顧客情報", x: 84, y: 46, tone: "plain", d: 1.2, f: 9.5 },
-  { t: "KPI", x: 62, y: 60, tone: "plain", d: 1.4, f: 10.5 },
-  { t: "経費", x: 88, y: 66, tone: "plain", d: 1.5, f: 11.5 },
-  { t: "AI", x: 68, y: 80, tone: "orange", d: 1.6, f: 9 },
-  { t: "CRM", x: 84, y: 88, tone: "blue", d: 1.7, f: 10 },
+const lanes = [
+  {
+    id: "front",
+    en: "Front Office",
+    ja: "顧客接点",
+    items: [
+      { t: "顧客情報", dx: 210, dy: 150, r: -7 },
+      { t: "案件管理", dx: 60, dy: 300, r: 5 },
+      { t: "商談", dx: 300, dy: 40, r: 9 },
+      { t: "見積", dx: 150, dy: 230, r: -5 },
+      { t: "CRM", dx: 330, dy: 330, r: -10 },
+    ],
+  },
+  {
+    id: "back",
+    en: "Back Office",
+    ja: "社内業務",
+    items: [
+      { t: "承認", dx: -260, dy: 90, r: 6 },
+      { t: "請求", dx: -40, dy: 260, r: -8 },
+      { t: "経費", dx: -180, dy: 340, r: 4 },
+      { t: "契約", dx: 40, dy: 170, r: -4 },
+      { t: "勤怠", dx: -300, dy: 220, r: 8 },
+    ],
+  },
 ];
 
-const netPoints = words.map((w) => `${w.x},${w.y}`).join(" ");
+const mgmt = {
+  en: "Management",
+  ja: "経営判断",
+  items: [
+    { t: "会議", dx: 120, dy: -330, r: -6 },
+    { t: "KPI", dx: -60, dy: -180, r: 7 },
+    { t: "売上", dx: 220, dy: -260, r: -9 },
+    { t: "粗利", dx: -160, dy: -300, r: 5 },
+    { t: "レポート", dx: 40, dy: -120, r: -5 },
+  ],
+};
+
+let chipIndex = 0;
+const chipStyle = (item: { dx: number; dy: number; r: number }) =>
+  `--dx: ${item.dx}px; --dy: ${item.dy}px; --r: ${item.r}deg; --i: ${chipIndex++}`;
 ---
 
 <section class="hero" id="top">
   <div class="hero__bg" aria-hidden="true"></div>
 
-  <!-- 漂う業務ワードと、それをつなぐ細い線 -->
-  <div class="hero__desk" aria-hidden="true">
-    <svg
-      class="hero__net"
-      viewBox="0 0 100 100"
-      preserveAspectRatio="none"
-      fill="none"
-    >
-      <polyline
-        class="hero__net-line"
-        points={netPoints}
-        vector-effect="non-scaling-stroke"></polyline>
-    </svg>
-    <ul class="hero__words">
-      {
-        words.map((word) => (
-          <li
-            class:list={["hero__word", `hero__word--${word.tone}`]}
-            style={`--x: ${word.x}%; --y: ${word.y}%; --d: ${word.d}s; --f: ${word.f}s`}
-          >
-            <span class="hero__chip">{word.t}</span>
-          </li>
-        ))
-      }
-    </ul>
-  </div>
-
   <div class="container hero__inner">
-    <p class="en-label reveal">Operations / Data / Systems</p>
+    <p class="en-label reveal">Scattered Work / Clear Path</p>
 
     <h1 class="hero__title en-display">
       <span class="hero__line">
@@ -63,24 +69,102 @@ const netPoints = words.map((w) => `${w.x},${w.y}`).join(" ");
       </span>
     </h1>
 
-    <div class="hero__copywrap">
-      <p class="hero__copy reveal" style="--reveal-delay: 0.75s">
-        仕事の流れを、整える。
-      </p>
+    <div class="hero__row">
+      <div class="hero__copywrap">
+        <p class="hero__copy reveal" style="--reveal-delay: 0.75s">
+          仕事の流れを、整える。
+        </p>
 
-      <p class="hero__sub reveal" style="--reveal-delay: 0.9s">
-        営業、管理部門、経営判断。<br />
-        会社の中に散らばった業務と情報をつなぎ、<br class="pc-only" />
-        少ない人数でも前に進める仕組みをつくります。
-      </p>
+        <p class="hero__sub reveal" style="--reveal-delay: 0.9s">
+          営業、管理部門、経営判断。<br />
+          会社の中に散らばった業務と情報をつなぎ、<br class="pc-only" />
+          少ない人数でも前に進める仕組みをつくります。
+        </p>
 
-      <div class="hero__actions reveal" style="--reveal-delay: 1.05s">
-        <a href="#contact" class="btn btn--primary cta-flow"
-          >相談する<span class="cta-arrow" aria-hidden="true">→</span></a
+        <div class="hero__actions reveal" style="--reveal-delay: 1.05s">
+          <a href="#contact" class="btn btn--primary cta-flow"
+            >相談する<span class="cta-arrow" aria-hidden="true">→</span></a
+          >
+          <a href="#domains" class="btn btn--ghost cta-flow"
+            >支援内容を見る<span class="cta-arrow" aria-hidden="true">→</span></a
+          >
+        </div>
+      </div>
+
+      <!-- 業務マップ:散らばり → 3レーン → Data Layer → 経営判断 -->
+      <div
+        class="hero__map"
+        role="img"
+        aria-label="散らばった業務が、顧客接点・社内業務・経営判断の3つのレーンに整理され、データ基盤を通じて経営判断へつながる図"
+      >
+        <!-- 絡まった線(未整理の状態) -->
+        <svg
+          class="hero__tangle"
+          viewBox="0 0 480 470"
+          preserveAspectRatio="none"
+          fill="none"
+          aria-hidden="true"
         >
-        <a href="#domains" class="btn btn--ghost cta-flow"
-          >支援内容を見る<span class="cta-arrow" aria-hidden="true">→</span></a
-        >
+          <path
+            class="tangle tangle--1"
+            d="M20 80 C 180 140, 120 320, 320 260 S 460 120, 430 60"></path>
+          <path
+            class="tangle tangle--2"
+            d="M60 400 C 200 300, 260 140, 440 220"></path>
+          <path
+            class="tangle tangle--3"
+            d="M240 30 C 100 180, 380 320, 180 430"></path>
+        </svg>
+
+        <div class="hero__lanes" aria-hidden="true">
+          {
+            lanes.map((lane) => (
+              <section class:list={["lane", `lane--${lane.id}`]}>
+                <header class="lane__head">
+                  <span class="lane__en">{lane.en}</span>
+                  <span class="lane__ja">{lane.ja}</span>
+                </header>
+                <ul class="lane__items">
+                  {lane.items.map((item) => (
+                    <li class="chip" style={chipStyle(item)}>
+                      {item.t}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))
+          }
+
+          <!-- 顧客接点・社内業務 → Data Layer -->
+          <div class="hero__conn hero__conn--pair">
+            <span class="hero__vline"></span>
+            <span class="hero__vline hero__vline--2"></span>
+          </div>
+
+          <div class="hero__databand">
+            <span class="hero__databand-en">Data Layer</span>
+            <span class="hero__databand-ja">データ基盤</span>
+          </div>
+
+          <!-- Data Layer → 経営判断 -->
+          <div class="hero__conn hero__conn--single">
+            <span class="hero__vline hero__vline--3"></span>
+          </div>
+
+          <section class="lane lane--mgmt">
+            <header class="lane__head">
+              <span class="lane__en">{mgmt.en}</span>
+              <span class="lane__ja">{mgmt.ja}</span>
+            </header>
+            <ul class="lane__items lane__items--row">
+              {mgmt.items.map((item) => (
+                <li class="chip" style={chipStyle(item)}>
+                  {item.t}
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
       </div>
     </div>
   </div>
@@ -124,112 +208,17 @@ const netPoints = words.map((w) => `${w.x},${w.y}`).join(" ");
     );
   }
 
-  /* --- 業務ワードのデスク(右側の空間) --- */
-  .hero__desk {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  }
-
-  .hero__net {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .hero__net-line {
-    stroke: var(--c-blue);
-    stroke-opacity: 0.35;
-    stroke-width: 1;
-    stroke-dasharray: 400;
-    stroke-dashoffset: 400;
-    animation: net-draw 2.6s cubic-bezier(0.16, 1, 0.3, 1) 1.9s forwards;
-  }
-
-  .hero__words {
-    position: absolute;
-    inset: 0;
-    list-style: none;
-  }
-
-  .hero__word {
-    position: absolute;
-    left: var(--x);
-    top: var(--y);
-    translate: -50% -50%;
-  }
-
-  .hero__chip {
-    display: inline-block;
-    padding: 7px 16px;
-    background: var(--c-white);
-    border: 1px solid var(--c-hairline);
-    border-radius: 7px;
-    box-shadow: 0 6px 18px rgba(30, 30, 26, 0.06);
-    font-size: 12px;
-    letter-spacing: 0.14em;
-    color: var(--c-sub);
-    opacity: 0;
-    animation: chip-in 0.9s ease var(--d) forwards,
-      chip-float var(--f) ease-in-out calc(var(--d) + 0.9s) infinite alternate;
-  }
-
-  .hero__word--yellow .hero__chip {
-    background: rgba(244, 208, 111, 0.32);
-    border-color: rgba(212, 172, 74, 0.45);
-    color: #7a6425;
-  }
-
-  .hero__word--blue .hero__chip {
-    background: rgba(76, 125, 255, 0.07);
-    border-color: rgba(76, 125, 255, 0.35);
-    color: #3d63cc;
-  }
-
-  .hero__word--orange .hero__chip {
-    background: rgba(240, 138, 75, 0.09);
-    border-color: rgba(240, 138, 75, 0.45);
-    color: #c06428;
-  }
-
-  @keyframes chip-in {
-    from {
-      opacity: 0;
-      transform: translateY(14px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes chip-float {
-    from {
-      transform: translateY(0);
-    }
-    to {
-      transform: translateY(-9px);
-    }
-  }
-
-  @keyframes net-draw {
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
-
   /* --- コンテンツ --- */
   .hero__inner {
     position: relative;
     z-index: 1;
     width: 100%;
-    padding-top: 140px;
-    padding-bottom: 96px;
+    padding-top: 132px;
+    padding-bottom: 88px;
   }
 
   .hero__title {
-    font-size: clamp(56px, 12vw, 168px);
+    font-size: clamp(52px, 10.5vw, 148px);
     font-weight: 200;
     color: var(--c-text);
   }
@@ -262,12 +251,19 @@ const netPoints = words.map((w) => `${w.x},${w.y}`).join(" ");
     }
   }
 
+  .hero__row {
+    margin-top: clamp(44px, 5vw, 64px);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 480px);
+    gap: clamp(48px, 6vw, 104px);
+    align-items: start;
+  }
+
   .hero__copywrap {
     max-width: 560px;
   }
 
   .hero__copy {
-    margin-top: clamp(48px, 6vw, 72px);
     font-size: clamp(17px, 2.2vw, 22px);
     font-weight: 500;
     letter-spacing: 0.14em;
@@ -281,7 +277,7 @@ const netPoints = words.map((w) => `${w.x},${w.y}`).join(" ");
   }
 
   .hero__actions {
-    margin-top: 56px;
+    margin-top: 52px;
     display: flex;
     gap: 18px;
     flex-wrap: wrap;
@@ -305,8 +301,8 @@ const netPoints = words.map((w) => `${w.x},${w.y}`).join(" ");
   }
 
   .btn--primary:hover {
-    background: var(--c-blue);
-    border-color: var(--c-blue);
+    background: #2e6e5a;
+    border-color: #2e6e5a;
     color: #fff;
     translate: 0 -2px;
   }
@@ -320,6 +316,271 @@ const netPoints = words.map((w) => `${w.x},${w.y}`).join(" ");
   .btn--ghost:hover {
     border-color: var(--c-text);
     translate: 0 -2px;
+  }
+
+  /* ==========================================================
+     業務マップ
+     ========================================================== */
+  .hero__map {
+    position: relative;
+  }
+
+  /* --- 絡まった線:描かれて、ほどけて消える --- */
+  .hero__tangle {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .tangle {
+    stroke-width: 1;
+    stroke-dasharray: 760;
+    stroke-dashoffset: 760;
+    animation: tangle-life 2.6s ease-in-out forwards;
+  }
+
+  .tangle--1 {
+    stroke: rgba(30, 30, 26, 0.28);
+    animation-delay: 0.25s;
+  }
+
+  .tangle--2 {
+    stroke: rgba(224, 103, 60, 0.5);
+    animation-delay: 0.45s;
+  }
+
+  .tangle--3 {
+    stroke: rgba(30, 30, 26, 0.2);
+    animation-delay: 0.6s;
+  }
+
+  /* 描画(0→) → 保持 → 前方へほどけて消える(→ -760) */
+  @keyframes tangle-life {
+    0% {
+      stroke-dashoffset: 760;
+      opacity: 1;
+    }
+    30% {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+    62% {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+    100% {
+      stroke-dashoffset: -760;
+      opacity: 0;
+    }
+  }
+
+  /* --- レーン構造 --- */
+  .hero__lanes {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "front back"
+      "conn conn"
+      "data data"
+      "conn2 conn2"
+      "mgmt mgmt";
+    column-gap: 18px;
+  }
+
+  .lane--front { grid-area: front; }
+  .lane--back { grid-area: back; }
+  .lane--mgmt { grid-area: mgmt; }
+
+  /* トレイ(紙片の受け皿)。枠は整列後に現れる */
+  .lane {
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 14px 14px 16px;
+    animation: lane-in 0.9s ease 2.6s forwards;
+  }
+
+  @keyframes lane-in {
+    to {
+      border-color: var(--c-hairline);
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: 0 10px 30px rgba(30, 30, 26, 0.05);
+    }
+  }
+
+  .lane__head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding-bottom: 10px;
+    opacity: 0;
+    animation: fade-in 0.8s ease 2.7s forwards;
+  }
+
+  .lane__en {
+    font-family: var(--font-en);
+    font-weight: 400;
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #2e6e5a;
+  }
+
+  .lane__ja {
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    color: var(--c-sub);
+  }
+
+  .lane__items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .lane__items--row {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  /* --- 紙片チップ --- */
+  .chip {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 6px 14px;
+    background: var(--c-white);
+    border: 1px solid var(--c-hairline);
+    border-radius: 6px;
+    box-shadow: 0 5px 14px rgba(30, 30, 26, 0.06);
+    font-size: 11.5px;
+    letter-spacing: 0.12em;
+    color: var(--c-text);
+    opacity: 0;
+    /* 散らばった位置(--dx/--dy/--r)から、レーン内の定位置へ */
+    animation: chip-in 0.5s ease calc(0.15s + var(--i) * 0.05s) forwards,
+      chip-settle 1.5s cubic-bezier(0.22, 1, 0.36, 1)
+        calc(1.75s + var(--i) * 0.04s) both,
+      chip-float 9s ease-in-out calc(3.8s + var(--i) * 0.35s) infinite
+        alternate;
+  }
+
+  @keyframes chip-in {
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes chip-settle {
+    from {
+      transform: translate(var(--dx), var(--dy)) rotate(var(--r));
+    }
+    to {
+      transform: translate(0, 0) rotate(0deg);
+    }
+  }
+
+  /* 整列後の、ごく軽い浮遊 */
+  @keyframes chip-float {
+    from {
+      translate: 0 0;
+    }
+    to {
+      translate: 0 -4px;
+    }
+  }
+
+  @keyframes fade-in {
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* --- 流れの線(トレイ → Data Layer → 経営判断) --- */
+  .hero__conn {
+    position: relative;
+    height: 26px;
+  }
+
+  .hero__conn--pair { grid-area: conn; }
+  .hero__conn--single { grid-area: conn2; height: 24px; }
+
+  .hero__vline {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: rgba(46, 110, 90, 0.55);
+    transform: scaleY(0);
+    transform-origin: top;
+    animation: line-grow 0.6s ease 3s forwards;
+  }
+
+  .hero__conn--pair .hero__vline { left: 25%; }
+  .hero__conn--pair .hero__vline--2 { left: 75%; animation-delay: 3.15s; }
+  .hero__conn--single .hero__vline--3 { left: 50%; animation-delay: 3.5s; }
+
+  @keyframes line-grow {
+    to {
+      transform: scaleY(1);
+    }
+  }
+
+  /* --- Data Layer --- */
+  .hero__databand {
+    grid-area: data;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 14px;
+    padding: 12px 16px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    opacity: 0;
+    animation: databand-in 0.8s ease 3.2s forwards;
+  }
+
+  @keyframes databand-in {
+    to {
+      opacity: 1;
+      border-color: rgba(46, 110, 90, 0.55);
+      background: rgba(46, 110, 90, 0.05);
+    }
+  }
+
+  .hero__databand-en {
+    font-family: var(--font-en);
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: #2e6e5a;
+  }
+
+  .hero__databand-ja {
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    color: var(--c-sub);
+  }
+
+  /* Management レーンだけ、道筋の終点(オレンジの点)を持つ */
+  .lane--mgmt {
+    position: relative;
+  }
+
+  .lane--mgmt::after {
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: calc(50% - 3.5px);
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #e0673c;
+    opacity: 0;
+    animation: fade-in 0.5s ease 4s forwards;
   }
 
   /* --- スクロールインジケーター --- */
@@ -349,20 +610,31 @@ const netPoints = words.map((w) => `${w.x},${w.y}`).join(" ");
     background: linear-gradient(var(--c-hairline), transparent);
   }
 
+  /* ==========================================================
+     レスポンシブ / reduced-motion
+     ========================================================== */
   @media (max-width: 960px) {
+    .hero__row {
+      grid-template-columns: 1fr;
+    }
+
+    .hero__map {
+      max-width: 480px;
+    }
+
     .hero__scroll {
       display: none;
     }
   }
 
-  /* --- スマホ:動きと要素を簡略化 --- */
+  /* スマホ:散乱アニメーションを省き、静的な3レーン図に */
   @media (max-width: 720px) {
     .pc-only {
       display: none;
     }
 
     .hero__inner {
-      padding-top: 120px;
+      padding-top: 116px;
     }
 
     .btn {
@@ -371,19 +643,51 @@ const netPoints = words.map((w) => `${w.x},${w.y}`).join(" ");
       padding-inline: 20px;
     }
 
-    /* チップは少数だけ、線は非表示 */
-    .hero__net {
+    .hero__map {
+      margin-top: 8px;
+    }
+
+    .hero__tangle {
       display: none;
     }
 
-    .hero__word:nth-child(n + 6) {
-      display: none;
+    .chip {
+      font-size: 10.5px;
+      padding: 5px 10px;
+      opacity: 1;
+      animation: none;
+      transform: none;
     }
 
-    .hero__chip {
-      font-size: 11px;
-      padding: 5px 12px;
-      animation: chip-in 0.9s ease var(--d) forwards;
+    .lane,
+    .lane__head,
+    .hero__databand {
+      animation: none;
+    }
+
+    .lane {
+      border-color: var(--c-hairline);
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .lane__head {
+      opacity: 1;
+    }
+
+    .hero__databand {
+      opacity: 1;
+      border-color: rgba(46, 110, 90, 0.55);
+      background: rgba(46, 110, 90, 0.05);
+    }
+
+    .hero__vline {
+      animation: none;
+      transform: scaleY(1);
+    }
+
+    .lane--mgmt::after {
+      animation: none;
+      opacity: 1;
     }
   }
 
@@ -392,13 +696,43 @@ const netPoints = words.map((w) => `${w.x},${w.y}`).join(" ");
       animation: none;
       transform: none;
     }
-    .hero__chip {
+
+    .hero__tangle {
+      display: none;
+    }
+
+    .chip {
       animation: none;
       opacity: 1;
+      transform: none;
     }
-    .hero__net-line {
+
+    .lane,
+    .lane__head,
+    .hero__databand,
+    .hero__vline,
+    .lane--mgmt::after {
       animation: none;
-      stroke-dashoffset: 0;
+    }
+
+    .lane {
+      border-color: var(--c-hairline);
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .lane__head,
+    .hero__databand,
+    .lane--mgmt::after {
+      opacity: 1;
+    }
+
+    .hero__databand {
+      border-color: rgba(46, 110, 90, 0.55);
+      background: rgba(46, 110, 90, 0.05);
+    }
+
+    .hero__vline {
+      transform: scaleY(1);
     }
   }
 </style>
