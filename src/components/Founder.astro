@@ -33,16 +33,6 @@ const career = [
     </h2>
 
     <div class="founder__intro">
-      <!--
-        代表写真の差し替え:下の .founder__photo-inner を
-        <img src="..." alt="代表 毛利元樹" /> に置き換えてください。
-      -->
-      <figure class="founder__photo reveal" style="--reveal-delay: 0.2s">
-        <div class="founder__photo-inner">
-          <span>Photo</span>
-        </div>
-      </figure>
-
       <div class="founder__text">
         <p class="founder__name reveal" style="--reveal-delay: 0.25s">
           <span class="founder__role">代表</span>
@@ -95,48 +85,12 @@ const career = [
     margin-top: 36px;
   }
 
-  /* --- 紹介(写真+メッセージ) --- */
+  /* --- 紹介(名前+メッセージのみで編集的に) --- */
   .founder__intro {
     margin-top: 88px;
-    display: grid;
-    grid-template-columns: minmax(220px, 300px) 1fr;
-    gap: clamp(40px, 6vw, 96px);
-    align-items: start;
-  }
-
-  /* 写真の余白(ポラロイド風の白フチ) */
-  .founder__photo {
-    background: var(--c-white);
-    border: 1px solid var(--c-hairline);
-    border-radius: 10px;
-    box-shadow: var(--shadow-paper);
-    padding: 12px 12px 40px;
-    rotate: -1.2deg;
-    transition-property: opacity, transform, rotate, translate;
-  }
-
-  @media (hover: hover) {
-    .founder__photo:hover {
-      rotate: 0deg;
-      translate: 0 -3px;
-    }
-  }
-
-  .founder__photo-inner {
-    aspect-ratio: 3 / 3.6;
-    background: #eeebe1;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .founder__photo-inner span {
-    font-family: var(--font-en);
-    font-size: 11px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--c-sub);
+    max-width: 680px;
+    border-left: 1.5px solid rgba(224, 103, 60, 0.6);
+    padding-left: clamp(24px, 4vw, 48px);
   }
 
   .founder__name {
@@ -202,14 +156,15 @@ const career = [
     max-width: 760px;
   }
 
+  /* 道筋がCareerの縦タイムラインへ続く */
   .founder__timeline::before {
     content: "";
     position: absolute;
     left: 3px;
     top: 8px;
     bottom: 8px;
-    width: 1px;
-    background: var(--c-hairline);
+    width: 1.5px;
+    background: rgba(224, 103, 60, 0.55);
   }
 
   .founder__entry {
@@ -228,12 +183,14 @@ const career = [
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    border: 1px solid var(--c-blue);
+    border: 1px solid #e0673c;
     background: var(--c-base);
   }
 
+  /* 現在地(ミチカク)は緑の点 */
   .founder__entry:last-child .founder__marker {
-    background: var(--c-blue);
+    border-color: #2e6e5a;
+    background: #2e6e5a;
   }
 
   .founder__tag {
@@ -253,11 +210,7 @@ const career = [
 
   @media (max-width: 720px) {
     .founder__intro {
-      grid-template-columns: 1fr;
-    }
-
-    .founder__photo {
-      max-width: 260px;
+      padding-left: 20px;
     }
   }
 </style>

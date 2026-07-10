@@ -57,6 +57,22 @@ const domains = [
       顧客接点、社内業務、経営判断。3つの領域で、会社の仕事の流れを整えます。
     </p>
 
+    <!-- 道筋:一本の線が3方向へ分岐する -->
+    <svg
+      class="domains__fork reveal"
+      viewBox="0 0 220 92"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path class="fork fork--stem" d="M 110 2 V 26"></path>
+      <path class="fork fork--b" d="M 110 26 C 110 50, 32 52, 24 88"></path>
+      <path class="fork fork--b" style="--fd: 0.5s" d="M 110 26 V 88"></path>
+      <path
+        class="fork fork--b"
+        style="--fd: 0.6s"
+        d="M 110 26 C 110 50, 188 52, 196 88"></path>
+    </svg>
+
     <!-- 3枚の紙面が少し重なる -->
     <div class="domains__stack">
       {
@@ -103,9 +119,48 @@ const domains = [
     margin-top: 32px;
   }
 
+  /* --- 分岐する道筋 --- */
+  .domains__fork {
+    display: block;
+    width: 200px;
+    height: 84px;
+    margin-top: 72px;
+  }
+
+  .fork {
+    stroke: rgba(224, 103, 60, 0.85);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-dasharray: 130;
+    stroke-dashoffset: 130;
+    transition: stroke-dashoffset 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--fd, 0.4s);
+  }
+
+  .fork--stem {
+    transition-delay: 0.15s;
+  }
+
+  .domains__fork.is-visible .fork {
+    stroke-dashoffset: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fork {
+      transition: none;
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .domains__fork {
+      display: none;
+    }
+  }
+
   /* --- 重なる紙面 --- */
   .domains__stack {
-    margin-top: 104px;
+    margin-top: 56px;
     display: flex;
     flex-direction: column;
   }

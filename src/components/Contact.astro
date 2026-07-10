@@ -22,6 +22,17 @@ import { SITE } from "../config";
           <li class="reveal" style="--reveal-delay: 0.54s">ツールありきの提案は行いません</li>
           <li class="reveal" style="--reveal-delay: 0.62s">初回相談は無料です</li>
         </ul>
+
+        <!-- 道筋の終着:線が矢印に変わり、CTAへ -->
+        <svg
+          class="contact__michi reveal"
+          viewBox="0 0 220 24"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path class="cm cm--line" d="M 2 12 H 198"></path>
+          <path class="cm cm--head" d="M 188 4 L 204 12 L 188 20"></path>
+        </svg>
       </div>
 
       <form
@@ -138,6 +149,48 @@ import { SITE } from "../config";
 
   .contact__points li:last-child {
     border-bottom: 1px solid var(--line);
+  }
+
+  /* --- 道筋の終着(フォームへ向かう矢印) --- */
+  .contact__michi {
+    display: block;
+    width: 200px;
+    height: 22px;
+    margin-top: 48px;
+  }
+
+  .cm {
+    stroke: rgba(224, 103, 60, 0.85);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 210;
+    stroke-dashoffset: 210;
+    transition: stroke-dashoffset 1s cubic-bezier(0.22, 1, 0.36, 1) 0.7s;
+  }
+
+  .cm--head {
+    stroke-dasharray: 40;
+    stroke-dashoffset: 40;
+    transition-delay: 1.5s;
+    transition-duration: 0.4s;
+  }
+
+  .contact__michi.is-visible .cm {
+    stroke-dashoffset: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cm {
+      transition: none;
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @media (max-width: 840px) {
+    .contact__michi {
+      display: none;
+    }
   }
 
   /* --- フォーム(白い紙面) --- */

@@ -575,8 +575,8 @@ const careerTimeline = [
     left: 3px;
     top: 8px;
     bottom: 8px;
-    width: 1px;
-    background: var(--c-hairline);
+    width: 1.5px;
+    background: rgba(224, 103, 60, 0.55);
   }
 
   .career__entry {
@@ -595,12 +595,14 @@ const careerTimeline = [
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    border: 1px solid var(--c-blue);
+    border: 1px solid #e0673c;
     background: var(--c-base);
   }
 
+  /* 現在地(ミチカク)は緑の点 */
   .career__entry:last-child .career__marker {
-    background: var(--c-blue);
+    border-color: #2e6e5a;
+    background: #2e6e5a;
   }
 
   .career__tag {

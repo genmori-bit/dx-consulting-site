@@ -11,7 +11,7 @@ import HeroMichiMap from "./HeroMichiMap.astro";
   <div class="hero__bg" aria-hidden="true"></div>
 
   <div class="container hero__inner">
-    <p class="en-label reveal">The Workflow Untangles.</p>
+    <p class="en-label reveal">散らばった仕事に、道筋を。</p>
 
     <h1 class="hero__title en-display">
       <span class="hero__line">
@@ -26,17 +26,17 @@ import HeroMichiMap from "./HeroMichiMap.astro";
 
     <div class="hero__row">
       <div class="hero__copywrap">
-        <p class="hero__copy reveal" style="--reveal-delay: 0.75s">
+        <p class="hero__copy reveal" style="--reveal-delay: 0.5s">
           仕事の流れを、整える。
         </p>
 
-        <p class="hero__sub reveal" style="--reveal-delay: 0.9s">
+        <p class="hero__sub reveal" style="--reveal-delay: 0.62s">
           営業、管理部門、経営判断。<br />
           会社の中に散らばった業務と情報をつなぎ、<br class="pc-only" />
           少ない人数でも前に進める仕組みをつくります。
         </p>
 
-        <div class="hero__actions reveal" style="--reveal-delay: 1.05s">
+        <div class="hero__actions reveal" style="--reveal-delay: 0.75s">
           <a href="#contact" class="btn btn--primary cta-flow"
             >相談する<span class="cta-arrow" aria-hidden="true">→</span></a
           >
@@ -94,12 +94,13 @@ import HeroMichiMap from "./HeroMichiMap.astro";
     position: relative;
     z-index: 1;
     width: 100%;
-    padding-top: 132px;
-    padding-bottom: 88px;
+    padding-top: 116px;
+    padding-bottom: 80px;
   }
 
+  /* ファーストビューにCTAとMichi Mapが収まるサイズ */
   .hero__title {
-    font-size: clamp(52px, 10.5vw, 148px);
+    font-size: clamp(48px, 9.5vw, 118px);
     font-weight: 200;
     color: var(--c-text);
   }
@@ -133,7 +134,7 @@ import HeroMichiMap from "./HeroMichiMap.astro";
   }
 
   .hero__row {
-    margin-top: clamp(44px, 5vw, 64px);
+    margin-top: clamp(36px, 4vw, 52px);
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(380px, 540px);
     gap: clamp(48px, 6vw, 104px);

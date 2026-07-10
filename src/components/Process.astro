@@ -134,10 +134,11 @@ const steps = [
     background: var(--line);
   }
 
+  /* スクロールに合わせて伸びる道筋(焼きオレンジ) */
   .process__fill {
     position: absolute;
     inset: 0;
-    background: var(--c-gold-dim);
+    background: rgba(224, 103, 60, 0.8);
     transform: scaleY(0);
     transform-origin: top;
     will-change: transform;
@@ -163,8 +164,14 @@ const steps = [
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    border: 1px solid var(--c-blue);
+    border: 1px solid #e0673c;
     background: var(--c-white);
+  }
+
+  /* 最終ステップ(Enable)は道筋の到達点=緑 */
+  .process__step:last-child .process__marker {
+    border-color: #2e6e5a;
+    background: #2e6e5a;
   }
 
   .process__num {
