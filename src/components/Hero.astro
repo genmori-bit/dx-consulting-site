@@ -1,62 +1,17 @@
 ---
 /**
- * Hero — Scattered Work → Clear Path
- * 散らばった業務ワード(紙片)が、3つのレーン(顧客接点/社内業務/経営判断)へ
- * 滑らかに整理され、Data Layer を通って経営判断へつながる業務マップ。
- *
- * 実装:チップはレーン内の最終位置に通常フローで配置し、
- * 初期状態だけ transform(--dx/--dy/--r)で散乱させておき、CSSアニメーションで整列させる。
- * 絡まった線(SVG)は描画→ほどけて消え、構造の線が伸びる。
+ * Hero — The Workflow Untangles.
+ * コピーは左、右にはMichi Map(散らばった業務が道筋に変わる業務地図)。
+ * 地図の実装は HeroMichiMap.astro に分離。
  */
-const lanes = [
-  {
-    id: "front",
-    en: "Front Office",
-    ja: "顧客接点",
-    items: [
-      { t: "顧客情報", dx: 210, dy: 150, r: -7 },
-      { t: "案件管理", dx: 60, dy: 300, r: 5 },
-      { t: "商談", dx: 300, dy: 40, r: 9 },
-      { t: "見積", dx: 150, dy: 230, r: -5 },
-      { t: "問い合わせ", dx: 330, dy: 330, r: -10 },
-    ],
-  },
-  {
-    id: "back",
-    en: "Back Office",
-    ja: "社内業務",
-    items: [
-      { t: "承認", dx: -260, dy: 90, r: 6 },
-      { t: "請求", dx: -40, dy: 260, r: -8 },
-      { t: "経費", dx: -180, dy: 340, r: 4 },
-      { t: "契約", dx: 40, dy: 170, r: -4 },
-      { t: "勤怠", dx: -300, dy: 220, r: 8 },
-    ],
-  },
-];
-
-const mgmt = {
-  en: "Management",
-  ja: "経営判断",
-  items: [
-    { t: "会議", dx: 120, dy: -330, r: -6 },
-    { t: "KPI", dx: -60, dy: -180, r: 7 },
-    { t: "売上", dx: 220, dy: -260, r: -9 },
-    { t: "粗利", dx: -160, dy: -300, r: 5 },
-    { t: "レポート", dx: 40, dy: -120, r: -5 },
-  ],
-};
-
-let chipIndex = 0;
-const chipStyle = (item: { dx: number; dy: number; r: number }) =>
-  `--dx: ${item.dx}px; --dy: ${item.dy}px; --r: ${item.r}deg; --i: ${chipIndex++}`;
+import HeroMichiMap from "./HeroMichiMap.astro";
 ---
 
 <section class="hero" id="top">
   <div class="hero__bg" aria-hidden="true"></div>
 
   <div class="container hero__inner">
-    <p class="en-label reveal">Scattered Work / Clear Path</p>
+    <p class="en-label reveal">The Workflow Untangles.</p>
 
     <h1 class="hero__title en-display">
       <span class="hero__line">
@@ -91,81 +46,7 @@ const chipStyle = (item: { dx: number; dy: number; r: number }) =>
         </div>
       </div>
 
-      <!-- 業務マップ:散らばり → 3レーン → Data Layer → 経営判断 -->
-      <div
-        class="hero__map"
-        role="img"
-        aria-label="散らばった業務が、顧客接点・社内業務・経営判断の3つのレーンに整理され、データ基盤を通じて経営判断へつながる図"
-      >
-        <!-- 絡まった線(未整理の状態) -->
-        <svg
-          class="hero__tangle"
-          viewBox="0 0 480 470"
-          preserveAspectRatio="none"
-          fill="none"
-          aria-hidden="true"
-        >
-          <path
-            class="tangle tangle--1"
-            d="M20 80 C 180 140, 120 320, 320 260 S 460 120, 430 60"></path>
-          <path
-            class="tangle tangle--2"
-            d="M60 400 C 200 300, 260 140, 440 220"></path>
-          <path
-            class="tangle tangle--3"
-            d="M240 30 C 100 180, 380 320, 180 430"></path>
-        </svg>
-
-        <div class="hero__lanes" aria-hidden="true">
-          {
-            lanes.map((lane) => (
-              <section class:list={["lane", `lane--${lane.id}`]}>
-                <header class="lane__head">
-                  <span class="lane__en">{lane.en}</span>
-                  <span class="lane__ja">{lane.ja}</span>
-                </header>
-                <ul class="lane__items">
-                  {lane.items.map((item) => (
-                    <li class="chip" style={chipStyle(item)}>
-                      {item.t}
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            ))
-          }
-
-          <!-- 顧客接点・社内業務 → Data Layer -->
-          <div class="hero__conn hero__conn--pair">
-            <span class="hero__vline"></span>
-            <span class="hero__vline hero__vline--2"></span>
-          </div>
-
-          <div class="hero__databand">
-            <span class="hero__databand-en">Data Layer</span>
-            <span class="hero__databand-ja">データ基盤</span>
-          </div>
-
-          <!-- Data Layer → 経営判断 -->
-          <div class="hero__conn hero__conn--single">
-            <span class="hero__vline hero__vline--3"></span>
-          </div>
-
-          <section class="lane lane--mgmt">
-            <header class="lane__head">
-              <span class="lane__en">{mgmt.en}</span>
-              <span class="lane__ja">{mgmt.ja}</span>
-            </header>
-            <ul class="lane__items lane__items--row">
-              {mgmt.items.map((item) => (
-                <li class="chip" style={chipStyle(item)}>
-                  {item.t}
-                </li>
-              ))}
-            </ul>
-          </section>
-        </div>
-      </div>
+      <HeroMichiMap />
     </div>
   </div>
 
@@ -254,7 +135,7 @@ const chipStyle = (item: { dx: number; dy: number; r: number }) =>
   .hero__row {
     margin-top: clamp(44px, 5vw, 64px);
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(360px, 480px);
+    grid-template-columns: minmax(0, 1fr) minmax(380px, 540px);
     gap: clamp(48px, 6vw, 104px);
     align-items: start;
   }
@@ -318,271 +199,6 @@ const chipStyle = (item: { dx: number; dy: number; r: number }) =>
     translate: 0 -2px;
   }
 
-  /* ==========================================================
-     業務マップ
-     ========================================================== */
-  .hero__map {
-    position: relative;
-  }
-
-  /* --- 絡まった線:描かれて、ほどけて消える --- */
-  .hero__tangle {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-  }
-
-  .tangle {
-    stroke-width: 1;
-    stroke-dasharray: 760;
-    stroke-dashoffset: 760;
-    animation: tangle-life 2.6s ease-in-out forwards;
-  }
-
-  .tangle--1 {
-    stroke: rgba(30, 30, 26, 0.28);
-    animation-delay: 0.25s;
-  }
-
-  .tangle--2 {
-    stroke: rgba(224, 103, 60, 0.5);
-    animation-delay: 0.45s;
-  }
-
-  .tangle--3 {
-    stroke: rgba(30, 30, 26, 0.2);
-    animation-delay: 0.6s;
-  }
-
-  /* 描画(0→) → 保持 → 前方へほどけて消える(→ -760) */
-  @keyframes tangle-life {
-    0% {
-      stroke-dashoffset: 760;
-      opacity: 1;
-    }
-    30% {
-      stroke-dashoffset: 0;
-      opacity: 1;
-    }
-    62% {
-      stroke-dashoffset: 0;
-      opacity: 1;
-    }
-    100% {
-      stroke-dashoffset: -760;
-      opacity: 0;
-    }
-  }
-
-  /* --- レーン構造 --- */
-  .hero__lanes {
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-      "front back"
-      "conn conn"
-      "data data"
-      "conn2 conn2"
-      "mgmt mgmt";
-    column-gap: 18px;
-  }
-
-  .lane--front { grid-area: front; }
-  .lane--back { grid-area: back; }
-  .lane--mgmt { grid-area: mgmt; }
-
-  /* トレイ(紙片の受け皿)。枠は整列後に現れる */
-  .lane {
-    border: 1px solid transparent;
-    border-radius: 10px;
-    padding: 14px 14px 16px;
-    animation: lane-in 0.9s ease 2.6s forwards;
-  }
-
-  @keyframes lane-in {
-    to {
-      border-color: var(--c-hairline);
-      background: rgba(255, 255, 255, 0.72);
-      box-shadow: 0 10px 30px rgba(30, 30, 26, 0.05);
-    }
-  }
-
-  .lane__head {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-    padding-bottom: 10px;
-    opacity: 0;
-    animation: fade-in 0.8s ease 2.7s forwards;
-  }
-
-  .lane__en {
-    font-family: var(--font-en);
-    font-weight: 400;
-    font-size: 10.5px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: #2e6e5a;
-  }
-
-  .lane__ja {
-    font-size: 10.5px;
-    letter-spacing: 0.14em;
-    color: var(--c-sub);
-  }
-
-  .lane__items {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .lane__items--row {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  /* --- 紙片チップ --- */
-  .chip {
-    display: inline-block;
-    align-self: flex-start;
-    padding: 6px 14px;
-    background: var(--c-white);
-    border: 1px solid var(--c-hairline);
-    border-radius: 6px;
-    box-shadow: 0 5px 14px rgba(30, 30, 26, 0.06);
-    font-size: 11.5px;
-    letter-spacing: 0.12em;
-    color: var(--c-text);
-    opacity: 0;
-    /* 散らばった位置(--dx/--dy/--r)から、レーン内の定位置へ */
-    animation: chip-in 0.5s ease calc(0.15s + var(--i) * 0.05s) forwards,
-      chip-settle 1.5s cubic-bezier(0.22, 1, 0.36, 1)
-        calc(1.75s + var(--i) * 0.04s) both,
-      chip-float 9s ease-in-out calc(3.8s + var(--i) * 0.35s) infinite
-        alternate;
-  }
-
-  @keyframes chip-in {
-    to {
-      opacity: 1;
-    }
-  }
-
-  @keyframes chip-settle {
-    from {
-      transform: translate(var(--dx), var(--dy)) rotate(var(--r));
-    }
-    to {
-      transform: translate(0, 0) rotate(0deg);
-    }
-  }
-
-  /* 整列後の、ごく軽い浮遊 */
-  @keyframes chip-float {
-    from {
-      translate: 0 0;
-    }
-    to {
-      translate: 0 -4px;
-    }
-  }
-
-  @keyframes fade-in {
-    to {
-      opacity: 1;
-    }
-  }
-
-  /* --- 流れの線(トレイ → Data Layer → 経営判断) --- */
-  .hero__conn {
-    position: relative;
-    height: 26px;
-  }
-
-  .hero__conn--pair { grid-area: conn; }
-  .hero__conn--single { grid-area: conn2; height: 24px; }
-
-  .hero__vline {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: rgba(46, 110, 90, 0.55);
-    transform: scaleY(0);
-    transform-origin: top;
-    animation: line-grow 0.6s ease 3s forwards;
-  }
-
-  .hero__conn--pair .hero__vline { left: 25%; }
-  .hero__conn--pair .hero__vline--2 { left: 75%; animation-delay: 3.15s; }
-  .hero__conn--single .hero__vline--3 { left: 50%; animation-delay: 3.5s; }
-
-  @keyframes line-grow {
-    to {
-      transform: scaleY(1);
-    }
-  }
-
-  /* --- Data Layer --- */
-  .hero__databand {
-    grid-area: data;
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: 14px;
-    padding: 12px 16px;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    opacity: 0;
-    animation: databand-in 0.8s ease 3.2s forwards;
-  }
-
-  @keyframes databand-in {
-    to {
-      opacity: 1;
-      border-color: rgba(46, 110, 90, 0.55);
-      background: rgba(46, 110, 90, 0.05);
-    }
-  }
-
-  .hero__databand-en {
-    font-family: var(--font-en);
-    font-weight: 400;
-    font-size: 11px;
-    letter-spacing: 0.26em;
-    text-transform: uppercase;
-    color: #2e6e5a;
-  }
-
-  .hero__databand-ja {
-    font-size: 10.5px;
-    letter-spacing: 0.14em;
-    color: var(--c-sub);
-  }
-
-  /* Management レーンだけ、道筋の終点(オレンジの点)を持つ */
-  .lane--mgmt {
-    position: relative;
-  }
-
-  .lane--mgmt::after {
-    content: "";
-    position: absolute;
-    top: -4px;
-    left: calc(50% - 3.5px);
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #e0673c;
-    opacity: 0;
-    animation: fade-in 0.5s ease 4s forwards;
-  }
-
   /* --- スクロールインジケーター --- */
   .hero__scroll {
     position: absolute;
@@ -610,16 +226,9 @@ const chipStyle = (item: { dx: number; dy: number; r: number }) =>
     background: linear-gradient(var(--c-hairline), transparent);
   }
 
-  /* ==========================================================
-     レスポンシブ / reduced-motion
-     ========================================================== */
   @media (max-width: 960px) {
     .hero__row {
       grid-template-columns: 1fr;
-    }
-
-    .hero__map {
-      max-width: 480px;
     }
 
     .hero__scroll {
@@ -627,7 +236,6 @@ const chipStyle = (item: { dx: number; dy: number; r: number }) =>
     }
   }
 
-  /* スマホ:散乱アニメーションを省き、静的な3レーン図に */
   @media (max-width: 720px) {
     .pc-only {
       display: none;
@@ -642,97 +250,12 @@ const chipStyle = (item: { dx: number; dy: number; r: number }) =>
       text-align: center;
       padding-inline: 20px;
     }
-
-    .hero__map {
-      margin-top: 8px;
-    }
-
-    .hero__tangle {
-      display: none;
-    }
-
-    .chip {
-      font-size: 10.5px;
-      padding: 5px 10px;
-      opacity: 1;
-      animation: none;
-      transform: none;
-    }
-
-    .lane,
-    .lane__head,
-    .hero__databand {
-      animation: none;
-    }
-
-    .lane {
-      border-color: var(--c-hairline);
-      background: rgba(255, 255, 255, 0.72);
-    }
-
-    .lane__head {
-      opacity: 1;
-    }
-
-    .hero__databand {
-      opacity: 1;
-      border-color: rgba(46, 110, 90, 0.55);
-      background: rgba(46, 110, 90, 0.05);
-    }
-
-    .hero__vline {
-      animation: none;
-      transform: scaleY(1);
-    }
-
-    .lane--mgmt::after {
-      animation: none;
-      opacity: 1;
-    }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .hero__line-inner {
       animation: none;
       transform: none;
-    }
-
-    .hero__tangle {
-      display: none;
-    }
-
-    .chip {
-      animation: none;
-      opacity: 1;
-      transform: none;
-    }
-
-    .lane,
-    .lane__head,
-    .hero__databand,
-    .hero__vline,
-    .lane--mgmt::after {
-      animation: none;
-    }
-
-    .lane {
-      border-color: var(--c-hairline);
-      background: rgba(255, 255, 255, 0.72);
-    }
-
-    .lane__head,
-    .hero__databand,
-    .lane--mgmt::after {
-      opacity: 1;
-    }
-
-    .hero__databand {
-      border-color: rgba(46, 110, 90, 0.55);
-      background: rgba(46, 110, 90, 0.05);
-    }
-
-    .hero__vline {
-      transform: scaleY(1);
     }
   }
 </style>

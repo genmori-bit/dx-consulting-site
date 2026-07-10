@@ -1,0 +1,483 @@
+---
+/**
+ * Michi Map — The Workflow Untangles.
+ * 散らばった業務メモが、一本の焼きオレンジの道筋に沿って3つの流れに整理される業務地図。
+ * 3つのレーンはロゴ「ミ」の3画、オレンジの線と緑の終点はfaviconの意匠と対応する。
+ *
+ * 実装:
+ * - ラベルはHTML(ol/li)。最終位置に通常配置し、初期状態のみ transform で散乱させる
+ * - 線はSVG。stroke-dasharray / stroke-dashoffset で描画
+ * - ホバーは :has() のみ(JSなし)。входアニメーションと衝突しないよう、
+ *   減光はラッパー(.mlane / g.seg / g.conn)側に当てる
+ */
+const lanes = [
+  {
+    id: "front",
+    ja: "顧客接点",
+    en: "Front Office",
+    items: [
+      { t: "問い合わせ", dx: 90, dy: 210, r: -6 },
+      { t: "顧客情報", dx: 240, dy: 90, r: 8 },
+      { t: "案件管理", dx: -60, dy: 300, r: -9 },
+      { t: "見積", dx: 130, dy: 160, r: 5 },
+      { t: "売上見込み", dx: -180, dy: 250, r: -4 },
+    ],
+  },
+  {
+    id: "back",
+    ja: "社内業務",
+    en: "Back Office",
+    items: [
+      { t: "申請", dx: 300, dy: -90, r: 7 },
+      { t: "承認", dx: 60, dy: 170, r: -8 },
+      { t: "請求", dx: -120, dy: 120, r: 4 },
+      { t: "入金", dx: 170, dy: -140, r: -5 },
+    ],
+  },
+  {
+    id: "mgmt",
+    ja: "経営判断",
+    en: "Management",
+    items: [
+      { t: "売上", dx: 150, dy: -320, r: 6 },
+      { t: "KPI", dx: -40, dy: -160, r: -7 },
+      { t: "会議", dx: 260, dy: -230, r: 9 },
+      { t: "次の打ち手", dx: -140, dy: -280, r: -5 },
+    ],
+  },
+];
+
+let chipIndex = 0;
+const chipStyle = (item: { dx: number; dy: number; r: number }) =>
+  `--dx: ${item.dx}px; --dy: ${item.dy}px; --r: ${item.r}deg; --i: ${chipIndex++}`;
+---
+
+<figure
+  class="michimap"
+  role="group"
+  aria-label="ミチカクの業務地図。散らばった業務が、顧客接点(問い合わせから売上見込みまで)、社内業務(申請から入金まで)、経営判断(売上から次の打ち手まで)の3つの流れに整理され、データ基盤を通じてつながる。"
+>
+  <svg
+    class="michimap__lines"
+    viewBox="0 0 540 470"
+    preserveAspectRatio="none"
+    fill="none"
+    aria-hidden="true"
+  >
+    <!-- 未整理:薄いグレーの交差線 -->
+    <g class="tangles">
+      <path
+        class="tangle tangle--1"
+        d="M 30 60 C 200 160, 140 320, 420 300 S 540 160, 500 120"></path>
+      <path
+        class="tangle tangle--2"
+        d="M 480 40 C 300 200, 420 340, 120 400"></path>
+    </g>
+
+    <!-- 道筋:一本の焼きオレンジの線(3区間に分けて連続描画) -->
+    <g class="seg" data-lane="front">
+      <path class="michi michi--1" d="M 8 80 C 140 74, 380 82, 502 77"></path>
+    </g>
+    <g class="seg" data-lane="back">
+      <path
+        class="michi michi--2"
+        d="M 502 77 C 536 92, 536 130, 500 150 C 420 188, 120 158, 30 176 C 14 180, 8 187, 16 191 C 160 185, 360 196, 500 190"
+      ></path>
+    </g>
+    <g class="seg" data-lane="mgmt">
+      <path
+        class="michi michi--3"
+        d="M 500 190 C 532 210, 520 246, 460 262 C 360 288, 180 278, 90 298 C 42 310, 16 330, 20 360 C 24 388, 60 404, 110 408 C 170 412, 240 406, 296 408"
+      ></path>
+    </g>
+
+    <!-- データ基盤への流れ(深緑) -->
+    <g class="conn" data-lane="front">
+      <path class="connline connline--1" d="M 526 92 V 270"></path>
+    </g>
+    <g class="conn" data-lane="back">
+      <path class="connline connline--2" d="M 250 207 V 270"></path>
+    </g>
+    <g class="conn" data-lane="mgmt">
+      <path class="connline connline--3" d="M 264 316 V 392"></path>
+    </g>
+
+    <!-- 道筋の終点(緑の点) -->
+    <circle class="michimap__goal" cx="308" cy="408" r="4"></circle>
+  </svg>
+
+  <!-- 3つの流れ -->
+  {
+    lanes.map((lane) => (
+      <div class:list={["mlane", `mlane--${lane.id}`]} data-lane={lane.id}>
+        <p class="mlane__head">
+          <span class="mlane__ja">{lane.ja}</span>
+          <span class="mlane__en">{lane.en}</span>
+        </p>
+        <ol class="mlane__chips" aria-label={`${lane.ja}の流れ`}>
+          {lane.items.map((item) => (
+            <li class="slot" style={chipStyle(item)}>
+              <span class="chip">{item.t}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    ))
+  }
+
+  <!-- Data Layer -->
+  <div class="michimap__databand" aria-label="データ基盤">
+    <span class="michimap__databand-en">Data Layer</span>
+    <span class="michimap__databand-ja">データ基盤</span>
+  </div>
+</figure>
+
+<style>
+  /* ==========================================================
+     レイアウト:540×470 の紙面に、3つの流れを固定配置
+     ========================================================== */
+  .michimap {
+    position: relative;
+    width: min(100%, 540px);
+    height: 470px;
+  }
+
+  .michimap__lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .mlane {
+    position: absolute;
+    left: 0;
+    right: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .mlane--front { top: 37px; }
+  .mlane--back { top: 151px; }
+  .mlane--mgmt { top: 367px; }
+
+  .mlane__head {
+    height: 18px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    opacity: 0;
+    animation: fade-in 0.8s ease 2.4s forwards;
+  }
+
+  .mlane__ja {
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    color: var(--c-text);
+  }
+
+  .mlane__en {
+    font-family: var(--font-en);
+    font-weight: 400;
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--c-sub);
+  }
+
+  .mlane__chips {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    height: 30px;
+    padding-left: 16px;
+  }
+
+  /* --- 業務メモの断片 --- */
+  .slot {
+    /* 散乱位置(--dx/--dy/--r)から定位置へ */
+    opacity: 0;
+    animation: slot-in 0.5s ease calc(0.4s + var(--i) * 0.04s) forwards,
+      slot-settle 1.25s cubic-bezier(0.22, 1, 0.36, 1)
+        calc(2s + var(--i) * 0.045s) both,
+      slot-float 10s ease-in-out calc(4.2s + var(--i) * 0.4s) infinite
+        alternate;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 30px;
+    padding: 0 13px;
+    background: var(--c-white);
+    border: 1px solid var(--c-hairline);
+    border-radius: 3px;
+    box-shadow: 0 4px 12px rgba(30, 30, 26, 0.07);
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+    color: var(--c-text);
+    white-space: nowrap;
+  }
+
+  /* メモ断片らしさ:ペンの短い書き込み線 */
+  .chip::before {
+    content: "";
+    width: 7px;
+    height: 1.5px;
+    background: rgba(30, 30, 26, 0.55);
+  }
+
+  @keyframes slot-in {
+    to { opacity: 1; }
+  }
+
+  @keyframes slot-settle {
+    from {
+      transform: translate(var(--dx), var(--dy)) rotate(var(--r));
+    }
+    to {
+      transform: translate(0, 0) rotate(0deg);
+    }
+  }
+
+  @keyframes slot-float {
+    from { translate: 0 0; }
+    to { translate: 0 -3px; }
+  }
+
+  @keyframes fade-in {
+    to { opacity: 1; }
+  }
+
+  /* ==========================================================
+     線:絡まり → 道筋
+     ========================================================== */
+  .tangle {
+    stroke-width: 1;
+    stroke-dasharray: 820;
+    stroke-dashoffset: 820;
+    animation: tangle-draw 0.9s ease-out 0.8s forwards,
+      tangle-out 0.7s ease 2.35s forwards;
+  }
+
+  .tangle--1 { stroke: rgba(30, 30, 26, 0.22); }
+  .tangle--2 {
+    stroke: rgba(30, 30, 26, 0.15);
+    animation-delay: 1s, 2.5s;
+  }
+
+  @keyframes tangle-draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes tangle-out {
+    to {
+      stroke-dashoffset: -820;
+      opacity: 0;
+    }
+  }
+
+  /* 一本の焼きオレンジの道筋 */
+  .seg,
+  .conn {
+    transition: opacity 0.4s ease;
+  }
+
+  .michi {
+    stroke: #e0673c;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-dasharray: 900;
+    stroke-dashoffset: 900;
+  }
+
+  .michi--1 { animation: michi-draw 0.6s ease-in-out 1.4s forwards; }
+  .michi--2 { animation: michi-draw 0.75s ease-in-out 2s forwards; }
+  .michi--3 { animation: michi-draw 0.85s ease-in-out 2.75s forwards; }
+
+  @keyframes michi-draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  /* データ基盤への流れ(深緑) */
+  .connline {
+    stroke: rgba(46, 110, 90, 0.5);
+    stroke-width: 1;
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+  }
+
+  .connline--1 { animation: michi-draw 0.5s ease 2.7s forwards; }
+  .connline--2 { animation: michi-draw 0.4s ease 2.85s forwards; }
+  .connline--3 { animation: michi-draw 0.4s ease 3s forwards; }
+
+  /* 終点の緑の点 */
+  .michimap__goal {
+    fill: #2e6e5a;
+    opacity: 0;
+    animation: fade-in 0.5s ease 3.6s forwards;
+  }
+
+  /* ==========================================================
+     Data Layer
+     ========================================================== */
+  .michimap__databand {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 270px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    opacity: 0;
+    animation: databand-in 0.8s ease 2.6s forwards;
+  }
+
+  @keyframes databand-in {
+    to {
+      opacity: 1;
+      border-color: rgba(46, 110, 90, 0.5);
+      background: rgba(46, 110, 90, 0.05);
+    }
+  }
+
+  .michimap__databand-en {
+    font-family: var(--font-en);
+    font-weight: 400;
+    font-size: 10.5px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: #2e6e5a;
+  }
+
+  .michimap__databand-ja {
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    color: var(--c-sub);
+  }
+
+  /* ==========================================================
+     ホバー:関連する流れだけを残して他を薄く
+     ========================================================== */
+  @media (hover: hover) {
+    .michimap:has(.mlane:hover) :is(.mlane, .seg, .conn) {
+      opacity: 0.16;
+    }
+
+    .michimap:has(.mlane[data-lane="front"]:hover) [data-lane="front"],
+    .michimap:has(.mlane[data-lane="back"]:hover) [data-lane="back"],
+    .michimap:has(.mlane[data-lane="mgmt"]:hover) [data-lane="mgmt"] {
+      opacity: 1;
+    }
+  }
+
+  /* ==========================================================
+     モバイル:静的な3レーン図
+     ========================================================== */
+  @media (max-width: 720px) {
+    .michimap {
+      height: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .michimap__lines {
+      display: none;
+    }
+
+    .mlane {
+      position: static;
+      border: 1px solid var(--c-hairline);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+      padding: 12px 14px 14px;
+    }
+
+    .mlane + .mlane {
+      margin-top: 14px;
+    }
+
+    .mlane__head {
+      opacity: 1;
+      animation: none;
+      margin-bottom: 10px;
+    }
+
+    .mlane__chips {
+      height: auto;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-left: 0;
+    }
+
+    .slot {
+      opacity: 1;
+      animation: none;
+      transform: none;
+    }
+
+    .chip {
+      height: 27px;
+      font-size: 10.5px;
+      padding: 0 10px;
+    }
+
+    /* 表示順:顧客接点 → 社内業務 → データ基盤 → 経営判断 */
+    .michimap__databand {
+      position: static;
+      order: 1;
+      height: 42px;
+      margin-top: 14px;
+      opacity: 1;
+      animation: none;
+      border-color: rgba(46, 110, 90, 0.5);
+      background: rgba(46, 110, 90, 0.05);
+    }
+
+    .mlane--mgmt {
+      order: 2;
+    }
+  }
+
+  /* ==========================================================
+     prefers-reduced-motion:最初から整理後の状態
+     ========================================================== */
+  @media (prefers-reduced-motion: reduce) {
+    .slot {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+
+    .tangles {
+      display: none;
+    }
+
+    .michi,
+    .connline {
+      animation: none;
+      stroke-dashoffset: 0;
+    }
+
+    .mlane__head,
+    .michimap__goal {
+      animation: none;
+      opacity: 1;
+    }
+
+    .michimap__databand {
+      animation: none;
+      opacity: 1;
+      border-color: rgba(46, 110, 90, 0.5);
+      background: rgba(46, 110, 90, 0.05);
+    }
+  }
+</style>
