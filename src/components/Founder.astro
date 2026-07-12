@@ -1,76 +1,63 @@
 ---
+/**
+ * Career(トップページ・コンパクト版)
+ * 左に見出しとメインコピー、右に本文。詳細は /company/#career へ。
+ * 本文テキストは src/data/career.ts で一元管理。
+ */
 import { SITE } from "../config";
+import { CAREER } from "../data/career";
 
-const career = [
-  {
-    tag: "HR Tech",
-    body: "大手人材会社の経営企画本部にて、HR Techサービスのインサイドセールス、フィールドセールス、プロダクト開発に従事。営業現場とプロダクトの両面から事業成長に携わる。",
-  },
-  {
-    tag: "SaaS ERP",
-    body: "クラウドサービス企業にて、SaaS型ERPサービスの営業企画、プロダクト企画、カスタマーエクスペリエンスを担当。SalesforceやMarketoを活用したマーケティング・営業プロセスの設計、機能改善、新規ビジネス開発、サポート体制の構築を推進。",
-  },
-  {
-    tag: "Service Leadership",
-    body: "ジョブカン経費精算/ワークフローのサービス責任者として、プロダクト、営業、顧客体験を横断して事業成長をリード。プロダクトの競争力強化と市場拡大に取り組む。",
-  },
-  {
-    tag: "CRM / DX Support",
-    body: "現在はSalesforceにてアカウントエグゼクティブとして勤務。法人営業の最前線で、企業のCRM活用、営業改革、業務改善、DX推進を支援。",
-  },
-  {
-    tag: "ミチカク",
-    body: "営業、マーケティング、プロダクト、CX、事業責任の経験を活かし、ツール導入で終わらない、現場に根づくデジタル活用を支援する。",
-  },
-];
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
 ---
 
 <section class="section founder" id="founder">
   <div class="container">
-    <p class="en-label reveal">06 / Founder</p>
-    <h2 class="heading-ja founder__heading reveal" style="--reveal-delay: 0.1s">
-      代表について
-    </h2>
+    <p class="en-label reveal">06 / Career</p>
 
-    <div class="founder__intro">
-      <div class="founder__text">
-        <p class="founder__name reveal" style="--reveal-delay: 0.25s">
+    <div class="founder__grid">
+      <!-- 左:見出し・メインコピー・名前 -->
+      <div class="founder__head">
+        <h2 class="founder__title en-display reveal" style="--reveal-delay: 0.1s">
+          Career
+        </h2>
+        <p class="founder__copy reveal" style="--reveal-delay: 0.2s">
+          B2B SaaSの、<em>つくる</em>・<em>届ける</em>・<em>使われ続ける</em>を。
+        </p>
+        <p class="founder__name reveal" style="--reveal-delay: 0.3s">
           <span class="founder__role">代表</span>
           {SITE.representative}
           <span class="founder__name-en">Genki Mouri</span>
         </p>
-        <div class="founder__message reveal" style="--reveal-delay: 0.35s">
-          <p>
-            DXという言葉は、少し大きく聞こえます。
-            でも、実際に会社を変えるのは、もっと身近な仕事の流れだと考えています。
-          </p>
-          <p>
-            営業も、プロダクトも、顧客対応も。仕事の流れが変わる瞬間を、ずっと現場で見てきました。
-            だから、ツールを入れて終わりにはしません。
-            現場の負担が減り、事業が続いていく仕組みになるまでを、一緒につくります。
-          </p>
-        </div>
       </div>
-    </div>
 
-    <!-- Career:縦のタイムライン -->
-    <div class="founder__career">
-      <h3 class="founder__career-title en-display reveal">Career</h3>
-      <p class="founder__career-sub reveal" style="--reveal-delay: 0.1s">
-        営業、プロダクト、顧客体験、事業成長の接点で。
-      </p>
-
-      <ol class="founder__timeline">
+      <!-- 右:本文 -->
+      <div class="founder__body">
+        <p class="reveal" style="--reveal-delay: 0.25s">{CAREER.lead}</p>
         {
-          career.map((item, i) => (
-            <li class="founder__entry reveal" style={`--reveal-delay: ${i * 0.08}s`}>
-              <span class="founder__marker" aria-hidden="true" />
-              <span class="founder__tag">{item.tag}</span>
-              <p class="founder__entry-body">{item.body}</p>
-            </li>
+          CAREER.topParagraphs.map((paragraph, i) => (
+            <p class="reveal" style={`--reveal-delay: ${0.4 + i * 0.15}s`}>
+              {paragraph}
+            </p>
           ))
         }
-      </ol>
+
+        <p class="founder__emphasis reveal" style="--reveal-delay: 0.75s">
+          {CAREER.emphasis}
+        </p>
+
+        <a
+          href={`${base}company/#career`}
+          class="founder__more cta-flow reveal"
+          style="--reveal-delay: 0.85s"
+          >詳しい経歴を見る<span class="cta-arrow" aria-hidden="true">→</span></a
+        >
+
+        <p class="founder__note reveal" style="--reveal-delay: 0.9s">
+          {CAREER.disclaimer}
+        </p>
+      </div>
     </div>
   </div>
 </section>
@@ -81,30 +68,55 @@ const career = [
     border-top: 1px solid var(--line);
   }
 
-  .founder__heading {
-    margin-top: 36px;
+  .founder__grid {
+    margin-top: 72px;
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(48px, 6vw, 112px);
+    align-items: start;
   }
 
-  /* --- 紹介(名前+メッセージのみで編集的に) --- */
-  .founder__intro {
-    margin-top: 88px;
-    max-width: 680px;
-    border-left: 1.5px solid rgba(224, 103, 60, 0.6);
-    padding-left: clamp(24px, 4vw, 48px);
+  /* --- 左:見出し --- */
+  .founder__title {
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 200;
+  }
+
+  .founder__copy {
+    margin-top: 28px;
+    font-size: clamp(17px, 2vw, 21px);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    line-height: 2;
+    max-width: 400px;
+  }
+
+  /* 「つくる」「届ける」「使われ続ける」の強調 */
+  .founder__copy em {
+    font-style: normal;
+    background-image: linear-gradient(
+      rgba(224, 103, 60, 0.7),
+      rgba(224, 103, 60, 0.7)
+    );
+    background-repeat: no-repeat;
+    background-size: 100% 2px;
+    background-position: 0 100%;
+    padding-bottom: 3px;
   }
 
   .founder__name {
+    margin-top: 44px;
     display: flex;
     align-items: baseline;
-    gap: 16px;
+    gap: 14px;
     flex-wrap: wrap;
-    font-size: clamp(22px, 2.8vw, 28px);
+    font-size: 18px;
     font-weight: 500;
     letter-spacing: 0.14em;
   }
 
   .founder__role {
-    font-size: 12px;
+    font-size: 11.5px;
     letter-spacing: 0.2em;
     color: var(--c-sub);
   }
@@ -112,105 +124,73 @@ const career = [
   .founder__name-en {
     font-family: var(--font-en);
     font-weight: 300;
-    font-size: 13px;
+    font-size: 12px;
     letter-spacing: 0.12em;
     color: var(--c-sub);
   }
 
-  .founder__message {
-    margin-top: 32px;
+  /* --- 右:本文 --- */
+  .founder__body {
     max-width: 560px;
   }
 
-  .founder__message p {
-    font-size: 14.5px;
+  .founder__body > p {
+    font-size: 14px;
     line-height: 2.4;
     color: var(--c-sub);
   }
 
-  .founder__message p + p {
-    margin-top: 1.6em;
+  .founder__body > p + p {
+    margin-top: 1.7em;
   }
 
-  /* --- Career タイムライン --- */
-  .founder__career {
-    margin-top: clamp(96px, 12vw, 144px);
+  /* 強調文:本文と距離を取り、道筋のオレンジ線を添える */
+  .founder__emphasis {
+    margin-top: 3.2em !important;
+    padding-left: 22px;
+    border-left: 1.5px solid rgba(224, 103, 60, 0.7);
+    font-size: 14.5px !important;
+    color: var(--c-text) !important;
+    letter-spacing: 0.06em;
   }
 
-  .founder__career-title {
-    font-size: clamp(36px, 5vw, 64px);
-    font-weight: 200;
-  }
-
-  .founder__career-sub {
-    margin-top: 20px;
+  .founder__more {
+    display: inline-block;
+    margin-top: 44px;
     font-size: 13.5px;
-    letter-spacing: 0.12em;
-    color: var(--c-sub);
-  }
-
-  .founder__timeline {
-    margin-top: 64px;
-    list-style: none;
-    position: relative;
-    max-width: 760px;
-  }
-
-  /* 道筋がCareerの縦タイムラインへ続く */
-  .founder__timeline::before {
-    content: "";
-    position: absolute;
-    left: 3px;
-    top: 8px;
-    bottom: 8px;
-    width: 1.5px;
-    background: rgba(224, 103, 60, 0.55);
-  }
-
-  .founder__entry {
-    position: relative;
-    padding: 0 0 clamp(44px, 6vw, 64px) clamp(40px, 5vw, 64px);
-  }
-
-  .founder__entry:last-child {
-    padding-bottom: 0;
-  }
-
-  .founder__marker {
-    position: absolute;
-    left: 0;
-    top: 7px;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    border: 1px solid #e0673c;
-    background: var(--c-base);
-  }
-
-  /* 現在地(ミチカク)は緑の点 */
-  .founder__entry:last-child .founder__marker {
-    border-color: #2e6e5a;
-    background: #2e6e5a;
-  }
-
-  .founder__tag {
-    font-family: var(--font-en);
-    font-weight: 400;
-    font-size: 15px;
     letter-spacing: 0.14em;
+    color: var(--c-text);
+    border-bottom: 1px solid var(--c-hairline);
+    padding-bottom: 5px;
+    transition: border-color 0.3s ease;
   }
 
-  .founder__entry-body {
-    margin-top: 14px;
-    font-size: 13.5px;
-    line-height: 2.3;
-    color: var(--c-sub);
-    max-width: 620px;
+  .founder__more:hover {
+    border-color: transparent;
   }
 
-  @media (max-width: 720px) {
-    .founder__intro {
-      padding-left: 20px;
+  .founder__more.cta-flow::after {
+    background: #e0673c;
+  }
+
+  /* 所属企業に関する注記 */
+  .founder__note {
+    margin-top: 40px !important;
+    font-size: 10.5px !important;
+    line-height: 2 !important;
+    letter-spacing: 0.06em;
+    color: var(--c-sub) !important;
+    opacity: 0.75;
+  }
+
+  @media (max-width: 840px) {
+    .founder__grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .founder__copy {
+      max-width: none;
     }
   }
 </style>
