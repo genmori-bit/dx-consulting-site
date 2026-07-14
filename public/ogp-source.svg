@@ -1,16 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#f7f5ef"/>
+  <rect width="1200" height="630" fill="#f8f8f6"/>
   <!-- 方眼 -->
-  <g stroke="#ddd8cc" stroke-opacity="0.55" stroke-width="1">
+  <g stroke="#deded8" stroke-opacity="0.55" stroke-width="1">
     <path d="M120 0 V630 M300 0 V630 M480 0 V630 M660 0 V630 M840 0 V630 M1020 0 V630"/>
     <path d="M0 126 H1200 M0 252 H1200 M0 378 H1200 M0 504 H1200"/>
   </g>
   <!-- ワードマーク -->
-  <text x="100" y="280" font-family="Hiragino Kaku Gothic ProN, sans-serif" font-size="120" font-weight="700" letter-spacing="18" fill="#1e1e1a">ミチカク</text>
+  <text x="100" y="280" font-family="Hiragino Kaku Gothic ProN, sans-serif" font-size="120" font-weight="700" letter-spacing="18" fill="#111111">ミチカク</text>
   <!-- 道筋の線 -->
-  <path d="M104 340 C 240 320, 380 356, 520 340 C 660 326, 780 348, 872 336" fill="none" stroke="#2e6e5a" stroke-width="7" stroke-linecap="round"/>
-  <circle cx="906" cy="333" r="13" fill="#e06a3f"/>
+  <path d="M104 340 C 240 320, 380 356, 520 340 C 660 326, 780 348, 872 336" fill="none" stroke="#164a3a" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="906" cy="333" r="13" fill="#ff5a1f"/>
   <!-- タグライン -->
-  <text x="104" y="430" font-family="Hiragino Kaku Gothic ProN, sans-serif" font-size="30" letter-spacing="6" fill="#6f6b63">仕事に、道筋を。</text>
+  <text x="104" y="430" font-family="Hiragino Kaku Gothic ProN, sans-serif" font-size="30" letter-spacing="6" fill="#686864">仕事に、道筋を。</text>
   <text x="106" y="486" font-family="Helvetica Neue, Arial, sans-serif" font-size="18" letter-spacing="7" fill="#a9a49a">WORKFLOWS, RE-DESIGNED.</text>
 </svg>

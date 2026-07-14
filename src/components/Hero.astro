@@ -70,12 +70,12 @@ import HeroMichiMap from "./HeroMichiMap.astro";
     position: absolute;
     inset: 0;
     background-image: linear-gradient(
-        rgba(221, 216, 204, 0.45) 1px,
+        rgba(222, 222, 216, 0.45) 1px,
         transparent 1px
       ),
-      linear-gradient(90deg, rgba(221, 216, 204, 0.45) 1px, transparent 1px),
-      linear-gradient(rgba(221, 216, 204, 0.22) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(221, 216, 204, 0.22) 1px, transparent 1px);
+      linear-gradient(90deg, rgba(222, 222, 216, 0.45) 1px, transparent 1px),
+      linear-gradient(rgba(222, 222, 216, 0.22) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(222, 222, 216, 0.22) 1px, transparent 1px);
     background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
     mask-image: radial-gradient(
       130% 100% at 60% 40%,
@@ -124,7 +124,7 @@ import HeroMichiMap from "./HeroMichiMap.astro";
 
   .hero__title-accent {
     color: transparent;
-    -webkit-text-stroke: 1px rgba(30, 30, 26, 0.75);
+    -webkit-text-stroke: 1px rgba(17, 17, 17, 0.75);
   }
 
   @keyframes hero-rise {
@@ -176,16 +176,17 @@ import HeroMichiMap from "./HeroMichiMap.astro";
       border-color 0.35s ease, translate 0.35s ease;
   }
 
+  /* Primary CTA:焼きオレンジ */
   .btn--primary {
-    background: var(--c-text);
-    border-color: var(--c-text);
-    color: var(--c-base);
+    background: var(--c-primary);
+    border-color: var(--c-primary);
+    color: #fff;
+    font-weight: 500;
   }
 
   .btn--primary:hover {
-    background: #2e6e5a;
-    border-color: #2e6e5a;
-    color: #fff;
+    background: var(--c-primary-dark);
+    border-color: var(--c-primary-dark);
     translate: 0 -2px;
   }
 

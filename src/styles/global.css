@@ -2,16 +2,24 @@
    Design Tokens — White Editorial × Playful Operations × Practical Trust
    ========================================================================== */
 :root {
-  /* Colors */
-  --c-base: #f7f5ef; /* 温かいオフホワイト(ベース地) */
+  /* Colors — 白80% / 墨15% / ブランド5%。原色は線・CTA・短い言葉に限定 */
+  --c-base: #f8f8f6; /* ほぼ白(ベース地) */
   --c-white: #ffffff; /* 紙面 */
-  --c-text: #1e1e1a; /* 墨色 */
-  --c-sub: #6f6b63; /* サブテキスト */
-  --c-hairline: #ddd8cc; /* 罫線 */
-  --c-blue: #4c7dff; /* アクセント(主) */
-  --c-green: #4fa66a; /* チェック・完了 */
-  --c-orange: #f08a4b; /* 詰まり・注意 */
-  --c-yellow: #f4d06f; /* 付箋 */
+  --c-text: #111111; /* 見出し・純黒に近い墨 */
+  --c-body: #2a2a28; /* 本文 */
+  --c-sub: #686864; /* 補足・ラベル */
+  --c-hairline: #deded8; /* 罫線 */
+  --c-primary: #ff5a1f; /* 焼きオレンジ(道筋・CTA・強調) */
+  --c-primary-dark: #d9420d; /* ホバー */
+  --c-secondary: #164a3a; /* 深いグリーン(データの流れ・濃色面) */
+
+  /*
+   * 旧アクセントのエイリアス。青・黄は廃止し、オレンジ/深緑の2色に集約。
+   */
+  --c-blue: var(--c-primary);
+  --c-green: var(--c-secondary);
+  --c-orange: var(--c-primary);
+  --c-yellow: var(--c-primary); /* 付箋色は廃止(原則不使用) */
 
   /*
    * 旧テーマ(黒基調)の変数エイリアス。
@@ -25,7 +33,7 @@
   --c-ink: var(--c-text);
   --c-ink-dark: var(--c-text);
   --c-gold: var(--c-blue);
-  --c-gold-dim: rgba(76, 125, 255, 0.45);
+  --c-gold-dim: rgba(255, 90, 31, 0.45);
   --c-muted: var(--c-sub);
   --c-muted-dark: var(--c-sub);
   --line: var(--c-hairline);
@@ -64,7 +72,7 @@ html {
 
 body {
   background: var(--c-base);
-  color: var(--c-text);
+  color: var(--c-body);
   font-family: var(--font-ja);
   font-weight: 400;
   font-size: 15px;
@@ -85,6 +93,14 @@ a {
   text-decoration: none;
 }
 
+/* 見出しは純黒に近い色でコントラストを確保 */
+h1,
+h2,
+h3,
+h4 {
+  color: var(--c-text);
+}
+
 button,
 input,
 textarea {
@@ -93,7 +109,7 @@ textarea {
 }
 
 ::selection {
-  background: var(--c-blue);
+  background: var(--c-primary);
   color: #fff;
 }
 

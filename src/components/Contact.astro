@@ -96,9 +96,18 @@ import { SITE } from "../config";
 </script>
 
 <style>
+  /* 墨黒の強い締めセクション */
   .contact {
-    background: var(--c-base);
-    border-top: 1px solid var(--line);
+    background: var(--c-text);
+    color: var(--c-base);
+  }
+
+  .contact .en-label {
+    color: rgba(248, 248, 246, 0.7);
+  }
+
+  .contact .en-label::before {
+    background: rgba(248, 248, 246, 0.4);
   }
 
   .contact__grid {
@@ -110,12 +119,13 @@ import { SITE } from "../config";
 
   .contact__heading {
     margin-top: 36px;
+    color: #fff;
   }
 
   .contact__lead {
     margin-top: 40px;
     font-size: 14.5px;
-    color: var(--c-muted);
+    color: rgba(248, 248, 246, 0.82);
     max-width: 440px;
   }
 
@@ -128,13 +138,13 @@ import { SITE } from "../config";
   .contact__points li {
     position: relative;
     padding: 14px 0 14px 26px;
-    border-top: 1px solid var(--line);
+    border-top: 1px solid rgba(248, 248, 246, 0.2);
     font-size: 13.5px;
     letter-spacing: 0.08em;
-    color: var(--c-text);
+    color: #fff;
   }
 
-  /* 小さな緑のチェック */
+  /* 小さなオレンジのチェック(墨黒面では緑よりも視認性が高い) */
   .contact__points li::before {
     content: "";
     position: absolute;
@@ -142,13 +152,13 @@ import { SITE } from "../config";
     top: 24px;
     width: 9px;
     height: 5px;
-    border-left: 2px solid var(--c-green);
-    border-bottom: 2px solid var(--c-green);
+    border-left: 2px solid var(--c-primary);
+    border-bottom: 2px solid var(--c-primary);
     transform: rotate(-45deg);
   }
 
   .contact__points li:last-child {
-    border-bottom: 1px solid var(--line);
+    border-bottom: 1px solid rgba(248, 248, 246, 0.2);
   }
 
   /* --- 道筋の終着(フォームへ向かう矢印) --- */
@@ -160,7 +170,7 @@ import { SITE } from "../config";
   }
 
   .cm {
-    stroke: rgba(224, 103, 60, 0.85);
+    stroke: rgba(255, 90, 31, 0.85);
     stroke-width: 1.6;
     stroke-linecap: round;
     stroke-linejoin: round;
@@ -242,25 +252,26 @@ import { SITE } from "../config";
     border-bottom-color: var(--c-blue);
   }
 
+  /* Primary CTA:焼きオレンジ */
   .contact__submit {
     margin-top: 52px;
     width: 100%;
     padding: 18px;
-    background: var(--c-text);
-    border: 1px solid var(--c-text);
+    background: var(--c-primary);
+    border: 1px solid var(--c-primary);
     border-radius: 10px;
-    color: var(--c-base);
+    color: #fff;
     font-size: 14px;
+    font-weight: 500;
     letter-spacing: 0.18em;
     cursor: pointer;
-    transition: background-color 0.35s ease, color 0.35s ease,
+    transition: background-color 0.35s ease, border-color 0.35s ease,
       translate 0.35s ease;
   }
 
   .contact__submit:hover {
-    background: var(--c-blue);
-    border-color: var(--c-blue);
-    color: #fff;
+    background: var(--c-primary-dark);
+    border-color: var(--c-primary-dark);
     translate: 0 -2px;
   }
 

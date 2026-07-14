@@ -26,10 +26,10 @@ const nav = [
       >
         <path
           d="M2 7 C 24 3, 44 10, 66 7 C 88 4, 106 8, 118 6"
-          stroke="#2E6E5A"
+          stroke="#164A3A"
           stroke-width="2.4"
           stroke-linecap="round"></path>
-        <circle cx="126" cy="5.5" r="4" fill="#E06A3F"></circle>
+        <circle cx="126" cy="5.5" r="4" fill="#FF5A1F"></circle>
       </svg>
     </a>
     <nav class="header__nav" aria-label="メインナビゲーション">
@@ -58,7 +58,7 @@ const nav = [
   }
 
   .header.is-scrolled {
-    background: rgba(247, 245, 239, 0.85);
+    background: rgba(248, 248, 246, 0.85);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border-bottom-color: var(--line);
@@ -110,21 +110,23 @@ const nav = [
     color: var(--c-text);
   }
 
+  /* Primary CTA:焼きオレンジ */
   .header__cta {
     font-size: 13px;
     letter-spacing: 0.12em;
-    border: 1px solid var(--c-text);
-    color: var(--c-text);
-    background: transparent;
+    border: 1px solid var(--c-primary);
+    color: #fff;
+    background: var(--c-primary);
     border-radius: 999px;
     padding: 10px 24px;
     white-space: nowrap;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    font-weight: 500;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
   }
 
   .header__cta:hover {
-    background: var(--c-text);
-    color: var(--c-base);
+    background: var(--c-primary-dark);
+    border-color: var(--c-primary-dark);
   }
 
   @media (max-width: 900px) {

@@ -281,7 +281,7 @@ const chipStyle = (item: { dx: number; dy: number; r: number }) =>
     background: var(--c-white);
     border: 1px solid var(--c-hairline);
     border-radius: 3px;
-    box-shadow: 0 4px 12px rgba(30, 30, 26, 0.07);
+    box-shadow: 0 4px 12px rgba(17, 17, 17, 0.07);
     font-size: 11.5px;
     letter-spacing: 0.1em;
     color: var(--c-text);
@@ -295,11 +295,11 @@ const chipStyle = (item: { dx: number; dy: number; r: number }) =>
     content: "";
     width: 7px;
     height: 1.5px;
-    background: rgba(30, 30, 26, 0.55);
+    background: rgba(17, 17, 17, 0.55);
   }
 
   .chip:focus-visible {
-    outline: 2px solid #e0673c;
+    outline: 2px solid var(--c-primary);
     outline-offset: 2px;
   }
 
@@ -320,7 +320,7 @@ const chipStyle = (item: { dx: number; dy: number; r: number }) =>
      Phase 2:ロゴの3本線がレーンへ展開
      ========================================================== */
   .lanebase {
-    stroke: rgba(30, 30, 26, 0.4);
+    stroke: rgba(17, 17, 17, 0.4);
     stroke-width: 2;
     stroke-linecap: round;
     stroke-dasharray: 520;
@@ -347,7 +347,7 @@ const chipStyle = (item: { dx: number; dy: number; r: number }) =>
   }
 
   .connline {
-    stroke: rgba(46, 110, 90, 0.55);
+    stroke: rgba(22, 74, 58, 0.55);
     stroke-width: 1;
     stroke-dasharray: 3 6;
     opacity: 0;
@@ -363,7 +363,7 @@ const chipStyle = (item: { dx: number; dy: number; r: number }) =>
   }
 
   .michi {
-    stroke: #e0673c;
+    stroke: var(--c-primary);
     stroke-width: 1.6;
     stroke-linecap: round;
     stroke-dasharray: 900;
@@ -384,7 +384,7 @@ const chipStyle = (item: { dx: number; dy: number; r: number }) =>
   }
 
   .michimap__goal {
-    fill: #2e6e5a;
+    fill: var(--c-secondary);
     opacity: 0;
     animation: fade-in 0.5s ease 4.7s forwards;
   }
@@ -398,8 +398,8 @@ const chipStyle = (item: { dx: number; dy: number; r: number }) =>
     right: -12px;
     top: 258px;
     height: 66px;
-    background-image: linear-gradient(rgba(46, 110, 90, 0.16) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(46, 110, 90, 0.16) 1px, transparent 1px);
+    background-image: linear-gradient(rgba(22, 74, 58, 0.16) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(22, 74, 58, 0.16) 1px, transparent 1px);
     background-size: 12px 12px;
     mask-image: linear-gradient(
       to bottom,
@@ -430,7 +430,7 @@ const chipStyle = (item: { dx: number; dy: number; r: number }) =>
     font-size: 10.5px;
     letter-spacing: 0.26em;
     text-transform: uppercase;
-    color: #2e6e5a;
+    color: var(--c-secondary);
   }
 
   .michimap__layer-ja {
@@ -460,12 +460,12 @@ const chipStyle = (item: { dx: number; dy: number; r: number }) =>
   }
 
   .chip.hot {
-    border-color: #e0673c;
+    border-color: var(--c-primary);
     translate: 0 -2px;
   }
 
   .conn.hot .connline {
-    stroke: rgba(46, 110, 90, 0.95);
+    stroke: rgba(22, 74, 58, 0.95);
   }
 
   .seg.hot .michi {

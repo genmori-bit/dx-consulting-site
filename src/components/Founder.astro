@@ -63,9 +63,10 @@ const base = import.meta.env.BASE_URL.endsWith("/")
 </section>
 
 <style>
+  /* 人物と経歴のセクション:色ではなく余白・文字・一本の線で見せる */
   .founder {
-    background: var(--c-base);
-    border-top: 1px solid var(--line);
+    background: var(--c-white);
+    border-top: 1px solid var(--c-hairline);
   }
 
   .founder__grid {
@@ -91,17 +92,54 @@ const base = import.meta.env.BASE_URL.endsWith("/")
     max-width: 400px;
   }
 
-  /* 「つくる」「届ける」「使われ続ける」の強調 */
+  /*
+   * 「つくる」「届ける」「使われ続ける」:
+   * 常時下線は付けず、表示時に順番にオレンジへ灯って黒に戻る。
+   * 最後はコピー下の一本の細いオレンジ線だけが残り、静止する。
+   */
   .founder__copy em {
     font-style: normal;
-    background-image: linear-gradient(
-      rgba(224, 103, 60, 0.7),
-      rgba(224, 103, 60, 0.7)
-    );
-    background-repeat: no-repeat;
-    background-size: 100% 2px;
-    background-position: 0 100%;
-    padding-bottom: 3px;
+    color: var(--c-text);
+  }
+
+  .founder__copy.is-visible em {
+    animation: word-flash 0.9s ease both;
+  }
+
+  .founder__copy.is-visible em:nth-of-type(1) { animation-delay: 0.9s; }
+  .founder__copy.is-visible em:nth-of-type(2) { animation-delay: 1.3s; }
+  .founder__copy.is-visible em:nth-of-type(3) { animation-delay: 1.7s; }
+
+  @keyframes word-flash {
+    0%, 100% { color: var(--c-text); }
+    40% { color: var(--c-primary); }
+  }
+
+  /* 残る一本の細いオレンジ線(左から右へ伸びて静止) */
+  .founder__copy::after {
+    content: "";
+    display: block;
+    width: 76px;
+    height: 2px;
+    margin-top: 20px;
+    background: var(--c-primary);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.4s;
+  }
+
+  .founder__copy.is-visible::after {
+    transform: scaleX(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .founder__copy.is-visible em {
+      animation: none;
+    }
+    .founder__copy::after {
+      transition: none;
+      transform: scaleX(1);
+    }
   }
 
   .founder__name {
@@ -137,7 +175,7 @@ const base = import.meta.env.BASE_URL.endsWith("/")
   .founder__body > p {
     font-size: 14px;
     line-height: 2.4;
-    color: var(--c-sub);
+    color: var(--c-body);
   }
 
   .founder__body > p + p {
@@ -148,7 +186,7 @@ const base = import.meta.env.BASE_URL.endsWith("/")
   .founder__emphasis {
     margin-top: 3.2em !important;
     padding-left: 22px;
-    border-left: 1.5px solid rgba(224, 103, 60, 0.7);
+    border-left: 2px solid var(--c-primary);
     font-size: 14.5px !important;
     color: var(--c-text) !important;
     letter-spacing: 0.06em;
@@ -170,7 +208,7 @@ const base = import.meta.env.BASE_URL.endsWith("/")
   }
 
   .founder__more.cta-flow::after {
-    background: #e0673c;
+    background: var(--c-primary);
   }
 
   /* 所属企業に関する注記 */

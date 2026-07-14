@@ -57,18 +57,24 @@ const base = import.meta.env.BASE_URL.endsWith("/")
     margin-top: 64px;
   }
 
+  /* Primary CTA:焼きオレンジ */
   .services-cta__btn {
     display: inline-block;
     padding: 17px 64px;
-    border: 1px solid var(--c-gold-dim);
-    color: var(--c-gold);
+    background: var(--c-primary);
+    border: 1px solid var(--c-primary);
+    border-radius: 10px;
+    color: #fff;
     font-size: 14px;
+    font-weight: 500;
     letter-spacing: 0.14em;
-    transition: background-color 0.35s ease, color 0.35s ease;
+    transition: background-color 0.35s ease, border-color 0.35s ease,
+      translate 0.35s ease;
   }
 
   .services-cta__btn:hover {
-    background: var(--c-gold);
-    color: var(--c-black);
+    background: var(--c-primary-dark);
+    border-color: var(--c-primary-dark);
+    translate: 0 -2px;
   }
 </style>

@@ -128,7 +128,7 @@ const domains = [
   }
 
   .fork {
-    stroke: rgba(224, 103, 60, 0.85);
+    stroke: rgba(255, 90, 31, 0.85);
     stroke-width: 1.6;
     stroke-linecap: round;
     stroke-dasharray: 130;
@@ -209,7 +209,7 @@ const domains = [
     .domains__paper:hover {
       translate: 0 -6px;
       rotate: 0deg;
-      box-shadow: 0 22px 56px rgba(30, 30, 26, 0.1);
+      box-shadow: 0 22px 56px rgba(17, 17, 17, 0.1);
       z-index: 4;
     }
 
@@ -230,16 +230,9 @@ const domains = [
     opacity: 0.85;
   }
 
-  .domains__paper--blue .domains__tab {
-    background: rgba(76, 125, 255, 0.28);
-  }
-
-  .domains__paper--green .domains__tab {
-    background: rgba(79, 166, 106, 0.3);
-  }
-
-  .domains__paper--orange .domains__tab {
-    background: rgba(240, 138, 75, 0.32);
+  /* タブは色分類をやめ、紙のインデックスとして中立色に統一 */
+  .domains__tab {
+    background: rgba(17, 17, 17, 0.1);
   }
 
   .domains__meta {
@@ -255,9 +248,7 @@ const domains = [
     letter-spacing: 0.2em;
   }
 
-  .domains__paper--blue .domains__num { color: var(--c-blue); }
-  .domains__paper--green .domains__num { color: var(--c-green); }
-  .domains__paper--orange .domains__num { color: var(--c-orange); }
+  .domains__num { color: var(--c-primary); }
 
   .domains__en {
     font-family: var(--font-en);
@@ -301,9 +292,7 @@ const domains = [
     padding: 18px 22px;
   }
 
-  .domains__paper--blue .domains__example { border-left: 3px solid var(--c-blue); }
-  .domains__paper--green .domains__example { border-left: 3px solid var(--c-green); }
-  .domains__paper--orange .domains__example { border-left: 3px solid var(--c-orange); }
+  .domains__example { border-left: 2px solid var(--c-primary); }
 
   .domains__example-label {
     display: block;
@@ -331,9 +320,7 @@ const domains = [
     transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .domains__paper--blue .domains__rule { background: var(--c-blue); }
-  .domains__paper--green .domains__rule { background: var(--c-green); }
-  .domains__paper--orange .domains__rule { background: var(--c-orange); }
+  .domains__rule { background: var(--c-primary); }
 
   @media (max-width: 840px) {
     .domains__stack {
