@@ -112,7 +112,7 @@ const overview = [
           <div class="profile__name-block">
             <span class="profile__role">代表</span>
             <span class="profile__name">{SITE.representative}</span>
-            <span class="profile__name-en">Genki Mouri</span>
+            <span class="profile__name-en">Genki Mori</span>
           </div>
           <div class="profile__body">
             <p>
@@ -487,15 +487,14 @@ const overview = [
     vertical-align: middle;
   }
 
-  /* 所属企業に関する注記 */
+  /* 所属企業に関する注記(目立たせすぎず、読める濃さで) */
   .career__note {
     margin-top: clamp(64px, 8vw, 88px);
     max-width: 720px;
-    font-size: 10.5px;
-    line-height: 2;
-    letter-spacing: 0.06em;
+    font-size: 0.75rem;
+    line-height: 1.7;
+    letter-spacing: 0.04em;
     color: var(--c-sub);
-    opacity: 0.75;
   }
 
   @media (prefers-reduced-motion: reduce) {

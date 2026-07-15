@@ -28,7 +28,7 @@ const base = import.meta.env.BASE_URL.endsWith("/")
         <p class="founder__name reveal" style="--reveal-delay: 0.3s">
           <span class="founder__role">代表</span>
           {SITE.representative}
-          <span class="founder__name-en">Genki Mouri</span>
+          <span class="founder__name-en">Genki Mori</span>
         </p>
       </div>
 
@@ -67,6 +67,7 @@ const base = import.meta.env.BASE_URL.endsWith("/")
   .founder {
     background: var(--c-white);
     border-top: 1px solid var(--c-hairline);
+    border-bottom: 1px solid var(--c-hairline);
   }
 
   .founder__grid {
@@ -211,14 +212,18 @@ const base = import.meta.env.BASE_URL.endsWith("/")
     background: var(--c-primary);
   }
 
-  /* 所属企業に関する注記 */
+  /* テキストリンク:黒文字+小さなオレンジの矢印 */
+  .founder__more .cta-arrow {
+    color: var(--c-primary);
+  }
+
+  /* 所属企業に関する注記(目立たせすぎず、読める濃さで) */
   .founder__note {
-    margin-top: 40px !important;
-    font-size: 10.5px !important;
-    line-height: 2 !important;
-    letter-spacing: 0.06em;
+    margin-top: 48px !important;
+    font-size: 0.75rem !important;
+    line-height: 1.7 !important;
+    letter-spacing: 0.04em;
     color: var(--c-sub) !important;
-    opacity: 0.75;
   }
 
   @media (max-width: 840px) {

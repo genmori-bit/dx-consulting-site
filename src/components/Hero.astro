@@ -190,14 +190,16 @@ import HeroMichiMap from "./HeroMichiMap.astro";
     translate: 0 -2px;
   }
 
+  /* Secondary CTA:透明+墨の枠 */
   .btn--ghost {
-    background: var(--c-white);
-    border-color: var(--c-hairline);
+    background: transparent;
+    border-color: var(--c-text);
     color: var(--c-text);
   }
 
   .btn--ghost:hover {
-    border-color: var(--c-text);
+    background: var(--c-text);
+    color: #fff;
     translate: 0 -2px;
   }
 

@@ -1,5 +1,9 @@
 ---
 import { SITE } from "../config";
+
+// 送信先(formEndpoint か contactEmail)が未設定の間は、
+// 実在しない宛先へ誘導しないようフォームを出さず「準備中」を表示する
+const formReady = Boolean(SITE.formEndpoint || SITE.contactEmail);
 ---
 
 <section class="section contact" id="contact">
@@ -35,6 +39,20 @@ import { SITE } from "../config";
         </svg>
       </div>
 
+      {
+        !formReady && (
+          <div class="contact__pending reveal" style="--reveal-delay: 0.2s">
+            <p class="contact__pending-title">
+              お問い合わせフォームは、ただいま準備中です。
+            </p>
+            <p class="contact__pending-body">
+              公開まで、今しばらくお待ちください。
+              ご相談の受付を開始しましたら、このページでご案内します。
+            </p>
+          </div>
+        )
+      }
+      {formReady && (
       <form
         class="contact__form reveal"
         style="--reveal-delay: 0.2s"
@@ -67,6 +85,7 @@ import { SITE } from "../config";
           送信いただいた内容は、お問い合わせ対応の目的にのみ使用します。
         </p>
       </form>
+      )}
     </div>
   </div>
 </section>
@@ -201,6 +220,29 @@ import { SITE } from "../config";
     .contact__michi {
       display: none;
     }
+  }
+
+  /* --- フォーム準備中の案内 --- */
+  .contact__pending {
+    background: var(--c-white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-paper);
+    padding: clamp(36px, 5vw, 60px);
+  }
+
+  .contact__pending-title {
+    font-size: 15.5px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--c-text);
+  }
+
+  .contact__pending-body {
+    margin-top: 18px;
+    font-size: 13.5px;
+    line-height: 2.2;
+    color: var(--c-sub);
   }
 
   /* --- フォーム(白い紙面) --- */
