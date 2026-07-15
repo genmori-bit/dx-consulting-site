@@ -1,118 +1,50 @@
 ---
+/**
+ * Contact — SNSへの連絡導線(フォーム・メールは設置しない)。
+ * facebookUrl が空のときは、Facebookボタンを表示しない。
+ */
 import { SITE } from "../config";
-
-// 送信先(formEndpoint か contactEmail)が未設定の間は、
-// 実在しない宛先へ誘導しないようフォームを出さず「準備中」を表示する
-const formReady = Boolean(SITE.formEndpoint || SITE.contactEmail);
 ---
 
 <section class="section contact" id="contact">
   <div class="container">
-    <div class="contact__grid">
-      <div class="contact__intro">
-        <p class="en-label reveal">07 / Contact</p>
-        <h2 class="heading-ja contact__heading reveal" style="--reveal-delay: 0.1s">
-          まずは、今の仕事の流れを<br />聞かせてください。
-        </h2>
-        <p class="contact__lead reveal" style="--reveal-delay: 0.2s">
-          「何から手をつければいいか分からない」という段階からで構いません。
-          無理な提案やツールありきの営業は行いません。
-          今の業務を一緒に整理し、無理なく始められる改善テーマを見つけます。
-        </p>
-        <ul class="contact__points">
-          <li class="reveal" style="--reveal-delay: 0.3s">小さな業務改善から相談できます</li>
-          <li class="reveal" style="--reveal-delay: 0.38s">IT担当者がいない企業もご相談ください</li>
-          <li class="reveal" style="--reveal-delay: 0.46s">オンラインを基本に、必要に応じて対面でのご相談も可能です</li>
-          <li class="reveal" style="--reveal-delay: 0.54s">ツールありきの提案は行いません</li>
-          <li class="reveal" style="--reveal-delay: 0.62s">初回相談は無料です</li>
-        </ul>
+    <p class="en-label reveal">07 / Contact</p>
 
-        <!-- 道筋の終着:線が矢印に変わり、CTAへ -->
-        <svg
-          class="contact__michi reveal"
-          viewBox="0 0 220 24"
-          fill="none"
-          aria-hidden="true"
-        >
-          <path class="cm cm--line" d="M 2 12 H 198"></path>
-          <path class="cm cm--head" d="M 188 4 L 204 12 L 188 20"></path>
-        </svg>
-      </div>
+    <h2 class="heading-ja contact__heading reveal" style="--reveal-delay: 0.1s">
+      まずは、SNSで気軽にご連絡ください。
+    </h2>
 
+    <p class="contact__lead reveal" style="--reveal-delay: 0.2s">
+      業務改善やAI活用について、まだ相談内容がまとまっていなくても構いません。
+      LinkedInまたはFacebookのメッセージからご連絡ください。
+    </p>
+
+    <div class="contact__actions reveal" style="--reveal-delay: 0.32s">
+      <a
+        href={SITE.linkedinUrl}
+        class="contact__cta contact__cta--primary"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="LinkedInで連絡する(新しいタブで開きます)"
+        >LinkedInで連絡する<span class="cta-arrow" aria-hidden="true">→</span></a
+      >
       {
-        !formReady && (
-          <div class="contact__pending reveal" style="--reveal-delay: 0.2s">
-            <p class="contact__pending-title">
-              お問い合わせフォームは、ただいま準備中です。
-            </p>
-            <p class="contact__pending-body">
-              公開まで、今しばらくお待ちください。
-              ご相談の受付を開始しましたら、このページでご案内します。
-            </p>
-          </div>
+        SITE.facebookUrl && (
+          <a
+            href={SITE.facebookUrl}
+            class="contact__cta contact__cta--secondary"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebookで連絡する(新しいタブで開きます)"
+          >
+            Facebookで連絡する
+            <span class="cta-arrow" aria-hidden="true">→</span>
+          </a>
         )
       }
-      {formReady && (
-      <form
-        class="contact__form reveal"
-        style="--reveal-delay: 0.2s"
-        id="contact-form"
-        method="POST"
-        action={SITE.formEndpoint || "#"}
-        data-endpoint={SITE.formEndpoint}
-        data-mailto={SITE.contactEmail}
-      >
-        <div class="field">
-          <label for="f-company">会社名・屋号・団体名(任意)</label>
-          <input id="f-company" name="company" type="text" autocomplete="organization" />
-        </div>
-        <div class="field">
-          <label for="f-name">お名前 <span class="req" aria-hidden="true">*</span></label>
-          <input id="f-name" name="name" type="text" autocomplete="name" required />
-        </div>
-        <div class="field">
-          <label for="f-email">メールアドレス <span class="req" aria-hidden="true">*</span></label>
-          <input id="f-email" name="email" type="email" autocomplete="email" required />
-        </div>
-        <div class="field">
-          <label for="f-message">ご相談内容 <span class="req" aria-hidden="true">*</span></label>
-          <textarea id="f-message" name="message" rows="5" required></textarea>
-        </div>
-        <button type="submit" class="contact__submit cta-flow"
-          >相談する<span class="cta-arrow" aria-hidden="true">→</span></button
-        >
-        <p class="contact__form-note">
-          送信いただいた内容は、お問い合わせ対応の目的にのみ使用します。
-        </p>
-      </form>
-      )}
     </div>
   </div>
 </section>
-
-<script>
-  // formEndpoint 未設定時は、入力内容を引き継いでメール作成画面を開くフォールバック
-  const form = document.getElementById("contact-form") as HTMLFormElement | null;
-
-  form?.addEventListener("submit", (e) => {
-    if (form.dataset.endpoint) return; // エンドポイント設定済みなら通常送信
-
-    e.preventDefault();
-    const data = new FormData(form);
-    const subject = encodeURIComponent("【無料相談】お問い合わせ");
-    const body = encodeURIComponent(
-      [
-        `会社名: ${data.get("company")}`,
-        `お名前: ${data.get("name")}`,
-        `メール: ${data.get("email")}`,
-        "",
-        "ご相談内容:",
-        String(data.get("message")),
-      ].join("\n")
-    );
-    window.location.href = `mailto:${form.dataset.mailto}?subject=${subject}&body=${body}`;
-  });
-</script>
 
 <style>
   /* 墨黒の強い締めセクション */
@@ -129,13 +61,6 @@ const formReady = Boolean(SITE.formEndpoint || SITE.contactEmail);
     background: rgba(248, 248, 246, 0.4);
   }
 
-  .contact__grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(48px, 6vw, 96px);
-    align-items: start;
-  }
-
   .contact__heading {
     margin-top: 36px;
     color: #fff;
@@ -144,189 +69,68 @@ const formReady = Boolean(SITE.formEndpoint || SITE.contactEmail);
   .contact__lead {
     margin-top: 40px;
     font-size: 14.5px;
+    line-height: 2.4;
     color: rgba(248, 248, 246, 0.82);
-    max-width: 440px;
+    max-width: 520px;
   }
 
-  .contact__points {
-    margin-top: 40px;
-    list-style: none;
-    max-width: 440px;
-  }
-
-  .contact__points li {
-    position: relative;
-    padding: 14px 0 14px 26px;
-    border-top: 1px solid rgba(248, 248, 246, 0.2);
-    font-size: 13.5px;
-    letter-spacing: 0.08em;
-    color: #fff;
-  }
-
-  /* 小さなオレンジのチェック(墨黒面では緑よりも視認性が高い) */
-  .contact__points li::before {
-    content: "";
-    position: absolute;
-    left: 2px;
-    top: 24px;
-    width: 9px;
-    height: 5px;
-    border-left: 2px solid var(--c-primary);
-    border-bottom: 2px solid var(--c-primary);
-    transform: rotate(-45deg);
-  }
-
-  .contact__points li:last-child {
-    border-bottom: 1px solid rgba(248, 248, 246, 0.2);
-  }
-
-  /* --- 道筋の終着(フォームへ向かう矢印) --- */
-  .contact__michi {
-    display: block;
-    width: 200px;
-    height: 22px;
-    margin-top: 48px;
-  }
-
-  .cm {
-    stroke: rgba(255, 90, 31, 0.85);
-    stroke-width: 1.6;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: 210;
-    stroke-dashoffset: 210;
-    transition: stroke-dashoffset 1s cubic-bezier(0.22, 1, 0.36, 1) 0.7s;
-  }
-
-  .cm--head {
-    stroke-dasharray: 40;
-    stroke-dashoffset: 40;
-    transition-delay: 1.5s;
-    transition-duration: 0.4s;
-  }
-
-  .contact__michi.is-visible .cm {
-    stroke-dashoffset: 0;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .cm {
-      transition: none;
-      stroke-dashoffset: 0;
-    }
-  }
-
-  @media (max-width: 840px) {
-    .contact__michi {
-      display: none;
-    }
-  }
-
-  /* --- フォーム準備中の案内 --- */
-  .contact__pending {
-    background: var(--c-white);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-paper);
-    padding: clamp(36px, 5vw, 60px);
-  }
-
-  .contact__pending-title {
-    font-size: 15.5px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    color: var(--c-text);
-  }
-
-  .contact__pending-body {
-    margin-top: 18px;
-    font-size: 13.5px;
-    line-height: 2.2;
-    color: var(--c-sub);
-  }
-
-  /* --- フォーム(白い紙面) --- */
-  .contact__form {
-    background: var(--c-white);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-paper);
-    padding: clamp(36px, 5vw, 60px);
-  }
-
-  .field + .field {
-    margin-top: 36px;
-  }
-
-  .field label {
+  .contact__actions {
+    margin-top: 64px;
     display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .contact__cta {
+    display: inline-flex;
     align-items: center;
-    gap: 10px;
-    font-size: 12.5px;
-    letter-spacing: 0.14em;
-    color: var(--c-muted);
+    padding: 17px 40px;
+    border-radius: 10px;
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    transition: background-color 0.35s ease, border-color 0.35s ease,
+      color 0.35s ease, translate 0.35s ease;
   }
 
-  .req {
-    color: var(--c-gold);
+  .contact__cta .cta-arrow {
+    margin-left: 12px;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .field input,
-  .field textarea {
-    width: 100%;
-    margin-top: 10px;
-    background: transparent;
-    border: 0;
-    border-bottom: 1px solid var(--line);
-    padding: 10px 2px;
-    font-size: 15px;
-    line-height: 1.7;
-    transition: border-color 0.4s ease;
+  .contact__cta:hover .cta-arrow {
+    transform: translateX(5px);
   }
 
-  .field textarea {
-    resize: vertical;
-  }
-
-  .field input:focus,
-  .field textarea:focus {
-    outline: none;
-    border-bottom-color: var(--c-blue);
-  }
-
-  /* Primary CTA:焼きオレンジ */
-  .contact__submit {
-    margin-top: 52px;
-    width: 100%;
-    padding: 18px;
+  /* Primary:焼きオレンジ */
+  .contact__cta--primary {
     background: var(--c-primary);
     border: 1px solid var(--c-primary);
-    border-radius: 10px;
     color: #fff;
-    font-size: 14px;
     font-weight: 500;
-    letter-spacing: 0.18em;
-    cursor: pointer;
-    transition: background-color 0.35s ease, border-color 0.35s ease,
-      translate 0.35s ease;
   }
 
-  .contact__submit:hover {
+  .contact__cta--primary:hover {
     background: var(--c-primary-dark);
     border-color: var(--c-primary-dark);
     translate: 0 -2px;
   }
 
-  .contact__form-note {
-    margin-top: 18px;
-    font-size: 11.5px;
-    color: var(--c-muted);
-    line-height: 1.9;
+  /* Secondary:透明+白枠(墨黒面のため) */
+  .contact__cta--secondary {
+    background: transparent;
+    border: 1px solid rgba(248, 248, 246, 0.55);
+    color: #fff;
   }
 
-  @media (max-width: 840px) {
-    .contact__grid {
-      grid-template-columns: 1fr;
+  .contact__cta--secondary:hover {
+    border-color: #fff;
+    translate: 0 -2px;
+  }
+
+  @media (max-width: 640px) {
+    .contact__cta {
+      flex: 1 1 100%;
+      justify-content: center;
     }
   }
 </style>

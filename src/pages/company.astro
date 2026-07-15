@@ -32,17 +32,16 @@ const principles = [
 ];
 
 const overview = [
-  { key: "屋号", value: SITE.brandJa },
+  { key: "名称", value: SITE.brandJa },
   { key: "代表", value: SITE.representative },
   {
-    key: "事業内容",
+    key: "支援領域",
     value:
-      "業務設計、営業・顧客管理改善、バックオフィス改善、AI活用支援、データ可視化、運用定着支援",
+      "業務設計、営業・顧客管理改善、バックオフィス改善、CRM・AI活用支援、データ可視化、運用定着支援",
   },
-  { key: "対応形式", value: "オンライン / 必要に応じて対面相談" },
-  { key: "対応企業", value: "地域企業、中小企業、成長企業" },
-  { key: "活動開始", value: "2026年" },
-  { key: "お問い合わせ", value: "フォームより受付" },
+  { key: "対応形式", value: "オンライン / 必要に応じて対面" },
+  { key: "主な支援対象", value: "地域企業、中小企業、成長企業" },
+  { key: "ご連絡", value: "sns" }, // マークアップ側でSNSリンクとして描画
 ];
 
 ---
@@ -57,7 +56,7 @@ const overview = [
       label="About"
       titleEn="About"
       titleJa="ミチカクについて"
-      lead="ミチカクは、業務とデータの流れを整え、事業が動く仕組みをつくる屋号です。"
+      lead="ミチカクは、業務とデータの流れを整え、事業が動く仕組みをつくるDX・業務改善支援です。"
     />
 
     <!-- Mission -->
@@ -116,14 +115,14 @@ const overview = [
           </div>
           <div class="profile__body">
             <p>
-              外資系IT企業で法人営業として、CRM/SFAをはじめとする業務システムの導入・活用支援に携わる。
-              導入したものの現場で使われないシステム、数字が集まらないままの経営会議——
-              その原因の多くがツールではなく仕事の流れの設計にあることを、現場で繰り返し見てきました。
+              外資系IT企業で法人営業として、CRM/SFAを起点とした営業改革、業務変革、AI活用支援に携わっています。
+              導入したものの現場で使われないシステム、数字が集まらないままの経営会議、PoCで止まるAI活用。
+              その原因の多くが、ツールの機能ではなく、仕事とデータの流れの設計にあることを現場で繰り返し見てきました。
             </p>
             <p>
-              この経験をもとに、業務とデータの流れを整えることから始める実装型の支援を行うため、
-              「ミチカク」を立ち上げ。地域で事業を続ける会社が、無理のない形でデジタルを使い、
-              事業を前に進めていけるよう支援しています。
+              この経験をもとに、業務とデータの流れから整えるDX・業務改善支援として、ミチカクを始めました。
+              地域で事業を続ける会社が、無理のない形でデジタルやAIを活用し、
+              事業を前へ進められる仕組みづくりを支援しています。
             </p>
           </div>
         </div>
@@ -205,7 +204,37 @@ const overview = [
             overview.map((row) => (
               <div class="overview__row">
                 <dt>{row.key}</dt>
-                <dd>{row.value}</dd>
+                <dd>
+                  {row.value === "sns" ? (
+                    <span class="overview__sns">
+                      <a
+                        href={SITE.linkedinUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="LinkedIn(新しいタブで開きます)"
+                      >
+                        LinkedIn
+                      </a>
+                      {SITE.facebookUrl && (
+                        <>
+                          <span class="overview__sns-sep" aria-hidden="true">
+                            /
+                          </span>
+                          <a
+                            href={SITE.facebookUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Facebook(新しいタブで開きます)"
+                          >
+                            Facebook
+                          </a>
+                        </>
+                      )}
+                    </span>
+                  ) : (
+                    row.value
+                  )}
+                </dd>
               </div>
             ))
           }
@@ -540,6 +569,24 @@ const overview = [
     font-size: 14.5px;
     line-height: 2.1;
     letter-spacing: 0.06em;
+  }
+
+  /* ご連絡:SNSへの外部リンク */
+  .overview__sns a {
+    color: var(--c-text);
+    border-bottom: 1px solid var(--c-hairline);
+    padding-bottom: 2px;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .overview__sns a:hover {
+    color: var(--c-primary);
+    border-color: var(--c-primary);
+  }
+
+  .overview__sns-sep {
+    margin: 0 10px;
+    color: var(--c-sub);
   }
 
   .overview__cta {

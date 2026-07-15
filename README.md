@@ -24,8 +24,7 @@ npm run preview  # ビルド結果の確認
 | 項目 | 場所 |
 | --- | --- |
 | 名称 | `src/config.ts` の `brandEn` / `brandJa` |
-| 問い合わせメールアドレス | `src/config.ts` の `contactEmail` |
-| フォーム送信先 | `src/config.ts` の `formEndpoint`(Formspree等のURL。空の場合はメール作成画面を開くフォールバック) |
+| SNS連絡先 | `src/config.ts` の `linkedinUrl` / `facebookUrl`(facebookUrlを空にするとFacebookボタン非表示) |
 | 本番ドメイン | `astro.config.mjs` の `site`(canonical / OGP の絶対URLに使用)。独自ドメインに移行する際は `base` も削除 |
 
 ## 構成

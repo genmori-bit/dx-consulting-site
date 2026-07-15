@@ -8,12 +8,11 @@ export const SITE = {
   representative: "毛利 元樹",
   title: "ミチカク | 事業が動く仕組みを設計するDX・業務改善支援",
   description:
-    "営業、管理部門、意思決定の流れを整え、AI・CRM/SFA・SaaSを現場で使われる仕組みに落とし込むDX・業務改善の支援サービスです。業務診断から設計、実装、運用改善まで支援します。",
+    "営業、管理部門、経営判断の流れを整え、CRM、AI、業務システムを現場で使われる仕組みに落とし込むDX・業務改善支援です。",
   /**
-   * 問い合わせ先。実在しないアドレスを公開しないため、確定するまで空にしておく。
-   * formEndpoint(Formspree等)か contactEmail のどちらかを設定すると、
-   * Contactセクションの「準備中」表示が自動でフォームに切り替わります。
+   * 連絡導線はSNS(フォーム・メールは設置しない)。
+   * facebookUrl を空にすると、Facebookボタンは表示されません。
    */
-  contactEmail: "",
-  formEndpoint: "",
+  linkedinUrl: "https://www.linkedin.com/in/morigenki-8573b0244/",
+  facebookUrl: "https://www.facebook.com/profile.php?id=100010341284356",
 } as const;
