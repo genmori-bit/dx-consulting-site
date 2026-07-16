@@ -23,7 +23,7 @@ const base = import.meta.env.BASE_URL.endsWith("/")
           Career
         </h2>
         <p class="founder__copy reveal" style="--reveal-delay: 0.2s">
-          B2B SaaSの、<em>つくる</em>・<em>届ける</em>・<em>使われ続ける</em>を。
+          B2B SaaSの、<em>つくる</em>・<em>届ける</em>・<span class="founder__copy-tail"><em>使われ続ける</em>を。</span>
         </p>
         <p class="founder__name reveal" style="--reveal-delay: 0.3s">
           <span class="founder__role">代表</span>
@@ -101,6 +101,11 @@ const base = import.meta.env.BASE_URL.endsWith("/")
   .founder__copy em {
     font-style: normal;
     color: var(--c-text);
+  }
+
+  /* 「使われ続ける」と「を。」の間で行が折り返され、空白に見えるのを防ぐ */
+  .founder__copy-tail {
+    white-space: nowrap;
   }
 
   .founder__copy.is-visible em {
